@@ -61,7 +61,7 @@
         }
         .error-msg { color: #ff6b6b; font-size: 13px; margin-top: 10px; display: none; }
 
-        /* Panel Admin */
+        /* Panel de Administración */
         #admin-panel {
             display: none;
             position: fixed;
@@ -75,111 +75,159 @@
             width: 320px;
         }
 
-        /* Estructura de la máquina 3D idéntica al estilo del video */
-        .machine-container {
+        /* --- ESTRUCTURA 3D REAL DE LA IMPRESORA (ESTILO VISTA SUPERIOR / TIKTOK LIVE) --- */
+        .printer-3d-scene {
             position: relative;
-            width: 460px;
-            margin-top: 15px;
+            width: 500px;
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            perspective: 1000px;
         }
 
-        .printer-frame {
-            width: 420px;
-            height: 50px;
-            background: linear-gradient(135deg, #2f3640, #192a56);
-            border-radius: 8px;
-            border: 3px solid #718093;
+        /* Cuerpo principal de la máquina con efecto 3D y perspectiva */
+        .printer-body-3d {
             position: relative;
-            z-index: 30;
+            width: 460px;
+            height: 110px;
+            background: linear-gradient(135deg, #34495e, #1a252f);
+            border-radius: 15px;
+            border: 4px solid #7f8c8d;
+            z-index: 40;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 5px 10px rgba(255,255,255,0.2);
+            transform: rotateX(10deg);
         }
 
-        .printer-slit {
-            width: 360px;
-            height: 8px;
-            background: #000;
-            border-radius: 4px;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.3);
+        /* Rieles metálicos laterales simulados en 3D */
+        .printer-body-3d::before, .printer-body-3d::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 30px;
+            height: 65px;
+            background: linear-gradient(90deg, #bdc3c7, #ecf0f1, #7f8c8d);
+            border-radius: 6px;
+            border: 2px solid #2c3e50;
         }
+        .printer-body-3d::before { left: -18px; }
+        .printer-body-3d::after { right: -18px; }
 
-        /* Área de salida del papel / tarjetas */
-        .paper-stream {
+        /* Cabezal deslizante de la impresora */
+        .print-head-slider {
+            width: 100px;
+            height: 45px;
+            background: linear-gradient(180deg, #e74c3c, #c0392b);
+            border-radius: 6px;
+            border: 2px solid #78281f;
             position: relative;
-            width: 340px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+            animation: slideHead 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes slideHead {
+            0% { transform: translateX(-130px); }
+            100% { transform: translateX(130px); }
+        }
+
+        /* Ranura de salida del papel integrada en el cuerpo 3D */
+        .printer-output-slot {
+            width: 380px;
+            height: 14px;
+            background: #0b0f12;
+            border-radius: 0 0 8px 8px;
+            border-top: 4px solid #000;
+            z-index: 50;
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.9);
+            margin-top: -2px;
+        }
+
+        /* Contenedor donde se despliegan las tarjetas impresas */
+        .paper-roll-stream {
+            position: relative;
+            width: 380px;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 10;
         }
 
-        /* Tarjeta impresa limpia y profesional */
-        .printed-ticket {
-            width: 260px;
-            background: #fffef9;
-            border: 2px solid #2f3640;
-            border-radius: 4px;
-            padding: 12px;
-            margin-top: -12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        /* Estilo de la tarjeta impresa con aspecto de papel fotográfico */
+        .ticket-item {
+            width: 300px;
+            background: #fffdf5;
+            border: 2px solid #2c3e50;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: -15px; /* Superposición perfecta para efecto continuo */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            animation: printMotion 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: printDown 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes printMotion {
-            0% { transform: translateY(-50px) scale(0.9); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
+        @keyframes printDown {
+            0% {
+                transform: translateY(-80px) scale(0.85);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
         }
 
-        .ticket-avatar-box {
-            width: 80px;
-            height: 80px;
-            border: 2px solid #2f3640;
+        .ticket-avatar-container {
+            width: 95px;
+            height: 95px;
+            border: 3px solid #2c3e50;
             border-radius: 50%;
             overflow: hidden;
-            background: #ddd;
-            margin-bottom: 8px;
+            background: #e2e8f0;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        .ticket-avatar-box img {
+        .ticket-avatar-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .ticket-user {
-            font-size: 15px;
+        .ticket-user-name {
+            font-size: 16px;
             font-weight: 700;
-            color: #2f3640;
-            margin-bottom: 3px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            text-align: center;
         }
 
-        .ticket-gift-info {
-            font-size: 12px;
+        .ticket-gift-tag {
+            font-size: 13px;
             font-weight: 600;
             color: #c0392b;
             background: #fadbd8;
-            padding: 2px 8px;
-            border-radius: 10px;
+            padding: 3px 12px;
+            border-radius: 12px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Login -->
+    <!-- Pantalla de Activación por Key / Licencia -->
     <div id="auth-overlay">
         <div class="auth-box">
             <h2>🔑 Activar Sistema</h2>
-            <input type="text" id="license-input" placeholder="Ingresa tu Key o Admin Key">
-            <button onclick="verificarLicencia()">Entrar</button>
-            <div id="error-msg" class="error-msg">Clave incorrecta.</div>
+            <p style="font-size: 12px; color: #a0aec0; margin-bottom: 15px;">Ingresa tu Key de por vida o Admin Key</p>
+            <input type="text" id="license-input" placeholder="Ingresa tu Clave">
+            <button onclick="verificarLicencia()">Activar</button>
+            <div id="error-msg" class="error-msg">Clave incorrecta o no válida para este PC.</div>
         </div>
     </div>
 
@@ -190,18 +238,20 @@
         <button onclick="generarKey()" style="background:#27ae60; border:none; color:#fff; padding:8px; width:100%; border-radius:4px; cursor:pointer; font-weight:bold;">Crear Key para Cliente</button>
     </div>
 
-    <!-- Interfaz de la Máquina 3D -->
-    <div class="machine-container">
-        <div class="printer-frame">
-            <div class="printer-slit"></div>
+    <!-- Escenario Visual de la Máquina 3D -->
+    <div class="printer-3d-scene">
+        <div class="printer-body-3d">
+            <div class="print-head-slider"></div>
         </div>
+        <div class="printer-output-slot"></div>
         
-        <div class="paper-stream" id="cards-container">
-            <!-- Las tarjetas aparecerán únicamente cuando recibas regalos reales en tu LIVE -->
+        <div class="paper-roll-stream" id="cards-container">
+            <!-- La pantalla se mantiene limpia y en espera real de tu TikTok LIVE -->
         </div>
     </div>
 
     <script>
+        // Gestión del HWID de la PC
         let pcHwid = localStorage.getItem('device_hwid');
         if (!pcHwid) {
             pcHwid = 'HWID-' + Math.random().toString(36).substring(2, 9).toUpperCase();
@@ -216,7 +266,7 @@
                 if (saved === 'Carolinaymiguel') {
                     document.getElementById('admin-panel').style.display = 'block';
                 }
-                inicializarConexionLive();
+                prepararEscuchaLive();
             }
         };
 
@@ -226,7 +276,7 @@
                 localStorage.setItem('app_activated_key', 'Carolinaymiguel');
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
-                inicializarConexionLive();
+                prepararEscuchaLive();
                 return;
             }
 
@@ -234,7 +284,7 @@
             if (keys[val] === pcHwid) {
                 localStorage.setItem('app_activated_key', val);
                 document.getElementById('auth-overlay').style.display = 'none';
-                inicializarConexionLive();
+                prepararEscuchaLive();
             } else {
                 document.getElementById('error-msg').style.display = 'block';
             }
@@ -250,32 +300,30 @@
             alert("Key generada con éxito:\n\n" + newKey);
         }
 
-        // Función que dibuja la tarjeta en la máquina 3D cuando llega un regalo real
-        function mostrarRegaloEnImpresora(username, avatarUrl, giftName) {
+        // Función real para disparar el efecto cuando recibas un regalo en tu LIVE
+        function imprimirRegaloLive(username, avatarUrl, giftName) {
             const container = document.getElementById('cards-container');
             const card = document.createElement('div');
-            card.className = 'printed-ticket';
+            card.className = 'ticket-item';
             
             card.innerHTML = `
-                <div class="ticket-avatar-box">
+                <div class="ticket-avatar-container">
                     <img src="${avatarUrl || 'https://via.placeholder.com/100'}" alt="Avatar">
                 </div>
-                <div class="ticket-user">@${username}</div>
-                <div class="ticket-gift-info">🎁 ${giftName}</div>
+                <div class="ticket-user-name">@${username}</div>
+                <div class="ticket-gift-tag">🎁 ¡Envió ${giftName}!</div>
             `;
 
             container.insertBefore(card, container.firstChild);
 
-            // Mantener un máximo de 4 tarjetas en pantalla
+            // Mantener máximo 4 tarjetas visibles para no saturar
             if (container.children.length > 4) {
                 container.removeChild(container.lastChild);
             }
         }
 
-        function inicializarConexionLive() {
-            // El sistema queda en modo escucha real para TikTok Live.
-            // (Aquí puedes conectar tu puente de WebSocket con TikTok Live Connector cuando realices tu transmisión).
-            console.log("Sistema listo y en espera de regalos reales de TikTok LIVE.");
+        function prepararEscuchaLive() {
+            console.log("Sistema configurado. Cero pruebas falsas. Esperando eventos reales de TikTok LIVE.");
         }
     </script>
 </body>
