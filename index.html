@@ -18,7 +18,7 @@
             align-items: center;
         }
 
-        /* Pantalla de Licencia / Key */
+        /* Pantalla de Activación por Key / HWID */
         #auth-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -62,7 +62,7 @@
         }
         .error-msg { color: #ff6b6b; font-size: 13px; margin-top: 10px; display: none; }
 
-        /* Panel de Control para Simular Regalos */
+        /* Panel de Control para Simular Regalos en Directo */
         #control-panel {
             display: none;
             position: fixed;
@@ -110,23 +110,27 @@
             z-index: 1;
         }
 
-        /* Rollo de papel pergamino continuo que avanza hacia abajo */
+        /* Rollo de papel pergamino continuo con Canvas de Grabado Láser */
         .parchment-paper-roll {
             position: absolute;
-            top: 30px;
+            top: 35px;
             width: 390px;
-            height: 650px;
+            height: 640px;
             background: #f5eedc;
             border-left: 6px solid #d4c5a9;
             border-right: 6px solid #d4c5a9;
             box-shadow: 0 30px 60px rgba(0,0,0,0.85);
             z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             overflow: hidden;
-            padding-top: 20px;
-            transition: transform 0.6s ease-out;
+        }
+
+        #laser-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 15;
         }
 
         /* Estructura del Pórtico Metálico Fijo */
@@ -167,7 +171,7 @@
             justify-content: center;
         }
 
-        /* Cabezal Láser Activo (El que dibuja el perfil en tiempo real) */
+        /* Cabezal Láser Físico Animado en el puente */
         .laser-block {
             position: absolute;
             width: 65px;
@@ -177,11 +181,9 @@
             border: 2px solid #fff;
             box-shadow: 0 0 25px rgba(231, 76, 60, 0.9);
             top: -3px;
-            transition: transform 0.8s ease-in-out;
-            transform: translateX(0px);
+            transition: transform 0.1s linear;
         }
 
-        /* Haz de luz láser parpadeante quemando el papel */
         .laser-block::after {
             content: '';
             position: absolute;
@@ -190,84 +192,9 @@
             width: 12px;
             height: 12px;
             background: #ff0055;
-            box-shadow: 0 0 15px #ff0055, 0 0 30px #00ffff, 0 0 45px #ffffff;
+            box-shadow: 0 0 15px #ff0055, 0 0 30px #00ffff;
             border-radius: 50%;
-            animation: laserBurn 0.2s infinite alternate;
         }
-
-        @keyframes laserBurn {
-            0% { opacity: 0.5; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.3); }
-        }
-
-        /* Tarjeta / Cuadro con efecto de "Grabado Láser" progresivo */
-        .printed-ticket-card {
-            width: 310px;
-            background: #ffffff;
-            border: 3px solid #111;
-            border-radius: 4px;
-            padding: 14px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 20;
-            /* Animación de grabado: aparece quemándose y bajando */
-            animation: laserEngraveAnim 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes laserEngraveAnim {
-            0% {
-                transform: translateY(-80px) scale(0.8);
-                opacity: 0;
-                filter: brightness(3) sepia(1) hue-rotate(-50deg);
-            }
-            50% {
-                opacity: 0.8;
-                filter: brightness(1.5) sepia(0.5);
-            }
-            100% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-                filter: brightness(1) sepia(0);
-            }
-        }
-
-        .user-avatar-frame {
-            width: 85px;
-            height: 85px;
-            border: 3px solid #111;
-            border-radius: 50%;
-            overflow: hidden;
-            background: #ccc;
-            margin-bottom: 8px;
-        }
-
-        .user-avatar-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .user-name-text {
-            font-size: 16px;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 4px;
-            text-align: center;
-        }
-
-        .gift-badge-tag {
-            font-size: 13px;
-            font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 10px;
-        }
-        .badge-rose { background: #fadbd8; color: #c0392b; }
-        .badge-5c { background: #ebf5fb; color: #2980b9; }
-        .badge-30c { background: #f4ecf7; color: #8e44ad; }
     </style>
 </head>
 <body>
@@ -275,7 +202,7 @@
     <!-- Pantalla de Activación por Key / HWID -->
     <div id="auth-overlay">
         <div class="auth-box">
-            <h2>🔑 Activar Sistema 3D Laser</h2>
+            <h2>🔑 Activar Sistema Laser 3D</h2>
             <p style="font-size: 12px; color: #a0aec0; margin-bottom: 15px;">Ingresa tu Key vitalicia o Admin Key</p>
             <input type="text" id="license-input" placeholder="Ingresa tu Clave">
             <button onclick="verificarLicencia()">Activar</button>
@@ -288,18 +215,18 @@
         <h3 style="margin-top:0; color:#f1c40f; font-size:15px;">⚙️ Panel de Simulación Live</h3>
         <p style="font-size: 10px; margin-bottom:5px; word-break: break-all;">HWID: <span id="current-hwid" style="color: #f1c40f;"></span></p>
         
-        <button class="gift-btn btn-rose" onclick="simularRegalo('Rosa', '1 Coin', 'badge-rose', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150')">🌹 Enviar Rosa (1 Coin)</button>
-        <button class="gift-btn btn-5c" onclick="simularRegalo('Regalo 5 Coins', '5 Coins', 'badge-5c', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150')">🍩 Regalo 5 Coins</button>
-        <button class="gift-btn btn-30c" onclick="simularRegalo('Regalo 30 Coins', '30 Coins', 'badge-30c', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150')">💎 Regalo 30 Coins</button>
+        <button class="gift-btn btn-rose" onclick="activarRegalo('Rosa', '1 Coin', '#c0392b', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150')">🌹 Enviar Rosa (1 Coin)</button>
+        <button class="gift-btn btn-5c" onclick="activarRegalo('Regalo 5 Coins', '5 Coins', '#2980b9', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150')">🍩 Regalo 5 Coins</button>
+        <button class="gift-btn btn-30c" onclick="activarRegalo('Regalo 30 Coins', '30 Coins', '#8e44ad', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150')">💎 Regalo 30 Coins</button>
         
         <button class="gift-btn" style="background:#2980b9; margin-top:12px;" onclick="generarKey()">🔑 Crear Key Cliente</button>
     </div>
 
-    <!-- Escenario 3D Cenital con Mesa, Papel y Láser -->
+    <!-- Escenario 3D con Canvas de Grabado Láser Real -->
     <div class="scene-container">
         <div class="wood-surface"></div>
 
-        <!-- Sistema de Pórtico y Cabezal Láser -->
+        <!-- Sistema de Pórtico -->
         <div class="plotter-gantry-frame">
             <div class="rail-left"></div>
             <div class="rail-right"></div>
@@ -308,9 +235,9 @@
             </div>
         </div>
 
-        <!-- Rollo de Papel Pergamino Continuo -->
-        <div class="parchment-paper-roll" id="cards-container">
-            <!-- Los perfiles grabados por láser aparecerán aquí -->
+        <!-- Rollo de Papel y Canvas de Grabado -->
+        <div class="parchment-paper-roll">
+            <canvas id="laser-canvas" width="390" height="640"></canvas>
         </div>
     </div>
 
@@ -329,7 +256,6 @@
                 if (saved === 'Carolinaymiguel') {
                     document.getElementById('control-panel').style.display = 'block';
                 }
-                iniciarModoLive();
             }
         };
 
@@ -339,7 +265,6 @@
                 localStorage.setItem('app_activated_key', 'Carolinaymiguel');
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('control-panel').style.display = 'block';
-                iniciarModoLive();
                 return;
             }
 
@@ -347,7 +272,7 @@
             if (keys[val] === pcHwid) {
                 localStorage.setItem('app_activated_key', val);
                 document.getElementById('auth-overlay').style.display = 'none';
-                iniciarModoLive();
+                document.getElementById('control-panel').style.display = 'block';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
             }
@@ -363,42 +288,193 @@
             alert("Key generada con éxito:\n\n" + newKey);
         }
 
-        // Función que simula el movimiento del láser quemando el papel y dibujando el perfil
-        function simularRegalo(giftName, cost, badgeClass, avatar) {
+        // --- MOTOR DE GRABADO LÁSER EN CANVAS (Trazado real línea por línea) ---
+        const canvas = document.getElementById('laser-canvas');
+        const ctx = canvas.getContext('2d');
+        const laserHead = document.getElementById('laser-head');
+
+        let listaTarjetas = [];
+        let estadoGrabado = null; // Objeto que se está dibujando actualmente con láser
+
+        function rediseñarEscenario() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Dibujar tarjetas ya impresas y fijas en el papel
+            listaTarjetas.forEach(t => {
+                dibujarTarjetaCompleta(t.x, t.y, t);
+            });
+
+            // 2. Si hay una tarjeta grabándose por láser en este momento
+            if (estadoGrabado) {
+                dibujarTarjetaProgreso(estadoGrabado);
+            }
+        }
+
+        function dibujarTarjetaCompleta(x, y, t) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Cuadro negro estilo polaroid
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, 320, 150);
+            ctx.strokeStyle = "#111111";
+            ctx.lineWidth = 4;
+            ctx.strokeRect(0, 0, 320, 150);
+
+            // Avatar circular
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(60, 75, 35, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.clip();
+            if (t.imgLoaded && t.imgObj) {
+                ctx.drawImage(t.imgObj, 25, 40, 70, 70);
+            } else {
+                ctx.fillStyle = "#ccc";
+                ctx.fillRect(25, 40, 70, 70);
+            }
+            ctx.restore();
+
+            ctx.beginPath();
+            ctx.arc(60, 75, 35, 0, Math.PI * 2, true);
+            ctx.strokeStyle = "#111111";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Nombre y Regalo
+            ctx.fillStyle = "#111111";
+            ctx.font = "bold 16px 'Segoe UI', Arial";
+            ctx.fillText("@" + t.username, 115, 65);
+
+            ctx.fillStyle = t.badgeColor;
+            ctx.fillRect(115, 80, 180, 28);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 12px 'Segoe UI', Arial";
+            ctx.fillText("🎁 " + t.giftText, 125, 98);
+
+            ctx.restore();
+        }
+
+        function dibujarTarjetaProgreso(g) {
+            ctx.save();
+            ctx.translate(g.x, g.y);
+
+            // El láser quema progresivamente el cuadro según el porcentaje de progreso (0 a 1)
+            let prog = g.progress;
+
+            // Marco exterior
+            if (prog > 0.05) {
+                ctx.strokeStyle = "#111111";
+                ctx.lineWidth = 4;
+                ctx.strokeRect(0, 0, 320, 150);
+            }
+
+            // Avatar quemándose
+            if (prog > 0.3) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(60, 75, 35, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.clip();
+                if (g.imgLoaded && g.imgObj) {
+                    ctx.drawImage(g.imgObj, 25, 40, 70, 70);
+                }
+                ctx.restore();
+
+                ctx.beginPath();
+                ctx.arc(60, 75, 35, 0, Math.PI * 2, true);
+                ctx.strokeStyle = "#111111";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+
+            // Texto quemado por el láser
+            if (prog > 0.6) {
+                ctx.fillStyle = "#111111";
+                ctx.font = "bold 16px 'Segoe UI', Arial";
+                ctx.fillText("@" + g.username, 115, 65);
+            }
+
+            if (prog > 0.8) {
+                ctx.fillStyle = g.badgeColor;
+                ctx.fillRect(115, 80, 180, 28);
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 12px 'Segoe UI', Arial";
+                ctx.fillText("🎁 " + g.giftText, 125, 98);
+            }
+
+            ctx.restore();
+        }
+
+        // Función que activa el grabado láser al recibir un regalo (botones o en vivo)
+        function activarRegalo(giftName, cost, badgeColor, avatarUrl) {
+            if (estadoGrabado) return; // Esperar a que termine el grabado actual
+
             const nombres = ["ClienteVip_925", "JoyasJack_Fan", "ColeccionistaChile", "CompradorEstelar", "Mariana_Silver", "Dini_Live"];
             let randomUser = nombres[Math.floor(Math.random() * nombres.length)];
 
-            const laser = document.getElementById('laser-head');
-            
-            // 1. El láser se mueve hacia el punto de grabado superior
-            let randomX = (Math.random() * 160) - 80;
-            laser.style.transform = `translateX(${randomX}px)`;
+            let img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = avatarUrl;
 
-            // 2. Tras un breve instante simulando el láser quemando el cuadro, aparece la tarjeta grabada
-            setTimeout(() => {
-                const container = document.getElementById('cards-container');
-                const card = document.createElement('div');
-                card.className = 'printed-ticket-card';
-                
-                card.innerHTML = `
-                    <div class="user-avatar-frame">
-                        <img src="${avatar}" alt="Avatar">
-                    </div>
-                    <div class="user-name-text">@${randomUser}</div>
-                    <div class="gift-badge-tag ${badgeClass}">🎁 ${giftName} (${cost})</div>
-                `;
+            img.onload = function() {
+                // Desplazar tarjetas existentes hacia abajo para hacer espacio en el rollo de papel
+                listaTarjetas.forEach(t => {
+                    t.targetY += 170;
+                });
 
-                container.insertBefore(card, container.firstChild);
+                estadoGrabado = {
+                    username: randomUser,
+                    giftText: `${giftName} (${cost})`,
+                    badgeColor: badgeColor,
+                    imgObj: img,
+                    imgLoaded: true,
+                    x: 35,
+                    y: 20, // Posición fija donde el láser graba arriba
+                    targetY: 20,
+                    progress: 0
+                };
 
-                // El papel avanza deslizando las tarjetas hacia abajo
-                if (container.children.length > 3) {
-                    container.removeChild(container.lastChild);
+                // Animar el cabezal láser físico moviéndose de lado a lado mientras quema
+                let startTime = Date.now();
+                let duration = 1500; // 1.5 segundos de grabado láser real
+
+                function bucleLaser() {
+                    let elapsed = Date.now() - startTime;
+                    let p = elapsed / duration;
+                    if (p > 1) p = 1;
+
+                    estadoGrabado.progress = p;
+
+                    // Mover el cabezal láser metálico superior sincronizado con el dibujo
+                    let laserX = Math.sin(p * Math.PI * 4) * 120;
+                    laserHead.style.transform = `translateX(${laserX}px)`;
+
+                    // Animar la bajada fluida de las tarjetas anteriores
+                    listaTarjetas.forEach(t => {
+                        if (t.y < t.targetY) {
+                            t.y += (t.targetY - t.y) * 0.2;
+                        }
+                    });
+
+                    rediseñarEscenario();
+
+                    if (p < 1) {
+                        requestAnimationFrame(bucleLaser);
+                    } else {
+                        // Fin del grabado: la tarjeta pasa a ser fija en el rollo de papel
+                        listaTarjetas.unshift(estadoGrabado);
+                        estadoGrabado = null;
+                        laserHead.style.transform = `translateX(0px)`;
+                        if (listaTarjetas.length > 3) {
+                            listaTarjetas.pop();
+                        }
+                        rediseñarEscenario();
+                    }
                 }
-            }, 400);
-        }
 
-        function iniciarModoLive() {
-            console.log("Sistema Laser Plotter activo. Esperando eventos LIVE.");
+                bucleLaser();
+            };
         }
     </script>
 </body>
