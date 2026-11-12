@@ -8,7 +8,7 @@
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            background-color: #12161f; /* Fondo de estudio / OBS */
+            background-color: #0b0e14;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
@@ -17,15 +17,15 @@
             align-items: center;
         }
 
-        /* Pantalla de Activación por Key / Licencia */
+        /* Pantalla de Licencia / Key por HWID */
         #auth-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 19, 23, 0.98);
+            background: rgba(11, 14, 20, 0.98);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 10000;
         }
         .auth-box {
             background: #1e272e;
@@ -34,7 +34,7 @@
             border: 2px solid #485460;
             text-align: center;
             width: 350px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
             color: #fff;
         }
         .auth-box h2 { margin-bottom: 15px; color: #f1c40f; }
@@ -61,7 +61,7 @@
         }
         .error-msg { color: #ff6b6b; font-size: 13px; margin-top: 10px; display: none; }
 
-        /* Panel de Control flotante para simular los 3 regalos */
+        /* Panel de Control flotante para simular en vivo */
         #control-panel {
             display: none;
             position: fixed;
@@ -70,10 +70,10 @@
             border: 2px solid #f1c40f;
             padding: 15px;
             border-radius: 10px;
-            z-index: 2000;
+            z-index: 5000;
             color: #fff;
-            width: 280px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            width: 270px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
         }
         .gift-btn {
             width: 100%;
@@ -90,136 +90,134 @@
         .btn-5c { background: #3498db; }
         .btn-30c { background: #9b59b6; }
 
-        /* --- MÁQUINA 3D PLOTTER / GRABADORA (DIÉSEÑO EXACTO DE LA FOTO) --- */
-        .plotter-scene {
+        /* --- ESCENARIO 3D IDÉNTICO AL VIDEO --- */
+        .scene-3d-wrapper {
             position: relative;
-            width: 520px;
-            height: 650px;
+            width: 480px;
+            height: 720px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            perspective: 1200px;
+            justify-content: center;
         }
 
-        /* Mesa de fondo simulada */
-        .wooden-table-bg {
+        /* Mesa de madera texturizada de fondo */
+        .wood-table-surface {
             position: absolute;
-            top: 0; left: -50px; right: -50px; bottom: 0;
-            background: radial-gradient(circle, #3d2817 0%, #1a100a 100%);
+            top: 0; left: -100px; right: -100px; bottom: 0;
+            background: linear-gradient(135deg, #2b170b 0%, #1a0f07 100%);
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
             z-index: 1;
-            border-radius: 15px;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
         }
 
-        /* Rollo de papel pergamino continuo debajo de la máquina */
-        .continuous-paper-roll {
+        /* Rollo de papel continuo color crema con marco negro impreso */
+        .paper-roll-sheet {
             position: absolute;
-            top: 90px;
-            width: 400px;
-            height: 520px;
-            background: #f4edd3; /* Tono pergamino idéntico a la foto */
-            border-left: 4px solid #c8b99c;
-            border-right: 4px solid #c8b99c;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
-            z-index: 5;
+            top: 40px;
+            width: 390px;
+            height: 640px;
+            background: #f5eedc;
+            border-left: 5px solid #d4c5a9;
+            border-right: 5px solid #d4c5a9;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             overflow: hidden;
-            padding-top: 20px;
+            padding-top: 25px;
         }
 
-        /* Estructura física 3D de la máquina (Rieles laterales y Puente superior) */
-        .machine-rails-assembly {
+        /* Estructura del Pórtico Metálico 3D (Rieles y Puente) */
+        .machine-gantry-system {
             position: absolute;
-            top: 30px;
-            width: 460px;
+            top: 15px;
+            width: 450px;
             height: 120px;
-            z-index: 20;
+            z-index: 100;
             pointer-events: none;
         }
 
-        /* Riel metálico izquierdo */
-        .rail-left, .rail-right {
+        /* Rieles laterales metálicos con soportes */
+        .rail-side-left, .rail-side-right {
             position: absolute;
             top: 0;
-            width: 22px;
+            width: 28px;
             height: 130px;
             background: linear-gradient(90deg, #7f8c8d, #ecf0f1, #7f8c8d);
             border-radius: 4px;
-            border: 1px solid #2c3e50;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 2px solid #2c3e50;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
-        .rail-left { left: 0; }
-        .rail-right { right: 0; }
+        .rail-side-left { left: 0; }
+        .rail-side-right { right: 0; }
 
-        /* Puente transversal metálico móvil con efecto grabado láser */
-        .gantry-bridge {
+        /* Puente transversal deslizable */
+        .bridge-crossbar {
             position: absolute;
-            top: 15px;
-            left: 10px;
-            right: 10px;
-            height: 45px;
+            top: 20px;
+            left: 14px;
+            right: 14px;
+            height: 40px;
             background: linear-gradient(180deg, #34495e, #1a252f);
             border-radius: 6px;
             border: 2px solid #7f8c8d;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Cabezal de grabado láser central que se desliza dibujando */
-        .laser-carriage {
+        /* Cabezal de impresión central con láser activo */
+        .laser-print-head {
             position: absolute;
-            width: 75px;
-            height: 55px;
-            background: linear-gradient(180deg, #e74c3c, #c0392b);
+            width: 70px;
+            height: 48px;
+            background: linear-gradient(180deg, #e74c3c, #900c3f);
             border-radius: 4px;
             border: 2px solid #fff;
-            box-shadow: 0 0 20px rgba(231, 76, 60, 0.9);
-            top: -5px;
-            animation: carveLaser 3s ease-in-out infinite alternate;
+            box-shadow: 0 0 25px rgba(231, 76, 60, 0.9);
+            top: -4px;
+            animation: moveLaserHead 3s ease-in-out infinite alternate;
         }
 
-        /* Haz de luz láser apuntando al papel */
-        .laser-carriage::after {
+        .laser-print-head::after {
             content: '';
             position: absolute;
-            bottom: -15px;
-            left: 31px;
+            bottom: -12px;
+            left: 28px;
             width: 10px;
-            height: 15px;
-            background: #00ffff;
-            box-shadow: 0 0 15px #00ffff, 0 0 25px #ff00ff;
+            height: 12px;
+            background: #ff0055;
+            box-shadow: 0 0 15px #ff0055, 0 0 25px #00ffff;
             border-radius: 50%;
         }
 
-        @keyframes carveLaser {
-            0% { transform: translateX(-150px); }
-            100% { transform: translateX(150px); }
+        @keyframes moveLaserHead {
+            0% { transform: translateX(-140px); }
+            100% { transform: translateX(140px); }
         }
 
-        /* Tarjeta / Recuadro impreso en el papel (estilo técnico de la foto) */
-        .drawn-ticket-card {
-            width: 330px;
+        /* Tarjeta / Recuadro impreso en el papel (Estilo Polaroid / Cuadro negro del video) */
+        .printed-card-item {
+            width: 320px;
             background: #ffffff;
-            border: 3px solid #2c3e50;
+            border: 3px solid #111;
             border-radius: 4px;
-            padding: 14px;
+            padding: 12px;
             margin-bottom: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            z-index: 10;
-            animation: dropTicket 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            z-index: 20;
+            animation: printCardMotion 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes dropTicket {
+        @keyframes printCardMotion {
             0% {
-                transform: translateY(-80px) scale(0.9);
+                transform: translateY(-70px) scale(0.9);
                 opacity: 0;
             }
             100% {
@@ -228,34 +226,34 @@
             }
         }
 
-        .avatar-frame-box {
-            width: 90px;
-            height: 90px;
-            border: 3px solid #2c3e50;
+        .avatar-circle-frame {
+            width: 85px;
+            height: 85px;
+            border: 3px solid #111;
             border-radius: 50%;
             overflow: hidden;
-            background: #ddd;
-            margin-bottom: 8px;
+            background: #ccc;
+            margin-bottom: 6px;
         }
 
-        .avatar-frame-box img {
+        .avatar-circle-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .user-name-label {
-            font-size: 16px;
+        .username-label {
+            font-size: 15px;
             font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 4px;
+            color: #111;
+            margin-bottom: 3px;
             text-align: center;
         }
 
-        .gift-info-badge {
+        .gift-tag-badge {
             font-size: 12px;
             font-weight: 700;
-            padding: 3px 10px;
+            padding: 2px 10px;
             border-radius: 10px;
         }
         .badge-rose { background: #fadbd8; color: #c0392b; }
@@ -265,45 +263,45 @@
 </head>
 <body>
 
-    <!-- Pantalla de Activación por Key / Licencia -->
+    <!-- Pantalla de Activación por Key / HWID -->
     <div id="auth-overlay">
         <div class="auth-box">
             <h2>🔑 Activar Sistema 3D</h2>
-            <p style="font-size: 12px; color: #a0aec0; margin-bottom: 15px;">Ingresa tu Key o Admin Key</p>
+            <p style="font-size: 12px; color: #a0aec0; margin-bottom: 15px;">Ingresa tu Key vitalicia o Admin Key</p>
             <input type="text" id="license-input" placeholder="Ingresa tu Clave">
             <button onclick="verificarLicencia()">Activar</button>
             <div id="error-msg" class="error-msg">Clave incorrecta o no válida para este PC.</div>
         </div>
     </div>
 
-    <!-- Panel de Control con los 3 Regalos -->
+    <!-- Panel de Control para Simular Regalos en Directo -->
     <div id="control-panel">
-        <h3 style="margin-top:0; color:#f1c40f; font-size:15px;">⚙️ Simular Regalos (Live)</h3>
+        <h3 style="margin-top:0; color:#f1c40f; font-size:15px;">⚙️ Panel de Simulación Live</h3>
         <p style="font-size: 10px; margin-bottom:5px; word-break: break-all;">HWID: <span id="current-hwid" style="color: #f1c40f;"></span></p>
         
         <button class="gift-btn btn-rose" onclick="simularRegalo('Rosa', '1 Coin', 'badge-rose', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150')">🌹 Enviar Rosa (1 Coin)</button>
-        <button class="gift-btn btn-5c" onclick="simularRegalo('Donut', '5 Coins', 'badge-5c', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150')">🍩 Regalo 5 Coins</button>
-        <button class="gift-btn btn-30c" onclick="simularRegalo('Perfume', '30 Coins', 'badge-30c', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150')">💎 Regalo 30 Coins</button>
+        <button class="gift-btn btn-5c" onclick="simularRegalo('Regalo 5 Coins', '5 Coins', 'badge-5c', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150')">🍩 Regalo 5 Coins</button>
+        <button class="gift-btn btn-30c" onclick="simularRegalo('Regalo 30 Coins', '30 Coins', 'badge-30c', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150')">💎 Regalo 30 Coins</button>
         
         <button class="gift-btn" style="background:#2980b9; margin-top:12px;" onclick="generarKey()">🔑 Crear Key Cliente</button>
     </div>
 
-    <!-- Escenario Visual 3D Exacto al de la Foto -->
-    <div class="plotter-scene">
-        <div class="wooden-table-bg"></div>
+    <!-- Escenario 3D Exacto al Video -->
+    <div class="scene-3d-wrapper">
+        <div class="wood-table-surface"></div>
 
-        <!-- Máquina Plotter con rieles y cabezal láser -->
-        <div class="machine-rails-assembly">
-            <div class="rail-left"></div>
-            <div class="rail-right"></div>
-            <div class="gantry-bridge">
-                <div class="laser-carriage"></div>
+        <!-- Sistema de Pórtico y Láser Superior -->
+        <div class="machine-gantry-system">
+            <div class="rail-side-left"></div>
+            <div class="rail-side-right"></div>
+            <div class="bridge-crossbar">
+                <div class="laser-print-head"></div>
             </div>
         </div>
 
-        <!-- Rollo de papel continuo pergamino -->
-        <div class="continuous-paper-roll" id="cards-container">
-            <!-- Los perfiles impresos aparecerán aquí ordenadamente -->
+        <!-- Rollo de Papel Continuo Pergamino con Tarjetas -->
+        <div class="paper-roll-sheet" id="cards-container">
+            <!-- Los perfiles impresos aparecerán aquí tal cual el video -->
         </div>
     </div>
 
@@ -331,6 +329,7 @@
             if (val === 'Carolinaymiguel') {
                 localStorage.setItem('app_activated_key', 'Carolinaymiguel');
                 document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('admin-panel') // por si acaso
                 document.getElementById('control-panel').style.display = 'block';
                 iniciarModoLive();
                 return;
@@ -356,35 +355,36 @@
             alert("Key generada con éxito:\n\n" + newKey);
         }
 
-        // Función que graba y dibuja el perfil en el papel al recibir un regalo
+        // Función que imprime el perfil en el papel continuo con animación
         function imprimirPerfilEnPapel(username, giftName, badgeClass, avatarUrl) {
             const container = document.getElementById('cards-container');
             const card = document.createElement('div');
-            card.className = 'drawn-ticket-card';
+            card.className = 'printed-card-item';
             
             card.innerHTML = `
-                <div class="avatar-frame-box">
+                <div class="avatar-circle-frame">
                     <img src="${avatarUrl}" alt="Avatar">
                 </div>
-                <div class="user-name-label">@${username}</div>
-                <div class="gift-info-badge ${badgeClass}">🎁 ${giftName}</div>
+                <div class="username-label">@${username}</div>
+                <div class="gift-tag-badge ${badgeClass}">🎁 ${giftName}</div>
             `;
 
             container.insertBefore(card, container.firstChild);
 
+            // Mantener máximo 3 tarjetas en el papel a la vez para mantener la proporción exacta del video
             if (container.children.length > 3) {
                 container.removeChild(container.lastChild);
             }
         }
 
         function simularRegalo(giftName, cost, badgeClass, avatar) {
-            const nombres = ["ClienteVip_925", "JoyasJack_Fan", "ColeccionistaChile", "CompradorEstelar", "Mariana_Silver"];
+            const nombres = ["ClienteVip_925", "JoyasJack_Fan", "ColeccionistaChile", "CompradorEstelar", "Mariana_Silver", "Dini_Live"];
             let randomUser = nombres[Math.floor(Math.random() * nombres.length)];
             imprimirPerfilEnPapel(randomUser, `${giftName} (${cost})`, badgeClass, avatar);
         }
 
         function iniciarModoLive() {
-            console.log("Sistema 3D Plotter listo. Esperando eventos de TikTok LIVE.");
+            console.log("Sistema 3D Plotter configurado exactamente como en el video. Esperando eventos LIVE.");
         }
     </script>
 </body>
