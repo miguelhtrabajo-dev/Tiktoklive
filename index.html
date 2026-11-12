@@ -17,7 +17,7 @@
             align-items: flex-start;
         }
 
-        /* Pantalla de Activación de Licencia / Login Admin */
+        /* Pantalla de Activación / Login Admin */
         #auth-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -58,12 +58,10 @@
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .auth-box button:hover { background: #c0392b; }
         .error-msg { color: #ff6b6b; font-size: 13px; margin-top: 10px; display: none; }
 
-        /* Panel de Administración Oculto */
+        /* Panel de Administración */
         #admin-panel {
             display: none;
             position: fixed;
@@ -76,83 +74,42 @@
             color: #fff;
             width: 320px;
         }
-        #admin-panel h3 { margin-top: 0; color: #f1c40f; }
 
-        /* Contenedor principal de la máquina 3D */
-        .machine-container {
+        /* Contenedor principal de la máquina 3D estilo del video */
+        .machine-wrapper {
             position: relative;
-            width: 450px;
-            margin-top: 20px;
+            width: 480px;
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
         }
 
-        .printer-header {
+        /* Estructura superior de la impresora 3D */
+        .printer-top-bar {
+            width: 440px;
+            height: 60px;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border-radius: 10px;
+            border: 3px solid #7f8c8d;
             position: relative;
-            width: 420px;
-            height: 70px;
-            background: linear-gradient(135deg, #2c3e50, #1a252f);
-            border-radius: 12px;
-            border: 3px solid #485460;
-            z-index: 20;
+            z-index: 30;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 3px 6px rgba(255,255,255,0.2), 0 8px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .printer-header::before, .printer-header::after {
-            content: '';
-            position: absolute;
-            top: 20px;
-            width: 25px;
-            height: 30px;
-            background: linear-gradient(90deg, #d2d7df, #fff, #8d99ae);
-            border-radius: 4px;
-            border: 1px solid #333;
-        }
-        .printer-header::before { left: -15px; }
-        .printer-header::after { right: -15px; }
-
-        .print-head {
-            width: 90px;
-            height: 45px;
-            background: linear-gradient(180deg, #e74c3c, #c0392b);
-            border-radius: 6px;
-            border: 2px solid #900c3f;
-            position: relative;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-            animation: moveHead 3s ease-in-out infinite alternate;
-        }
-
-        .print-head::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 35px;
-            width: 20px;
-            height: 8px;
-            background: #f1c40f;
-            box-shadow: 0 0 10px #f1c40f;
-        }
-
-        @keyframes moveHead {
-            0% { transform: translateX(-120px); }
-            100% { transform: translateX(120px); }
-        }
-
-        .printer-slot {
+        .printer-slot-line {
             width: 380px;
-            height: 14px;
-            background: #111;
-            border-radius: 0 0 8px 8px;
-            border-top: 3px solid #000;
-            z-index: 25;
+            height: 10px;
+            background: #000;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
         }
 
-        .paper-output-area {
+        /* Área donde descienden las tarjetas impresas */
+        .output-stream {
             position: relative;
             width: 360px;
             display: flex;
@@ -161,165 +118,178 @@
             z-index: 10;
         }
 
-        .printed-card {
-            width: 280px;
-            background: #fffdf5;
-            border: 2px solid #2f3640;
-            border-radius: 4px;
-            padding: 15px;
-            margin-top: -10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        /* Tarjeta individual impresa (Foto + Nombre + Regalo) */
+        .ticket-card {
+            width: 270px;
+            background: #fdfbf7;
+            border: 2px solid #2c3e50;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: -15px; /* Superposición para el efecto continuo */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            animation: printOut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: slideDown 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes printOut {
-            0% { transform: translateY(-80px) scale(0.8); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-60px) scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
         }
 
-        .avatar-box {
-            width: 90px;
-            height: 90px;
-            border: 3px solid #2f3640;
+        .ticket-avatar {
+            width: 85px;
+            height: 85px;
+            border: 2px solid #2c3e50;
             border-radius: 50%;
             overflow: hidden;
-            background: #f5f6fa;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            background: #eee;
+            margin-bottom: 8px;
         }
 
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .user-info { text-align: center; }
-        .username { font-size: 16px; font-weight: 700; color: #2f3640; margin-bottom: 3px; }
-        .gift-text { font-size: 13px; font-weight: 600; color: #e74c3c; background: #fdedec; padding: 3px 10px; border-radius: 12px; display: inline-block; }
+        .ticket-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ticket-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .ticket-gift {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e74c3c;
+            background: #fadbd8;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Validación de Licencia -->
+    <!-- Pantalla de Activación -->
     <div id="auth-overlay">
         <div class="auth-box">
-            <h2>🔐 Activar Software</h2>
-            <p style="font-size: 13px; color: #aaa; margin-bottom: 15px;">Ingresa tu Key de acceso vitalicia (o llave maestra de Admin)</p>
-            <input type="text" id="license-input" placeholder="Ej: KEY-XXXX-XXXX o Admin Key">
-            <button onclick="verificarLicencia()">Verificar Licencia</button>
-            <div id="error-msg" class="error-msg">Clave inválida o no registrada en este PC.</div>
+            <h2>🔑 Activar Sistema</h2>
+            <input type="text" id="license-input" placeholder="Ingresa tu Key o Admin Key">
+            <button onclick="verificarLicencia()">Entrar</button>
+            <div id="error-msg" class="error-msg">Clave incorrecta.</div>
         </div>
     </div>
 
-    <!-- Panel de Administración (Visible solo para ti con 'Carolinaymiguel') -->
+    <!-- Panel Admin -->
     <div id="admin-panel">
-        <h3>⚙️ Panel Admin</h3>
-        <p style="font-size: 12px;">Modo Administrador Activo.</p>
-        <p style="font-size: 11px; word-break: break-all;">HWID de este PC: <span id="current-hwid" style="color: #f1c40f;"></span></p>
-        <button onclick="generarNuevaKeyCliente()" style="background:#27ae60; border:none; color:#fff; padding:8px; width:100%; border-radius:4px; cursor:pointer; font-weight:bold;">Generar Key para Cliente</button>
+        <h3>⚙️ Admin Panel</h3>
+        <p style="font-size: 11px; word-break: break-all;">HWID: <span id="current-hwid" style="color: #f1c40f;"></span></p>
+        <button onclick="generarKey()" style="background:#27ae60; border:none; color:#fff; padding:8px; width:100%; border-radius:4px; cursor:pointer; font-weight:bold;">Crear Key para Cliente</button>
     </div>
 
-    <!-- Máquina 3D Interactiva (TikTok Live Overlay) -->
-    <div class="machine-container">
-        <div class="printer-header">
-            <div class="print-head"></div>
+    <!-- Interfaz de la Máquina 3D -->
+    <div class="machine-wrapper">
+        <div class="printer-top-bar">
+            <div class="printer-slot-line"></div>
         </div>
-        <div class="printer-slot"></div>
         
-        <div class="paper-output-area" id="cards-container">
-            <!-- Las tarjetas aparecerán aquí automáticamente al recibir regalos -->
+        <div class="output-stream" id="cards-container">
+            <!-- Las tarjetas impresas se generan aquí automáticamente -->
         </div>
     </div>
 
     <script>
-        // Simulación de HWID basada en el navegador/PC actual
+        // HWID del dispositivo
         let pcHwid = localStorage.getItem('device_hwid');
         if (!pcHwid) {
-            pcHwid = 'HWID-' + Math.random().toString(36).substring(2, 10).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
+            pcHwid = 'HWID-' + Math.random().toString(36).substring(2, 9).toUpperCase();
             localStorage.setItem('device_hwid', pcHwid);
         }
         document.getElementById('current-hwid').innerText = pcHwid;
 
-        // Comprobar si ya estaba activado en este equipo
         window.onload = function() {
-            let savedKey = localStorage.getItem('app_activated_key');
-            if (savedKey) {
+            let saved = localStorage.getItem('app_activated_key');
+            if (saved) {
                 document.getElementById('auth-overlay').style.display = 'none';
-                if (savedKey === 'Carolinaymiguel') {
+                if (saved === 'Carolinaymiguel') {
                     document.getElementById('admin-panel').style.display = 'block';
                 }
-                iniciarSimuladorLive();
+                iniciarLiveSimulator();
             }
         };
 
         function verificarLicencia() {
-            let ingresada = document.getElementById('license-input').value.trim();
-            let errorDiv = document.getElementById('error-msg');
-
-            // Llave Maestra de Administrador
-            if (ingresada === 'Carolinaymiguel') {
+            let val = document.getElementById('license-input').value.trim();
+            if (val === 'Carolinaymiguel') {
                 localStorage.setItem('app_activated_key', 'Carolinaymiguel');
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
-                iniciarSimuladorLive();
+                iniciarLiveSimulator();
                 return;
             }
 
-            // Validación de Key de cliente generada por HWID
-            let validKeys = JSON.parse(localStorage.getItem('joyasjack_client_keys') || '{}');
-            if (validKeys[ingresada] && validKeys[ingresada] === pcHwid) {
-                localStorage.setItem('app_activated_key', ingresada);
+            let keys = JSON.parse(localStorage.getItem('jj_keys') || '{}');
+            if (keys[val] === pcHwid) {
+                localStorage.setItem('app_activated_key', val);
                 document.getElementById('auth-overlay').style.display = 'none';
-                iniciarSimuladorLive();
+                iniciarLiveSimulator();
             } else {
-                errorDiv.style.display = 'block';
+                document.getElementById('error-msg').style.display = 'block';
             }
         }
 
-        // Función del Admin para generar una Key atada al HWID de un cliente
-        function generarNuevaKeyCliente() {
-            let clientHwidInput = prompt("Ingresa el HWID del PC del cliente:");
-            if (!clientHwidInput) return;
-            
-            let nuevaKey = 'JJ-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-LIVE';
-            let validKeys = JSON.parse(localStorage.getItem('joyasjack_client_keys') || '{}');
-            validKeys[nuevaKey] = clientHwidInput.trim();
-            localStorage.setItem('joyasjack_client_keys', JSON.stringify(validKeys));
-
-            alert("¡Key generada con éxito para el cliente!\n\nKEY: " + nuevaKey + "\n(Válida únicamente para su PC).");
+        function generarKey() {
+            let targetHwid = prompt("Ingresa el HWID del PC del cliente:");
+            if (!targetHwid) return;
+            let newKey = 'JJ-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            let keys = JSON.parse(localStorage.getItem('jj_keys') || '{}');
+            keys[newKey] = targetHwid.trim();
+            localStorage.setItem('jj_keys', JSON.stringify(keys));
+            alert("Key generada con éxito:\n\n" + newKey);
         }
 
-        // Sistema de impresión automática al recibir regalos de TikTok LIVE
-        function agregarTarjetaAlImprimir(username, avatarUrl, giftName) {
+        // Función que imprime la tarjeta en pantalla de forma automática
+        function imprimirTarjeta(username, avatarUrl, giftName) {
             const container = document.getElementById('cards-container');
             const card = document.createElement('div');
-            card.className = 'printed-card';
+            card.className = 'ticket-card';
             
             card.innerHTML = `
-                <div class="avatar-box">
+                <div class="ticket-avatar">
                     <img src="${avatarUrl || 'https://via.placeholder.com/100'}" alt="Avatar">
                 </div>
-                <div class="user-info">
-                    <div class="username">@${username}</div>
-                    <div class="gift-text">🎁 ¡Envió ${giftName}!</div>
-                </div>
+                <div class="ticket-name">@${username}</div>
+                <div class="ticket-gift">🎁 ${giftName}</div>
             `;
 
             container.insertBefore(card, container.firstChild);
+
+            // Mantener máximo 4 tarjetas visibles para un flujo ordenado
             if (container.children.length > 4) {
                 container.removeChild(container.lastChild);
             }
         }
 
-        function iniciarSimuladorLive() {
-            // Aquí se conectará con los eventos de TikTok Live (Regalos automáticos)
+        // Simulador automático de regalos para TikTok Live
+        function iniciarLiveSimulator() {
             setInterval(() => {
-                const usuariosPrueba = ["ClienteVip_925", "JoyasJack_Fan", "Coleccionista_Chile", "CompradorEstelar"];
-                const regalos = ["Rosa x1", "León", "TikTok Universe", "Gorra x5"];
-                let u = usuariosPrueba[Math.floor(Math.random() * usuariosPrueba.length)];
-                let g = regalos[Math.floor(Math.random() * regalos.length)];
-                agregarTarjetaAlImprimir(u, "https://via.placeholder.com/100", g);
-            }, 6000);
+                const users = ["ClienteVip", "JoyasJackFan", "Coleccionista_925", "CompradorEstelar"];
+                const gifts = ["Rosa x1", "León", "TikTok Universe", "Gorra x5"];
+                let u = users[Math.floor(Math.random() * users.length)];
+                let g = gifts[Math.floor(Math.random() * gifts.length)];
+                imprimirTarjeta(u, "https://via.placeholder.com/100", g);
+            }, 5000);
         }
     </script>
 </body>
