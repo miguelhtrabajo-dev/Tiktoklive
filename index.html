@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Live 3D Printer - Joyas Jack</title>
+    <title>TikTok Live 3D Plotter Printer - Joyas Jack</title>
     <style>
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            background-color: #0b0e14; /* Fondo oscuro ideal para OBS / TikTok Studio */
+            background-color: #12161f; /* Fondo de estudio / OBS */
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
         }
 
         /* Pantalla de Activación por Key / Licencia */
@@ -61,7 +61,7 @@
         }
         .error-msg { color: #ff6b6b; font-size: 13px; margin-top: 10px; display: none; }
 
-        /* Panel de Control flotante (Admin / Botón de Prueba para ver la máquina en acción) */
+        /* Panel de Control flotante para simular los 3 regalos */
         #control-panel {
             display: none;
             position: fixed;
@@ -75,131 +75,151 @@
             width: 280px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
-        #control-panel button {
+        .gift-btn {
             width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            background: #27ae60;
+            padding: 8px;
+            margin-top: 6px;
             border: none;
             color: #fff;
             font-weight: bold;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 13px;
         }
+        .btn-rose { background: #e74c3c; }
+        .btn-5c { background: #3498db; }
+        .btn-30c { background: #9b59b6; }
 
-        /* --- MÁQUINA 3D Y RODILLO DE PAPEL CONTINUO (ESTILO FOTO) --- */
-        .printer-scene {
+        /* --- MÁQUINA 3D PLOTTER / GRABADORA (DIÉSEÑO EXACTO DE LA FOTO) --- */
+        .plotter-scene {
             position: relative;
-            width: 480px;
-            margin-top: 15px;
+            width: 520px;
+            height: 650px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            perspective: 1200px;
         }
 
-        /* Estructura superior de la impresora 3D (El pórtico con rieles) */
-        .printer-gantry {
-            position: relative;
-            width: 440px;
-            height: 75px;
-            background: linear-gradient(135deg, #2c3e50, #1a252f);
-            border-radius: 10px;
-            border: 3px solid #7f8c8d;
-            z-index: 50;
+        /* Mesa de fondo simulada */
+        .wooden-table-bg {
+            position: absolute;
+            top: 0; left: -50px; right: -50px; bottom: 0;
+            background: radial-gradient(circle, #3d2817 0%, #1a100a 100%);
+            z-index: 1;
+            border-radius: 15px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        /* Rollo de papel pergamino continuo debajo de la máquina */
+        .continuous-paper-roll {
+            position: absolute;
+            top: 90px;
+            width: 400px;
+            height: 520px;
+            background: #f4edd3; /* Tono pergamino idéntico a la foto */
+            border-left: 4px solid #c8b99c;
+            border-right: 4px solid #c8b99c;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 20px;
+        }
+
+        /* Estructura física 3D de la máquina (Rieles laterales y Puente superior) */
+        .machine-rails-assembly {
+            position: absolute;
+            top: 30px;
+            width: 460px;
+            height: 120px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        /* Riel metálico izquierdo */
+        .rail-left, .rail-right {
+            position: absolute;
+            top: 0;
+            width: 22px;
+            height: 130px;
+            background: linear-gradient(90deg, #7f8c8d, #ecf0f1, #7f8c8d);
+            border-radius: 4px;
+            border: 1px solid #2c3e50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .rail-left { left: 0; }
+        .rail-right { right: 0; }
+
+        /* Puente transversal metálico móvil con efecto grabado láser */
+        .gantry-bridge {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            right: 10px;
+            height: 45px;
+            background: linear-gradient(180deg, #34495e, #1a252f);
+            border-radius: 6px;
+            border: 2px solid #7f8c8d;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.8), inset 0 3px 6px rgba(255,255,255,0.2);
         }
 
-        /* Rieles metálicos laterales */
-        .printer-gantry::before, .printer-gantry::after {
-            content: '';
+        /* Cabezal de grabado láser central que se desliza dibujando */
+        .laser-carriage {
             position: absolute;
-            top: 15px;
-            width: 25px;
-            height: 50px;
-            background: linear-gradient(90deg, #bdc3c7, #fff, #7f8c8d);
-            border-radius: 4px;
-            border: 2px solid #222;
-        }
-        .printer-gantry::before { left: -15px; }
-        .printer-gantry::after { right: -15px; }
-
-        /* Cabezal de impresión deslizante */
-        .printer-nozzle-head {
-            width: 80px;
-            height: 38px;
+            width: 75px;
+            height: 55px;
             background: linear-gradient(180deg, #e74c3c, #c0392b);
-            border-radius: 6px;
-            border: 2px solid #900c3f;
-            position: relative;
-            box-shadow: 0 0 15px #e74c3c;
-            animation: moveHead 2.5s ease-in-out infinite alternate;
+            border-radius: 4px;
+            border: 2px solid #fff;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.9);
+            top: -5px;
+            animation: carveLaser 3s ease-in-out infinite alternate;
         }
 
-        .printer-nozzle-head::after {
+        /* Haz de luz láser apuntando al papel */
+        .laser-carriage::after {
             content: '';
             position: absolute;
-            bottom: -7px;
-            left: 33px;
-            width: 14px;
-            height: 8px;
-            background: #f1c40f;
-            box-shadow: 0 0 10px #f1c40f;
+            bottom: -15px;
+            left: 31px;
+            width: 10px;
+            height: 15px;
+            background: #00ffff;
+            box-shadow: 0 0 15px #00ffff, 0 0 25px #ff00ff;
+            border-radius: 50%;
         }
 
-        @keyframes moveHead {
-            0% { transform: translateX(-120px); }
-            100% { transform: translateX(120px); }
+        @keyframes carveLaser {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(150px); }
         }
 
-        /* Ranura de salida de papel */
-        .printer-slot-exit {
-            width: 380px;
-            height: 12px;
-            background: #000;
-            border-radius: 0 0 6px 6px;
-            z-index: 55;
-            box-shadow: inset 0 3px 5px rgba(0,0,0,0.9);
-            border-top: 3px solid #111;
-        }
-
-        /* Rollo de papel continuo (Hoja pergamino idéntica a la imagen) */
-        .paper-roll-sheet {
-            position: relative;
-            width: 360px;
-            background: #f4edd3; /* Tono papel pergamino realista */
-            border-left: 3px solid #c8b99c;
-            border-right: 3px solid #c8b99c;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px 0 30px 0;
-            z-index: 10;
-            min-height: 150px;
-        }
-
-        /* Tarjeta / Recuadro impreso en la hoja */
-        .printed-ticket-box {
-            width: 300px;
+        /* Tarjeta / Recuadro impreso en el papel (estilo técnico de la foto) */
+        .drawn-ticket-card {
+            width: 330px;
             background: #ffffff;
-            border: 2px solid #2f3640;
-            border-radius: 6px;
-            padding: 15px;
-            margin-top: 15px;
+            border: 3px solid #2c3e50;
+            border-radius: 4px;
+            padding: 14px;
+            margin-bottom: 15px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            animation: printCardAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            z-index: 10;
+            animation: dropTicket 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes printCardAnim {
+        @keyframes dropTicket {
             0% {
-                transform: translateY(-50px) scale(0.9);
+                transform: translateY(-80px) scale(0.9);
                 opacity: 0;
             }
             100% {
@@ -208,39 +228,39 @@
             }
         }
 
-        .ticket-avatar-circle {
+        .avatar-frame-box {
             width: 90px;
             height: 90px;
-            border: 3px solid #2f3640;
+            border: 3px solid #2c3e50;
             border-radius: 50%;
             overflow: hidden;
             background: #ddd;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            margin-bottom: 8px;
         }
 
-        .ticket-avatar-circle img {
+        .avatar-frame-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .ticket-username-text {
+        .user-name-label {
             font-size: 16px;
             font-weight: 700;
-            color: #2f3640;
-            margin-bottom: 5px;
+            color: #2c3e50;
+            margin-bottom: 4px;
             text-align: center;
         }
 
-        .ticket-gift-tag {
-            font-size: 13px;
-            font-weight: 600;
-            color: #c0392b;
-            background: #fadbd8;
+        .gift-info-badge {
+            font-size: 12px;
+            font-weight: 700;
             padding: 3px 10px;
             border-radius: 10px;
         }
+        .badge-rose { background: #fadbd8; color: #c0392b; }
+        .badge-5c { background: #ebf5fb; color: #2980b9; }
+        .badge-30c { background: #f4ecf7; color: #8e44ad; }
     </style>
 </head>
 <body>
@@ -248,37 +268,46 @@
     <!-- Pantalla de Activación por Key / Licencia -->
     <div id="auth-overlay">
         <div class="auth-box">
-            <h2>🔑 Activar Sistema</h2>
-            <p style="font-size: 12px; color: #a0aec0; margin-bottom: 15px;">Ingresa tu Key vitalicia o Admin Key</p>
+            <h2>🔑 Activar Sistema 3D</h2>
+            <p style="font-size: 12px; color: #a0aec0; margin-bottom: 15px;">Ingresa tu Key o Admin Key</p>
             <input type="text" id="license-input" placeholder="Ingresa tu Clave">
             <button onclick="verificarLicencia()">Activar</button>
             <div id="error-msg" class="error-msg">Clave incorrecta o no válida para este PC.</div>
         </div>
     </div>
 
-    <!-- Panel de Control y Botón de Prueba -->
+    <!-- Panel de Control con los 3 Regalos -->
     <div id="control-panel">
-        <h3 style="margin-top:0; color:#f1c40f; font-size:15px;">⚙️ Panel de Control</h3>
-        <p style="font-size: 11px; margin-bottom:5px; word-break: break-all;">HWID: <span id="current-hwid" style="color: #f1c40f;"></span></p>
-        <button onclick="probarImpresionManual()" style="background:#27ae60;">🖨️ Botón de Prueba (Simular Regalo)</button>
-        <button onclick="generarKey()" style="background:#2980b9;">🔑 Crear Key para Cliente</button>
+        <h3 style="margin-top:0; color:#f1c40f; font-size:15px;">⚙️ Simular Regalos (Live)</h3>
+        <p style="font-size: 10px; margin-bottom:5px; word-break: break-all;">HWID: <span id="current-hwid" style="color: #f1c40f;"></span></p>
+        
+        <button class="gift-btn btn-rose" onclick="simularRegalo('Rosa', '1 Coin', 'badge-rose', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150')">🌹 Enviar Rosa (1 Coin)</button>
+        <button class="gift-btn btn-5c" onclick="simularRegalo('Donut', '5 Coins', 'badge-5c', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150')">🍩 Regalo 5 Coins</button>
+        <button class="gift-btn btn-30c" onclick="simularRegalo('Perfume', '30 Coins', 'badge-30c', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150')">💎 Regalo 30 Coins</button>
+        
+        <button class="gift-btn" style="background:#2980b9; margin-top:12px;" onclick="generarKey()">🔑 Crear Key Cliente</button>
     </div>
 
-    <!-- Estructura Visual de la Máquina 3D y Rollo de Papel -->
-    <div class="printer-scene">
-        <div class="printer-gantry">
-            <div class="printer-nozzle-head"></div>
+    <!-- Escenario Visual 3D Exacto al de la Foto -->
+    <div class="plotter-scene">
+        <div class="wooden-table-bg"></div>
+
+        <!-- Máquina Plotter con rieles y cabezal láser -->
+        <div class="machine-rails-assembly">
+            <div class="rail-left"></div>
+            <div class="rail-right"></div>
+            <div class="gantry-bridge">
+                <div class="laser-carriage"></div>
+            </div>
         </div>
-        <div class="printer-slot-exit"></div>
-        
-        <!-- Rollo de papel continuo donde se imprimen los perfiles -->
-        <div class="paper-roll-sheet" id="cards-container">
-            <!-- Aquí aparecerán los perfiles impresos -->
+
+        <!-- Rollo de papel continuo pergamino -->
+        <div class="continuous-paper-roll" id="cards-container">
+            <!-- Los perfiles impresos aparecerán aquí ordenadamente -->
         </div>
     </div>
 
     <script>
-        // Gestión del HWID de la PC
         let pcHwid = localStorage.getItem('device_hwid');
         if (!pcHwid) {
             pcHwid = 'HWID-' + Math.random().toString(36).substring(2, 9).toUpperCase();
@@ -327,50 +356,35 @@
             alert("Key generada con éxito:\n\n" + newKey);
         }
 
-        // Función principal para imprimir el perfil en la hoja de papel continuo
-        function imprimirEnPapel(username, avatarUrl, giftName) {
+        // Función que graba y dibuja el perfil en el papel al recibir un regalo
+        function imprimirPerfilEnPapel(username, giftName, badgeClass, avatarUrl) {
             const container = document.getElementById('cards-container');
             const card = document.createElement('div');
-            card.className = 'printed-ticket-box';
+            card.className = 'drawn-ticket-card';
             
             card.innerHTML = `
-                <div class="ticket-avatar-circle">
-                    <img src="${avatarUrl || 'https://via.placeholder.com/100'}" alt="Avatar">
+                <div class="avatar-frame-box">
+                    <img src="${avatarUrl}" alt="Avatar">
                 </div>
-                <div class="ticket-username-text">@${username}</div>
-                <div class="ticket-gift-tag">🎁 ¡Envió ${giftName}!</div>
+                <div class="user-name-label">@${username}</div>
+                <div class="gift-info-badge ${badgeClass}">🎁 ${giftName}</div>
             `;
 
-            // Inserta el nuevo ticket arriba en el rollo de papel (simulando que sale de la ranura)
             container.insertBefore(card, container.firstChild);
 
-            // Mantener máximo 4 tarjetas visibles en el rollo para mantener el diseño limpio
-            if (container.children.length > 4) {
+            if (container.children.length > 3) {
                 container.removeChild(container.lastChild);
             }
         }
 
-        // --- BOTÓN DE PRUEBA (Para ver la máquina funcionando sin estar en Live) ---
-        function probarImpresionManual() {
-            const nombresPrueba = ["ClienteVip_925", "JoyasJack_Fan", "ColeccionistaChile", "CompradorEstelar"];
-            const regalosPrueba = ["Rosa x1", "León 🦁", "TikTok Universe 🌌", "Gorra x5"];
-            const avataresPrueba = [
-                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
-                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150"
-            ];
-
-            let randomUser = nombresPrueba[Math.floor(Math.random() * nombresPrueba.length)];
-            let randomGift = regalosPrueba[Math.floor(Math.random() * regalosPrueba.length)];
-            let randomAvatar = avataresPrueba[Math.floor(Math.random() * avataresPrueba.length)];
-
-            imprimirEnPapel(randomUser, randomAvatar, randomGift);
+        function simularRegalo(giftName, cost, badgeClass, avatar) {
+            const nombres = ["ClienteVip_925", "JoyasJack_Fan", "ColeccionistaChile", "CompradorEstelar", "Mariana_Silver"];
+            let randomUser = nombres[Math.floor(Math.random() * nombres.length)];
+            imprimirPerfilEnPapel(randomUser, `${giftName} (${cost})`, badgeClass, avatar);
         }
 
         function iniciarModoLive() {
-            console.log("Sistema configurado. En espera de conexión con TikTok LIVE.");
-            // Aquí se conectará con el WebSocket de tu directo de TikTok cuando estés transmitiendo.
+            console.log("Sistema 3D Plotter listo. Esperando eventos de TikTok LIVE.");
         }
     </script>
 </body>
