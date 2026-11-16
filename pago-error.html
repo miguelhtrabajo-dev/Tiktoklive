@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago No Procesado | Joyas Jack Navidad 925</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        emeraldDeep: '#041f18',
+                        emeraldCard: '#082e24',
+                        emeraldBorder: '#134e3e',
+                        rubyNav: '#991b1b',
+                        rubyBright: '#dc2626',
+                        champagne: '#e5c158',
+                        champagneLight: '#f6e29f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #041f18;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .font-display { font-family: 'Cinzel', serif; }
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #f6e29f 0%, #d4af37 50%, #f6e29f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gold-metallic {
+            background: linear-gradient(135deg, #d4af37 0%, #f6e29f 50%, #b48a1e 100%);
+        }
+        .glass-card {
+            background: rgba(8, 46, 36, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(220, 38, 38, 0.45);
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-xl glass-card rounded-3xl p-6 sm:p-10 shadow-2xl text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-full bg-red-500/20 border-2 border-red-400 text-red-300 flex items-center justify-center text-3xl shadow-lg">
+            ✕
+        </div>
+
+        <div>
+            <span class="text-xs uppercase tracking-[0.25em] text-champagne font-bold">Joyas Jack • Navidad Plata 925</span>
+            <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-white mt-1">No Pudimos Procesar tu Pago</h1>
+            <p id="mensajeErrorCliente" class="text-xs sm:text-sm text-slate-300 mt-2">
+                La transacción en Flow.cl fue cancelada, rechazada por el banco o superó el tiempo de espera. <strong>No se realizó ningún cargo ni se emitieron folios.</strong>
+            </p>
+        </div>
+
+        <!-- Detalle del intento fallido (si existía en sesión) -->
+        <div id="detalleOrdenFallida" class="hidden p-4 rounded-2xl bg-emeraldDeep border border-red-500/30 text-left space-y-1.5">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-2 mb-2">
+                <span>Intento de Orden: <strong id="ordenFallidaId" class="text-white">JJ-1001</strong></span>
+                <span class="px-2 py-0.5 rounded bg-red-950 text-red-300 font-bold text-[10px] uppercase">Pago No Completado</span>
+            </div>
+            <div class="text-xs text-slate-300">Pack seleccionado: <strong id="packFallidoNombre" class="text-champagneLight">Pack Stickers</strong></div>
+            <div class="text-xs text-slate-300">Monto: <strong id="montoFallido" class="text-white">$0 CLP</strong></div>
+        </div>
+
+        <!-- Motivos comunes -->
+        <div class="p-4 rounded-2xl bg-black/30 border border-emeraldBorder text-left text-xs text-slate-300 space-y-1.5">
+            <div class="font-bold text-champagneLight uppercase tracking-wider text-[11px] mb-1">¿Por qué puede ocurrir esto?</div>
+            <p>• Cancelaste la ventana de pago antes de finalizar en Webpay / Flow.</p>
+            <p>• Límite diario de transferencia o saldo insuficiente en la tarjeta.</p>
+            <p>• Bloqueo preventivo de seguridad de tu banco (puedes reintentar con otro medio de pago).</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <a id="btnReintentarPago" href="index.html#packs" class="flex-1 py-3.5 px-4 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-xs uppercase tracking-wider text-center hover:brightness-110 transition shadow-lg">
+                🔄 Reintentar Compra
+            </a>
+            <a href="https://wa.me/56945281442?text=Hola%20Joyas%20Jack,%20tuve%20un%20problema%20al%20intentar%20pagar%20mi%20pack%20de%20stickers%20en%20Flow" target="_blank" rel="noopener noreferrer" class="flex-1 py-3.5 px-4 rounded-xl bg-emerald-700/40 border border-emerald-400/40 text-emerald-200 font-bold text-xs uppercase tracking-wider text-center hover:bg-emerald-700/60 transition">
+                💬 Ayuda por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const STORAGE_KEY_PENDING = 'joyas_jack_pending_flow_tx_v1';
+
+            function initPagoError() {
+                try {
+                    const pendingRaw = localStorage.getItem(STORAGE_KEY_PENDING);
+                    if (pendingRaw) {
+                        const pending = JSON.parse(pendingRaw);
+                        document.getElementById('ordenFallidaId').textContent = pending.orderId || 'N/A';
+                        document.getElementById('packFallidoNombre').textContent = pending.packName || 'Pack Stickers Digitales';
+                        document.getElementById('montoFallido').textContent = `$${Number(pending.amount || 0).toLocaleString('es-CL')} CLP`;
+                        document.getElementById('detalleOrdenFallida').classList.remove('hidden');
+
+                        // Limpiar la orden pendiente para evitar que quede retenida
+                        localStorage.removeItem(STORAGE_KEY_PENDING);
+                    }
+                } catch (e) {
+                    console.warn('Error leyendo datos de intento fallido');
+                }
+            }
+
+            window.onload = initPagoError;
+        })();
+    </script>
+</body>
+</html>
