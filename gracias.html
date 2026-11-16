@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¡Pago Confirmado! Tus Stickers y Folios | Joyas Jack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top, #182238 0%, #090d16 70%);
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+    .font-luxury { font-family: 'Cinzel', serif; }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4">
+
+  <div class="max-w-xl w-full bg-slate-900/90 border border-amber-400/40 rounded-3xl p-6 sm:p-10 shadow-2xl text-center">
+    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-3xl">
+      ✅
+    </div>
+    <p class="text-xs uppercase tracking-[0.25em] text-amber-300 font-bold mb-1">Joyas Jack · Navidad 925</p>
+    <h1 class="font-luxury text-2xl sm:text-3xl font-extrabold text-white mb-2">¡Compra Confirmada con Éxito!</h1>
+    <p id="saludo-cliente" class="text-sm text-slate-300 mb-6">
+      Tus stickers digitales están listos y tus folios de cortesía quedaron registrados en el sistema.
+    </p>
+
+    <!-- Caja de Folios -->
+    <div class="bg-slate-950/90 border border-amber-400/40 rounded-2xl p-5 mb-6">
+      <div class="flex justify-between items-center text-xs text-slate-400 mb-3 border-b border-slate-800 pb-2">
+        <span>Orden: <strong id="orden-id" class="text-white">JJ-NAV-2026</strong></span>
+        <span id="pack-nombre" class="text-amber-300 font-semibold">Pack Digital</span>
+      </div>
+      <p class="text-xs uppercase tracking-widest text-slate-400 mb-3">Tus Folios de Cortesía Asignados:</p>
+      <div id="contenedor-folios" class="flex flex-wrap justify-center gap-2"></div>
+    </div>
+
+    <!-- Descarga de Stickers -->
+    <div class="space-y-3 mb-6">
+      <button onclick="descargarStickers()" class="w-full py-4 px-6 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-extrabold text-sm tracking-wide shadow-lg transition transform hover:-translate-y-0.5 cursor-pointer">
+        📥 DESCARGAR MIS STICKERS DIGITALES (PNG)
+      </button>
+      <p class="text-[11px] text-slate-400">
+        Toma una captura de pantalla de esta ventana como respaldo adicional. También podrás consultar tus números cuando quieras en la web principal.
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center pt-4 border-t border-slate-800">
+      <a href="index.html" class="px-5 py-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition">
+        ← Volver a Joyas Jack
+      </a>
+      <a id="btn-wa-respaldo" href="https://wa.me/56945281442" target="_blank" class="px-5 py-2.5 rounded-full bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600/30 text-xs font-bold text-emerald-300 transition">
+        💬 Enviar respaldo a mi WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'joyas_jack_navidad_2026_v1';
+    const PENDING_KEY = 'joyas_jack_pending_order';
+    let compraConfirmada = null;
+
+    function generarFoliosUnicos(cantidad, existentesSet) {
+      const disponibles = [];
+      for (let i = 1; i <= 1500; i++) {
+        const f = String(i).padStart(4, '0');
+        if (!existentesSet.has(f)) disponibles.push(f);
+      }
+      for (let i = disponibles.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [disponibles[i], disponibles[j]] = [disponibles[j], disponibles[i]];
+      }
+      return disponibles.slice(0, cantidad);
+    }
+
+    function procesarRetorno() {
+      const rawState = localStorage.getItem(STORAGE_KEY);
+      const state = rawState ? JSON.parse(rawState) : { orders: [], closed: false };
+      const pendingRaw = localStorage.getItem(PENDING_KEY);
+
+      if (pendingRaw) {
+        const pending = JSON.parse(pendingRaw);
+        const yaExiste = state.orders.find(o => o.id === pending.id);
+
+        if (!yaExiste) {
+          const usados = new Set();
+          state.orders.forEach(o => o.folios.forEach(f => usados.add(f)));
+          const foliosAsignados = generarFoliosUnicos(pending.qty, usados);
+
+          compraConfirmada = {
+            ...pending,
+            status: 'PAGADO',
+            folios: foliosAsignados,
+            date: new Date().toLocaleString('es-CL')
+          };
+
+          state.orders.unshift(compraConfirmada);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } else {
+          compraConfirmada = yaExiste;
+        }
+        localStorage.removeItem(PENDING_KEY);
+      } else if (state.orders.length > 0) {
+        compraConfirmada = state.orders[0];
+      }
+
+      if (compraConfirmada) {
+        document.getElementById('saludo-cliente').innerHTML =
+          `¡Gracias <strong class="text-white">${compraConfirmada.name}</strong>! Tus stickers están listos y tus folios quedaron registrados bajo tu RUT <strong class="text-amber-300">${compraConfirmada.rut}</strong>.`;
+        document.getElementById('orden-id').textContent = compraConfirmada.id;
+        document.getElementById('pack-nombre').textContent = compraConfirmada.packTitle;
+
+        const cont = document.getElementById('contenedor-folios');
+        cont.innerHTML = compraConfirmada.folios.map(f =>
+          `<span class="px-3.5 py-1.5 rounded-xl bg-amber-400/15 border border-amber-400 text-amber-300 font-extrabold text-base tracking-wider">#${f}</span>`
+        ).join('');
+
+        const msgWa = encodeURIComponent(
+          `Hola Joyas Jack! Acabo de comprar mi ${compraConfirmada.packTitle} (Orden ${compraConfirmada.id}). Mis folios son: ${compraConfirmada.folios.map(f => '#' + f).join(', ')}`
+        );
+        document.getElementById('btn-wa-respaldo').href = `https://wa.me/56945281442?text=${msgWa}`;
+      } else {
+        document.getElementById('contenedor-folios').innerHTML =
+          `<span class="text-xs text-slate-400">No se detectó una orden reciente en este navegador. Usa el buscador en la página principal con tu RUT.</span>`;
+      }
+    }
+
+    function descargarStickers() {
+      const qty = compraConfirmada ? compraConfirmada.qty : 1;
+      for (let i = 1; i <= qty; i++) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = 800;
+        const ctx = canvas.getContext('2d');
+
+        const grad = ctx.createRadialGradient(400, 400, 60, 400, 400, 390);
+        grad.addColorStop(0, '#1e293b');
+        grad.addColorStop(1, '#090d16');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(400, 400, 380, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = '#facc15';
+        ctx.stroke();
+
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 34px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('JOYAS JACK · PLATA 925', 400, 260);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 54px sans-serif';
+        ctx.fillText(`STICKER NAVIDAD #${i}`, 400, 390);
+
+        ctx.fillStyle = '#f87171';
+        ctx.font = 'bold 28px sans-serif';
+        ctx.fillText('EDICIÓN COLECCIONABLE 2026', 400, 470);
+
+        if (compraConfirmada && compraConfirmada.folios[i - 1]) {
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = 'bold 24px sans-serif';
+          ctx.fillText(`FOLIO CORTESÍA: #${compraConfirmada.folios[i - 1]}`, 400, 560);
+        }
+
+        const link = document.createElement('a');
+        link.download = `Sticker-Navidad-JoyasJack-${i}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }
+    }
+
+    procesarRetorno();
+  </script>
+</body>
+</html>
