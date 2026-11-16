@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <!-- Header Minimalista Estilo Tío Tito -->
+    <!-- Header Minimalista -->
     <header class="sticky top-0 z-30 bg-emeraldDeep/90 backdrop-blur-md border-b border-champagne/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
             <a href="#" class="flex items-center gap-3 group">
@@ -536,36 +536,6 @@
                     </button>
                 </form>
             </div>
-
-            <!-- Paso de Compra Confirmada al volver de Flow (?pago=ok) -->
-            <div id="checkoutStepSuccess" class="hidden p-6 space-y-4 max-h-[82vh] overflow-y-auto">
-                <div class="text-center">
-                    <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-2xl mb-2">✓</div>
-                    <h4 class="font-display text-2xl font-extrabold text-gold-gradient">¡Pago Confirmado!</h4>
-                    <p id="successOrderMeta" class="text-xs text-slate-300 mt-1">Orden #JJ-1004 • Comprobante emitido</p>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-champagneLight">Tus Folios de Cortesía Asignados:</span>
-                        <button onclick="copyLatestFolios()" class="text-xs text-emerald-300 hover:underline font-semibold cursor-pointer">Copiar folios</button>
-                    </div>
-                    <div id="assignedFoliosContainer" class="flex flex-wrap gap-2"></div>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-emeraldDeep/70 border border-emeraldBorder">
-                    <div class="text-xs font-bold uppercase tracking-wider text-white mb-2.5">
-                        📥 Descarga tus Stickers Coleccionables (PNG Alta Resolución):
-                    </div>
-                    <div id="downloadStickersList" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
-                </div>
-
-                <div class="flex gap-2.5">
-                    <button onclick="closeCheckoutModal()" class="flex-1 py-3 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-xs uppercase tracking-wider cursor-pointer">
-                        Listo, Volver a la Web
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -802,14 +772,14 @@
             'use strict';
 
             // =========================================================================
-            // 1. LINKS REALES DE PAGO EN FLOW.CL + SEGURIDAD OTP EMAILJS
+            // 1. BOTONES DE PAGO REALES DE FLOW.CL + SEGURIDAD OTP EMAILJS
             // =========================================================================
             const FLOW_PAYMENT_LINKS = {
-                'pack-1': 'https://www.flow.cl/uri/Ha8t0Vgnt',
-                'pack-2': 'https://www.flow.cl/uri/f9w1N9KZP',
-                'pack-3': 'https://www.flow.cl/uri/c3X0PL5BG',
-                'pack-5': 'https://www.flow.cl/uri/5sXNjSBJz',
-                'pack-10': 'https://www.flow.cl/uri/vy0rNR4ac'
+                'pack-1': 'https://www.flow.cl/btn.php?token=vdbd7bab380a2192cf58f31df1857bb819ab9c38',
+                'pack-2': 'https://www.flow.cl/btn.php?token=gdf6c0b4b20c3760f71e925fe54c9a5ff0f1c729',
+                'pack-3': 'https://www.flow.cl/btn.php?token=dae6d45a6697bb1d3fd8441440992036be9ffaf5',
+                'pack-5': 'https://www.flow.cl/btn.php?token=pb4d6b06430a93a9bf8b1ccf169b358537040512',
+                'pack-10': 'https://www.flow.cl/btn.php?token=t0fd06e7715a318f13cf09dc46a9cb7f03dd91da'
             };
 
             const ADMIN_SECURITY_CONFIG = {
@@ -903,7 +873,6 @@
             let campaignClosed = false;
             let winners = [];
             let selectedPack = null;
-            let latestCreatedOrder = null;
 
             function initApp() {
                 try {
@@ -933,68 +902,8 @@
                 updateStockAndStatsUI();
                 applyCampaignStatusUI();
                 renderPublicWinners();
-                checkFlowReturnConfirmation();
                 startCountdown();
                 initSnowCanvas();
-            }
-
-            // Verifica si el cliente regresó desde Flow.cl tras completar el pago (?pago=ok)
-            function checkFlowReturnConfirmation() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const pagoStatus = urlParams.get('pago');
-                const pendingRaw = localStorage.getItem(STORAGE_KEY_PENDING);
-
-                if (pagoStatus === 'ok' && pendingRaw) {
-                    try {
-                        const pending = JSON.parse(pendingRaw);
-                        // Evitar duplicados si recarga la página
-                        if (!orders.some(o => o.orderId === pending.orderId)) {
-                            const assignedFolios = generateUniqueFolios(pending.foliosCount);
-                            const completedOrder = {
-                                ...pending,
-                                folios: assignedFolios
-                            };
-                            orders.unshift(completedOrder);
-                            latestCreatedOrder = completedOrder;
-                            saveState();
-                            updateStockAndStatsUI();
-                            showConfirmedOrderModal(completedOrder);
-                        }
-                    } catch (err) {
-                        showToast(err.message);
-                    } finally {
-                        localStorage.removeItem(STORAGE_KEY_PENDING);
-                        window.history.replaceState({}, document.title, window.location.pathname);
-                    }
-                }
-            }
-
-            function showConfirmedOrderModal(order) {
-                document.getElementById('checkoutPackTitle').textContent = order.packName;
-                document.getElementById('checkoutStepForm').classList.add('hidden');
-                document.getElementById('successOrderMeta').textContent = `Orden #${order.orderId} • Pagado vía Flow.cl • RUT ${order.rut}`;
-
-                document.getElementById('assignedFoliosContainer').innerHTML = order.folios.map(f => `
-                    <span class="px-3 py-1.5 rounded-xl bg-gold-metallic text-emeraldDeep font-display font-extrabold text-sm shadow">
-                        #${f}
-                    </span>
-                `).join('');
-
-                const dlContainer = document.getElementById('downloadStickersList');
-                let dlHtml = '';
-                for (let i = 1; i <= order.stickersCount; i++) {
-                    dlHtml += `
-                        <button type="button" onclick="downloadStickerPNG('${order.orderId}', ${i}, '${order.stickerTitle}', '${order.packId}')" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/35 text-xs text-white font-semibold transition cursor-pointer">
-                            <span>🎄 Sticker #${i} (${order.stickerTitle})</span>
-                            <span class="text-champagneLight font-bold">PNG ↓</span>
-                        </button>
-                    `;
-                }
-                dlContainer.innerHTML = dlHtml;
-
-                document.getElementById('checkoutStepSuccess').classList.remove('hidden');
-                document.getElementById('checkoutModal').classList.remove('hidden');
-                showToast('¡Pago aprobado en Flow.cl! Descarga tus stickers abajo.');
             }
 
             function syncPoolTexts() {
@@ -1116,32 +1025,6 @@
                 }
             }
 
-            function generateUniqueFolios(count) {
-                const usedSet = new Set();
-                orders.forEach(o => o.folios.forEach(f => usedSet.add(f)));
-
-                const padLen = Math.max(4, String(totalPoolFolios).length);
-                const available = [];
-                for (let i = 1; i <= totalPoolFolios; i++) {
-                    const formatted = String(i).padStart(padLen, '0');
-                    if (!usedSet.has(formatted)) {
-                        available.push(formatted);
-                    }
-                }
-
-                if (available.length < count) {
-                    throw new Error('No quedan suficientes folios disponibles en el stock de esta campaña.');
-                }
-
-                const assigned = [];
-                for (let i = 0; i < count; i++) {
-                    const randIdx = Math.floor(Math.random() * available.length);
-                    assigned.push(available[randIdx]);
-                    available.splice(randIdx, 1);
-                }
-                return assigned.sort();
-            }
-
             function formatRutInput(input) {
                 let val = input.value.replace(/[^0-9kK]/g, '').toUpperCase();
                 if (val.length > 1) {
@@ -1185,7 +1068,6 @@
 
                 document.getElementById('checkoutErrorMsg').classList.add('hidden');
                 document.getElementById('checkoutStepForm').classList.remove('hidden');
-                document.getElementById('checkoutStepSuccess').classList.add('hidden');
                 document.getElementById('checkoutModal').classList.remove('hidden');
             }
 
@@ -1220,7 +1102,7 @@
                 const dateStr = now.toLocaleDateString('es-CL') + ' ' + now.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
                 const orderNumber = `JJ-${1001 + orders.length}`;
 
-                // Guardar orden pendiente antes de salir a Flow.cl
+                // Guardar orden pendiente para que pago-ok.html la confirme y asigne folios al volver de Flow
                 const pendingTx = {
                     orderId: orderNumber,
                     date: dateStr,
@@ -1299,18 +1181,6 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 showToast(`Descargando Sticker #${index} en PNG...`);
-            }
-
-            function copyLatestFolios() {
-                if (!latestCreatedOrder) return;
-                const text = `Mis folios Joyas Jack (${latestCreatedOrder.orderId}): ${latestCreatedOrder.folios.map(f => '#' + f).join(', ')}`;
-                const temp = document.createElement('textarea');
-                temp.value = text;
-                document.body.appendChild(temp);
-                temp.select();
-                document.execCommand('copy');
-                document.body.removeChild(temp);
-                showToast('Folios copiados al portapapeles.');
             }
 
             function handleTicketSearch(e, inputId, resultsId) {
@@ -1826,7 +1696,7 @@
                 animateSnow();
             }
 
-            // Exponer funciones al ámbito global para los botones HTML
+            // Exponer funciones al ámbito global
             window.openBasesModal = openBasesModal;
             window.closeBasesModal = closeBasesModal;
             window.openPrivacyModal = openPrivacyModal;
@@ -1837,7 +1707,6 @@
             window.formatRutInput = formatRutInput;
             window.redirectToFlowPayment = redirectToFlowPayment;
             window.downloadStickerPNG = downloadStickerPNG;
-            window.copyLatestFolios = copyLatestFolios;
             window.handleTicketSearch = handleTicketSearch;
             window.toggleFloatingWidget = toggleFloatingWidget;
             window.openAdminModal = openAdminModal;
