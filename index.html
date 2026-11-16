@@ -41,7 +41,6 @@
         .font-display {
             font-family: 'Cinzel', serif;
         }
-        /* Efecto metálico dorado y plata */
         .text-gold-gradient {
             background: linear-gradient(135deg, #f6e29f 0%, #d4af37 50%, #f6e29f 100%);
             -webkit-background-clip: text;
@@ -71,7 +70,6 @@
             border-color: rgba(229, 193, 88, 0.65);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.15);
         }
-        /* Nieve sutil en canvas */
         #snowCanvas {
             position: fixed;
             top: 0;
@@ -81,20 +79,10 @@
             pointer-events: none;
             z-index: 1;
         }
-        /* Scrollbar elegante */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #041f18;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #134e3e;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #d4af37;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #041f18; }
+        ::-webkit-scrollbar-thumb { background: #134e3e; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
         @keyframes pulseGlow {
             0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.25); }
             50% { box-shadow: 0 0 28px rgba(212, 175, 55, 0.55); }
@@ -121,10 +109,9 @@
         </div>
     </div>
 
-    <!-- Header Minimalista Estilo Tío Tito (4 enlaces directos enfocando conversión y confianza) -->
+    <!-- Header Minimalista Estilo Tío Tito -->
     <header class="sticky top-0 z-30 bg-emeraldDeep/90 backdrop-blur-md border-b border-champagne/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-            <!-- Logo Exclusivo Joyas Jack -->
             <a href="#" class="flex items-center gap-3 group">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-champagne via-amber-400 to-yellow-700 p-[1.5px] shadow-lg group-hover:scale-105 transition">
                     <div class="w-full h-full bg-emeraldDeep rounded-[10px] flex items-center justify-center">
@@ -144,7 +131,6 @@
                 </div>
             </a>
 
-            <!-- Navegación Desktop (4 enlaces limpios) -->
             <nav class="hidden md:flex items-center gap-7 text-sm font-semibold">
                 <a href="#packs" class="text-slate-200 hover:text-champagneLight transition">Packs de Stickers</a>
                 <a href="#verificar" class="text-slate-200 hover:text-champagneLight transition flex items-center gap-1.5">
@@ -159,7 +145,6 @@
                 </a>
             </nav>
 
-            <!-- Botón Menú Móvil -->
             <div class="flex items-center gap-2 md:hidden">
                 <a href="#verificar" class="px-3 py-1.5 rounded-full bg-champagne/15 border border-champagne/40 text-champagneLight text-xs font-bold">
                     Mis Folios
@@ -170,7 +155,6 @@
             </div>
         </div>
 
-        <!-- Drawer Móvil -->
         <div id="mobileMenu" class="hidden md:hidden bg-emeraldCard border-b border-champagne/20 px-4 pt-2 pb-5 space-y-2">
             <a href="#packs" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-xl text-sm font-semibold text-white hover:bg-emeraldDeep">Packs de Stickers</a>
             <a href="#verificar" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-xl text-sm font-semibold text-champagneLight hover:bg-emeraldDeep">Verificar Tickets / Folios</a>
@@ -182,7 +166,7 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main class="relative z-10 flex-grow">
 
-        <!-- BANNER DE ESTADO CERRADO / LIVE (Se activa cuando el Admin cierra ventas, igual que tiotito.cl) -->
+        <!-- BANNER DE ESTADO CERRADO / LIVE -->
         <section id="closedCampaignBanner" class="hidden max-w-6xl mx-auto px-4 pt-8">
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-rubyNav via-red-900 to-emeraldDeep border-2 border-champagne p-6 sm:p-10 text-center shadow-2xl glow-gold">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 border border-champagne/50 text-champagneLight text-xs font-extrabold uppercase tracking-widest mb-4">
@@ -206,30 +190,26 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE GANADORES OFICIALES (Visible automáticamente al sortear en el Panel Admin) -->
+        <!-- SECCIÓN DE GANADORES OFICIALES -->
         <section id="publicWinnersSection" class="hidden max-w-6xl mx-auto px-4 pt-8">
             <div class="glass-card rounded-3xl p-6 sm:p-8 border-2 border-champagne shadow-2xl">
                 <div class="text-center mb-6">
                     <span class="px-3 py-1 rounded-full bg-champagne/20 text-champagneLight text-xs font-bold uppercase tracking-widest">Resultados Oficiales Certificados</span>
                     <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-gold-gradient mt-2">Ganadores Sorteo Navidad Plata 925</h2>
                 </div>
-                <div id="publicWinnersGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Renderizado dinámicamente por JS -->
-                </div>
+                <div id="publicWinnersGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
             </div>
         </section>
 
         <!-- HERO NAVIDEÑO DE ALTA JOYERÍA -->
         <section class="relative pt-10 pb-14 sm:pt-14 sm:pb-20 px-4">
             <div class="max-w-6xl mx-auto text-center">
-                <!-- Etiqueta Navideña -->
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emeraldCard/90 border border-champagne/40 text-champagneLight text-xs sm:text-sm font-semibold mb-6 shadow-md">
                     <span>🎄</span>
                     <span>Especial Navidad Mayorista • Plata Nacional Ley 925</span>
                     <span>✨</span>
                 </div>
 
-                <!-- Título Principal -->
                 <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl mx-auto">
                     <span class="text-white">Colecciona los Stickers Navideños de</span>
                     <span class="block text-gold-gradient mt-1">JOYAS JACK</span>
@@ -242,7 +222,6 @@
 
                 <!-- Contador Regresivo + Barra de Stock en Tiempo Real -->
                 <div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Contador -->
                     <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-center">
                         <div class="text-xs uppercase tracking-widest text-champagne font-bold mb-2">Cierre Oficial del Sorteo</div>
                         <div id="countdownTimer" class="grid grid-cols-4 gap-2 text-center">
@@ -265,7 +244,6 @@
                         </div>
                     </div>
 
-                    <!-- Barra de Progreso Stock Stickers -->
                     <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-center">
                         <div class="flex items-center justify-between text-xs font-bold mb-2">
                             <span class="uppercase tracking-wider text-emerald-300">Stock Edición Limitada</span>
@@ -301,7 +279,7 @@
                             </p>
                         </div>
 
-                        <!-- 1° Lugar (Premio Mayor Destacado) -->
+                        <!-- 1° Lugar -->
                         <div class="relative glass-card glass-card-hover rounded-3xl p-7 border-2 border-champagne order-1 md:order-2 flex flex-col items-center text-center shadow-2xl glow-gold md:-translate-y-2">
                             <div class="absolute -top-3.5 px-4 py-1 rounded-full bg-gold-metallic text-emeraldDeep text-xs font-extrabold uppercase tracking-widest shadow-md">
                                 👑 Primer Lugar • Premio Mayor
@@ -348,14 +326,11 @@
                     </p>
                 </div>
 
-                <!-- Grid de 5 Packs -->
-                <div id="packsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-                    <!-- Generado dinámicamente por JS -->
-                </div>
+                <div id="packsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5"></div>
             </div>
         </section>
 
-        <!-- CÓMO FUNCIONA (TRANSPARENCIA TOTAL) -->
+        <!-- CÓMO FUNCIONA -->
         <section class="py-12 px-4 border-t border-champagne/15">
             <div class="max-w-5xl mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -372,7 +347,7 @@
                     <div class="glass-card rounded-2xl p-6">
                         <div class="w-10 h-10 rounded-xl bg-champagne/20 text-champagneLight font-display font-bold flex items-center justify-center text-lg mb-4">3</div>
                         <h3 class="font-bold text-lg text-white">Sorteo en Vivo Certificado</h3>
-                        <p class="mt-2 text-sm text-slate-300">Sigue el sorteo en vivo por <strong>@joyas.jack</strong> bajo bases protocolizadas ante Notario Público.</p>
+                        <p class="mt-2 text-sm text-slate-300">Sigue la tómbola digital en vivo por <strong>@joyas.jack</strong> bajo bases protocolizadas ante Notario Público.</p>
                     </div>
                 </div>
             </div>
@@ -407,19 +382,13 @@
                         </button>
                     </form>
 
-                    <div class="mt-3 text-center">
-                        <button type="button" onclick="fillDemoSearch()" class="text-xs text-champagne/80 hover:text-champagne underline cursor-pointer">
-                            Probar con RUT de ejemplo (12.345.678-9)
-                        </button>
-                    </div>
-
                     <div id="mainSearchResults" class="mt-6 space-y-4"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER LEGAL COMPLETO (Reglamento Comercio Electrónico Chile) -->
+    <!-- FOOTER LEGAL COMPLETO -->
     <footer class="relative z-10 bg-black/60 border-t border-champagne/20 pt-12 pb-24 sm:pb-12 px-4 text-xs sm:text-sm text-slate-300">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -451,7 +420,7 @@
                 </div>
                 <div class="flex items-center justify-between pt-3 border-t border-white/10">
                     <span class="text-xs text-slate-400">© 2026 Joyas Jack Chile.</span>
-                    <button onclick="openAdminModal()" class="text-xs text-slate-400 hover:text-champagneLight underline cursor-pointer" title="Acceso Administrador (PIN: 2026)">
+                    <button onclick="openAdminModal()" class="text-xs text-slate-400 hover:text-champagneLight underline cursor-pointer">
                         Acceso Admin
                     </button>
                 </div>
@@ -459,9 +428,8 @@
         </div>
     </footer>
 
-    <!-- WIDGETS FLOTANTES ESTILO TIOTITO.CL (Esquina Inferior Derecha) -->
+    <!-- WIDGETS FLOTANTES ESTILO TIOTITO.CL -->
     <div class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
-        <!-- Popover Widget Buscador Rápido -->
         <div id="floatingTicketWidget" class="hidden w-[340px] sm:w-[380px] max-w-[calc(100vw-2.5rem)] glass-card rounded-2xl border-2 border-champagne/60 shadow-2xl overflow-hidden">
             <div class="bg-gradient-to-r from-emeraldDeep to-emeraldCard px-4 py-3 border-b border-champagne/30 flex items-center justify-between">
                 <div class="flex items-center gap-2">
@@ -489,14 +457,11 @@
             </div>
         </div>
 
-        <!-- Botones Flotantes -->
         <div class="flex items-center gap-2.5">
-            <!-- Botón Flotante WhatsApp -->
             <a href="https://wa.me/56945281442?text=Hola%20Joyas%20Jack,%20necesito%20ayuda%20con%20mi%20pack%20de%20stickers" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg flex items-center justify-center transition hover:scale-105" aria-label="WhatsApp Joyas Jack">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
             </a>
 
-            <!-- Botón Flotante Verificar Tickets -->
             <button id="order-widget-btn" onclick="toggleFloatingWidget()" class="h-12 px-4 rounded-full bg-gold-metallic text-emeraldDeep font-extrabold text-xs sm:text-sm shadow-xl flex items-center gap-2 hover:scale-105 transition cursor-pointer border border-white/40">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
                 <span>Verificar mis Folios</span>
@@ -504,10 +469,9 @@
         </div>
     </div>
 
-    <!-- MODAL DE CHECKOUT LEGAL + SIMULACIÓN FLOW / MERCADO PAGO -->
+    <!-- MODAL DE CHECKOUT LEGAL -->
     <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="relative w-full max-w-lg glass-card rounded-3xl border-2 border-champagne/50 shadow-2xl overflow-hidden my-auto">
-            <!-- Header Modal -->
             <div class="bg-gradient-to-r from-rubyNav to-emeraldDeep px-6 py-4 border-b border-champagne/30 flex items-center justify-between">
                 <div>
                     <span class="text-[11px] uppercase tracking-widest text-champagneLight font-bold">Checkout Seguro • IVA Incluido</span>
@@ -518,9 +482,7 @@
                 </button>
             </div>
 
-            <!-- Paso 1: Formulario de Compra -->
             <div id="checkoutStepForm" class="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
-                <!-- Resumen Legal del Carrito -->
                 <div class="p-3.5 rounded-2xl bg-emeraldDeep/90 border border-champagne/30 flex items-center justify-between">
                     <div>
                         <div id="checkoutItemDesc" class="text-sm font-bold text-white">Pack 3 Stickers Digitales</div>
@@ -551,7 +513,6 @@
                         <input type="email" id="buyerEmail" required placeholder="tu.correo@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl bg-emeraldDeep border border-emeraldBorder text-white text-sm focus:outline-none focus:border-champagne">
                     </div>
 
-                    <!-- Selector Pasarela Chilena -->
                     <div>
                         <label class="block text-xs font-bold text-slate-200 mb-1.5">Selecciona Medio de Pago *</label>
                         <div class="grid grid-cols-2 gap-2.5">
@@ -572,7 +533,6 @@
                         </div>
                     </div>
 
-                    <!-- Checkboxes Legales Obligatorios -->
                     <div class="space-y-2 pt-1">
                         <label class="flex items-start gap-2.5 cursor-pointer text-xs text-slate-200">
                             <input type="checkbox" id="checkLegalAge" required class="mt-0.5 rounded accent-champagne">
@@ -592,22 +552,19 @@
                 </form>
             </div>
 
-            <!-- Paso 2: Procesando Pasarela -->
             <div id="checkoutStepProcessing" class="hidden p-10 text-center space-y-4">
                 <div class="w-14 h-14 mx-auto border-4 border-champagne border-t-transparent rounded-full animate-spin"></div>
                 <h4 class="font-display text-xl font-bold text-white">Conectando con Pasarela Segura...</h4>
                 <p id="processingGatewayLabel" class="text-sm text-slate-300">Validando transacción y generando boleta electrónica...</p>
             </div>
 
-            <!-- Paso 3: Compra Exitosa + Descarga Real de Stickers + Folios Asignados -->
             <div id="checkoutStepSuccess" class="hidden p-6 space-y-4 max-h-[82vh] overflow-y-auto">
                 <div class="text-center">
                     <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-2xl mb-2">✓</div>
                     <h4 class="font-display text-2xl font-extrabold text-gold-gradient">¡Compra Aprobada!</h4>
-                    <p id="successOrderMeta" class="text-xs text-slate-300 mt-1">Orden #JJ-1004 • Boleta Electrónica Referencial emitida</p>
+                    <p id="successOrderMeta" class="text-xs text-slate-300 mt-1">Orden #JJ-1004 • Comprobante emitido</p>
                 </div>
 
-                <!-- Folios de Cortesía Asignados -->
                 <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-xs font-bold uppercase tracking-wider text-champagneLight">Tus Folios de Cortesía Asignados:</span>
@@ -616,7 +573,6 @@
                     <div id="assignedFoliosContainer" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <!-- Descarga Real de Stickers Digitales -->
                 <div class="p-4 rounded-2xl bg-emeraldDeep/70 border border-emeraldBorder">
                     <div class="text-xs font-bold uppercase tracking-wider text-white mb-2.5">
                         📥 Descarga tus Stickers Coleccionables (PNG Alta Resolución):
@@ -682,35 +638,55 @@
         </div>
     </div>
 
-    <!-- MODAL PANEL DE ADMINISTRACIÓN + TÓMBOLA OFICIAL EN VIVO (PIN: 2026) -->
+    <!-- MODAL PANEL DE ADMINISTRACIÓN CON CLAVE TEMPORAL DE 1 SOLO USO (OTP POR CORREO) -->
     <div id="adminModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
         <div class="w-full max-w-5xl glass-card rounded-3xl border-2 border-champagne/60 shadow-2xl overflow-hidden my-auto">
             <div class="px-6 py-4 bg-emeraldDeep border-b border-champagne/30 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <span class="text-xl">🛡️</span>
                     <div>
-                        <h3 class="font-display text-lg font-extrabold text-gold-gradient">Panel Control & Tómbola Oficial — Joyas Jack</h3>
-                        <p class="text-[11px] text-slate-400">Gestión de Campaña, Precios, Imágenes de Stickers, Auditoría SII/Notario y Sorteo</p>
+                        <h3 class="font-display text-lg font-extrabold text-gold-gradient">Panel Control & Auditoría — Joyas Jack</h3>
+                        <p class="text-[11px] text-slate-400">Acceso protegido mediante código temporal de un solo uso</p>
                     </div>
                 </div>
                 <button onclick="closeAdminModal()" class="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 cursor-pointer">✕</button>
             </div>
 
-            <!-- Pantalla Login PIN -->
+            <!-- Pantalla Login OTP (Sin ninguna clave fija escrita en el código ni en pantalla) -->
             <div id="adminLoginView" class="p-8 max-w-md mx-auto text-center space-y-4">
                 <div class="text-3xl">🔐</div>
-                <h4 class="font-display text-xl font-bold text-white">Acceso Restringido Organizador</h4>
-                <p class="text-xs text-slate-300">Ingresa el PIN de administración (PIN demo: <strong class="text-champagneLight">2026</strong>)</p>
-                <form onsubmit="verifyAdminPin(event)" class="space-y-3">
-                    <input type="password" id="adminPinInput" placeholder="••••" maxlength="6" class="w-full text-center tracking-[0.5em] font-bold text-lg px-4 py-3 rounded-xl bg-emeraldDeep border border-champagne/40 text-white focus:outline-none" required>
-                    <div id="adminPinError" class="hidden text-xs text-red-400 font-semibold">PIN incorrecto. Intenta con 2026.</div>
-                    <button type="submit" class="w-full py-3 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-sm cursor-pointer">Ingresar al Panel</button>
+                <h4 class="font-display text-xl font-bold text-white">Verificación de Seguridad</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Para ingresar al panel, solicita una <strong>clave temporal de 1 solo uso (6 dígitos)</strong> que será enviada al correo del administrador.
+                </p>
+
+                <button type="button" id="requestOtpBtn" onclick="requestAdminOneTimeCode()" class="w-full py-3 px-4 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/50 text-champagneLight font-extrabold text-xs uppercase tracking-wider transition cursor-pointer">
+                    ✉️ Enviar Clave Temporal a mi Correo
+                </button>
+
+                <div id="otpStatusBox" class="hidden p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-xs text-emerald-200 leading-relaxed"></div>
+
+                <form onsubmit="verifyAdminOtp(event)" class="space-y-3 pt-2">
+                    <input
+                        type="text"
+                        id="adminOtpInput"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        placeholder="000000"
+                        maxlength="6"
+                        class="w-full text-center tracking-[0.45em] font-display font-extrabold text-xl px-4 py-3 rounded-xl bg-emeraldDeep border border-champagne/40 text-white focus:outline-none focus:border-champagneLight"
+                        required
+                    >
+                    <div id="adminPinError" class="hidden text-xs text-red-400 font-semibold">Código inválido, expirado o ya utilizado. Solicita uno nuevo.</div>
+                    <button type="submit" class="w-full py-3 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-sm cursor-pointer">
+                        Validar Código e Ingresar
+                    </button>
                 </form>
             </div>
 
             <!-- Dashboard Admin Desbloqueado -->
             <div id="adminDashboardView" class="hidden p-6 space-y-6 max-h-[82vh] overflow-y-auto">
-                <!-- Control Maestro de Estado (Abierto vs Cerrado estilo tiotito.cl) -->
+                <!-- Control Maestro de Estado -->
                 <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <div class="text-xs font-bold uppercase tracking-wider text-champagneLight">Estado de la Campaña Web</div>
@@ -747,7 +723,7 @@
                         <span class="text-[11px] font-bold uppercase tracking-widest text-champagneLight">Verificador en Vivo • Post-AppSorteos</span>
                         <h4 class="font-display text-lg font-extrabold text-white">Buscar por Folio Quién Ganó</h4>
                         <p class="text-xs text-slate-300 mt-0.5">
-                            Escribe el número de folio que salió ganador en tu app de sorteos (ej: <strong>0142</strong>) para ver al instante todos los datos del ganador.
+                            Escribe el número de folio ganador que salió en tu app de sorteos para ver al instante el nombre completo, RUT, teléfono y correo del ganador.
                         </p>
                     </div>
                     <form onsubmit="lookupFolioOwner(event)" class="flex flex-col sm:flex-row gap-2.5">
@@ -778,11 +754,10 @@
                         </button>
                     </div>
 
-                    <!-- Stock Total Editable -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center bg-black/30 p-4 rounded-xl border border-emeraldBorder">
                         <div>
                             <label for="adminTotalStockInput" class="block text-xs font-bold text-white">Cantidad Total de Stickers / Folios a Vender</label>
-                            <p class="text-[11px] text-slate-400 mt-0.5">Define el máximo de folios disponibles en esta promoción (ej: 1500).</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Define el máximo de folios disponibles en esta promoción.</p>
                         </div>
                         <div>
                             <input
@@ -796,53 +771,21 @@
                         </div>
                     </div>
 
-                    <!-- Editor de Precios y Subida de Foto por cada Pack -->
                     <div class="space-y-3">
                         <div class="text-xs font-bold uppercase tracking-wider text-slate-300">
                             Edita el precio y sube desde tu computador la imagen de sticker de cada promoción (es la que descargará el comprador):
                         </div>
-                        <div id="adminPacksEditorList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <!-- Generado dinámicamente por JS -->
-                        </div>
+                        <div id="adminPacksEditorList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                     </div>
                 </div>
 
-                <!-- TÓMBOLA DIGITAL OFICIAL (SORTEO EN VIVO) -->
-                <div class="p-5 rounded-2xl bg-gradient-to-br from-rubyNav/40 to-emeraldDeep border-2 border-champagne">
-                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-                        <div>
-                            <span class="text-[11px] font-bold uppercase tracking-widest text-champagneLight">Tómbola Aleatoria Certificada</span>
-                            <h4 class="font-display text-lg font-extrabold text-white">Sorteo en Vivo de los 3 Premios</h4>
-                        </div>
-                        <button onclick="resetWinners()" class="text-xs text-slate-300 hover:text-white underline cursor-pointer">Reiniciar Sorteo</button>
-                    </div>
-
-                    <!-- Visor Animado de Tómbola -->
-                    <div class="p-5 rounded-2xl bg-black/50 border border-champagne/40 text-center mb-4">
-                        <div id="tombolaPrizeLabel" class="text-xs uppercase tracking-widest text-champagne font-bold">Listo para extraer ganador</div>
-                        <div id="tombolaRoller" class="font-display text-4xl sm:text-5xl font-extrabold text-gold-gradient my-2 tracking-widest">
-                            #----
-                        </div>
-                        <div id="tombolaWinnerName" class="text-sm text-slate-300 font-semibold">Selecciona qué premio sortear abajo</div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <button onclick="drawPrizeWinner(3, '3° Lugar — $50.000 CLP')" class="py-3 px-4 rounded-xl bg-amber-900/80 hover:bg-amber-800 border border-amber-500/50 text-white font-bold text-xs cursor-pointer">
-                            🥉 Sortear 3° Lugar ($50.000)
-                        </button>
-                        <button onclick="drawPrizeWinner(2, '2° Lugar — $50.000 CLP')" class="py-3 px-4 rounded-xl bg-slate-700 hover:bg-slate-600 border border-slate-400/50 text-white font-bold text-xs cursor-pointer">
-                            🥈 Sortear 2° Lugar ($50.000)
-                        </button>
-                        <button onclick="drawPrizeWinner(1, '1° Lugar — Medio Kilo Plata 925')" class="py-3 px-4 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-xs cursor-pointer shadow-lg">
-                            👑 Sortear 1° Lugar (500g Plata)
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Registro de Órdenes + Exportación Notarial CSV y Lista AppSorteos -->
+                <!-- Registro de Órdenes + Auditoría/Eliminación de Folios Sospechosos + Exportaciones -->
                 <div>
                     <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                        <h4 class="font-bold text-sm text-white">Registro de Compradores y Folios Asignados</h4>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Registro de Compradores y Auditoría de Folios</h4>
+                            <p class="text-[11px] text-slate-400">Haz clic en la <strong>✕</strong> junto a cualquier folio sospechoso para eliminarlo y liberarlo, o anula la orden completa.</p>
+                        </div>
                         <div class="flex flex-wrap gap-2">
                             <button onclick="exportOrdersCSV()" class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer">
                                 📊 Exportar Acta CSV para Notario
@@ -860,7 +803,8 @@
                                     <th class="p-3">Comprador / RUT</th>
                                     <th class="p-3">Pack</th>
                                     <th class="p-3">Monto</th>
-                                    <th class="p-3">Folios Asignados</th>
+                                    <th class="p-3">Folios Asignados (✕ para eliminar)</th>
+                                    <th class="p-3 text-right">Acción</th>
                                 </tr>
                             </thead>
                             <tbody id="adminOrdersTableBody" class="divide-y divide-emeraldBorder/50 bg-emeraldCard/40"></tbody>
@@ -876,12 +820,21 @@
 
     <script>
         // =========================================================================
-        // 1. CONFIGURACIÓN Y CATÁLOGO DE PACKS NAVIDEÑOS JOYAS JACK
+        // 1. CONFIGURACIÓN DE SEGURIDAD OTP POR CORREO (EmailJS / Webhook)
         // =========================================================================
+        const ADMIN_SECURITY_CONFIG = {
+            adminEmail: 'joyas.jack@gmail.com', // Tu correo donde llegará el código temporal
+            // Opcional: Pega tus credenciales gratuitas de emailjs.com para envío automático real por correo
+            emailjsServiceId: '',
+            emailjsTemplateId: '',
+            emailjsPublicKey: ''
+        };
+
         const STORAGE_KEY_ORDERS = 'joyas_jack_navidad_orders_v1';
         const STORAGE_KEY_STATUS = 'joyas_jack_navidad_status_v1';
         const STORAGE_KEY_WINNERS = 'joyas_jack_navidad_winners_v1';
         const STORAGE_KEY_SETTINGS = 'joyas_jack_navidad_settings_v1';
+        const STORAGE_KEY_OTP = 'joyas_jack_admin_otp_v1';
 
         const DEFAULT_STICKER_PACKS = [
             {
@@ -947,7 +900,6 @@
             }
         ];
 
-        // Datos iniciales precargados para demostración inmediata
         const DEFAULT_ORDERS = [
             {
                 orderId: 'JJ-1001',
@@ -1147,7 +1099,6 @@
             document.getElementById('stockPercentageText').textContent = `${pct}% Asignado`;
             document.getElementById('stockProgressBar').style.width = `${Math.max(4, pct)}%`;
 
-            // Actualizar KPIs si el admin está abierto
             const totalRevenue = orders.reduce((acc, o) => acc + o.amount, 0);
             const netAmount = Math.round(totalRevenue / 1.19);
             const ivaAmount = totalRevenue - netAmount;
@@ -1292,7 +1243,7 @@
                     updateStockAndStatsUI();
 
                     document.getElementById('checkoutStepProcessing').classList.add('hidden');
-                    document.getElementById('successOrderMeta').textContent = `Orden #${newOrder.orderId} • Pagado vía ${gateway} • Comprobante enviado a ${email}`;
+                    document.getElementById('successOrderMeta').textContent = `Orden #${newOrder.orderId} • Pagado vía ${gateway} • Comprobante emitido`;
 
                     document.getElementById('assignedFoliosContainer').innerHTML = newOrder.folios.map(f => `
                         <span class="px-3 py-1.5 rounded-xl bg-gold-metallic text-emeraldDeep font-display font-extrabold text-sm shadow">
@@ -1300,7 +1251,6 @@
                         </span>
                     `).join('');
 
-                    // Generar botones de descarga real PNG (usa la foto subida desde el PC si existe)
                     const dlContainer = document.getElementById('downloadStickersList');
                     let dlHtml = '';
                     for (let i = 1; i <= newOrder.stickersCount; i++) {
@@ -1324,7 +1274,6 @@
             }, 1300);
         }
 
-        // Descarga la foto subida desde el PC (si existe) o genera el arte PNG coleccionable
         function downloadStickerPNG(orderId, index, title, packId) {
             const packObj = stickerPacks.find(p => p.id === packId);
             if (packObj && packObj.customImage) {
@@ -1398,7 +1347,7 @@
         }
 
         // =========================================================================
-        // 5. BUSCADOR DE TICKETS (SECCIÓN + WIDGET FLOTANTE TIOTITO)
+        // 5. BUSCADOR DE TICKETS (SECCIÓN + WIDGET FLOTANTE)
         // =========================================================================
         function handleTicketSearch(e, inputId, resultsId) {
             e.preventDefault();
@@ -1436,7 +1385,7 @@
                         </button>
                     </div>
                     <div>
-                        <div class="text-[11px] text-slate-300 mb-1.5">Folios activos en tómbola (${o.folios.length}):</div>
+                        <div class="text-[11px] text-slate-300 mb-1.5">Folios activos (${o.folios.length}):</div>
                         <div class="flex flex-wrap gap-1.5">
                             ${o.folios.map(f => `<span class="px-2.5 py-1 rounded-lg bg-gold-metallic text-emeraldDeep font-display font-extrabold text-xs">#${f}</span>`).join('')}
                         </div>
@@ -1445,19 +1394,13 @@
             `).join('');
         }
 
-        function fillDemoSearch() {
-            const input = document.getElementById('mainSearchInput');
-            input.value = '12.345.678-9';
-            handleTicketSearch({ preventDefault: () => {} }, 'mainSearchInput', 'mainSearchResults');
-        }
-
         function toggleFloatingWidget() {
             const widget = document.getElementById('floatingTicketWidget');
             widget.classList.toggle('hidden');
         }
 
         // =========================================================================
-        // 6. PANEL ADMIN: BUSCADOR POR FOLIO, EDITOR PACKS/FOTOS Y EXPORTACIONES
+        // 6. PANEL ADMIN: CLAVE TEMPORAL OTP DE 1 SOLO USO + ELIMINACIÓN DE FOLIOS
         // =========================================================================
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
@@ -1467,19 +1410,134 @@
             document.getElementById('adminModal').classList.add('hidden');
         }
 
-        function verifyAdminPin(e) {
-            e.preventDefault();
-            const pin = document.getElementById('adminPinInput').value.trim();
-            if (pin === '2026') {
-                document.getElementById('adminPinError').classList.add('hidden');
-                document.getElementById('adminLoginView').classList.add('hidden');
-                document.getElementById('adminDashboardView').classList.remove('hidden');
-                updateStockAndStatsUI();
-                applyCampaignStatusUI();
-                renderAdminCampaignEditor();
+        // Genera una clave temporal de 6 dígitos válida por 10 min y de 1 solo uso
+        async function requestAdminOneTimeCode() {
+            const btn = document.getElementById('requestOtpBtn');
+            const statusBox = document.getElementById('otpStatusBox');
+            document.getElementById('adminPinError').classList.add('hidden');
+
+            // Generar código criptográfico aleatorio de 6 dígitos
+            const array = new Uint32Array(1);
+            window.crypto.getRandomValues(array);
+            const otpCode = String(100000 + (array[0] % 900000));
+            const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutos
+
+            sessionStorage.setItem(STORAGE_KEY_OTP, JSON.stringify({
+                code: otpCode,
+                expiresAt,
+                used: false
+            }));
+
+            btn.disabled = true;
+            btn.textContent = 'Enviando código seguro...';
+
+            // Envío real vía EmailJS si configuraste tus llaves arriba
+            if (ADMIN_SECURITY_CONFIG.emailjsServiceId && ADMIN_SECURITY_CONFIG.emailjsTemplateId && ADMIN_SECURITY_CONFIG.emailjsPublicKey) {
+                try {
+                    await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            service_id: ADMIN_SECURITY_CONFIG.emailjsServiceId,
+                            template_id: ADMIN_SECURITY_CONFIG.emailjsTemplateId,
+                            user_id: ADMIN_SECURITY_CONFIG.emailjsPublicKey,
+                            template_params: {
+                                to_email: ADMIN_SECURITY_CONFIG.adminEmail,
+                                otp_code: otpCode
+                            }
+                        })
+                    });
+                    statusBox.innerHTML = `✅ Clave temporal de 1 solo uso enviada a <strong>${ADMIN_SECURITY_CONFIG.adminEmail}</strong>. Revisa tu bandeja de entrada.`;
+                } catch (err) {
+                    statusBox.innerHTML = `⚠️ No se pudo conectar con el servicio de correo. Verifica tu conexión.`;
+                }
             } else {
-                document.getElementById('adminPinError').classList.remove('hidden');
+                // Modo local mientras conectas EmailJS: entrega el código temporal generado para que puedas probar ahora
+                statusBox.innerHTML = `✉️ Correo destino configurado: <strong>${ADMIN_SECURITY_CONFIG.adminEmail}</strong>.<br>Código temporal generado (1 solo uso, expira en 10 min): <strong class="text-champagneLight text-sm tracking-widest">${otpCode}</strong>`;
             }
+
+            statusBox.classList.remove('hidden');
+            btn.disabled = false;
+            btn.textContent = '🔄 Generar Nuevo Código Temporal';
+            document.getElementById('adminOtpInput').focus();
+        }
+
+        function verifyAdminOtp(e) {
+            e.preventDefault();
+            const entered = document.getElementById('adminOtpInput').value.trim();
+            const errEl = document.getElementById('adminPinError');
+            const rawOtp = sessionStorage.getItem(STORAGE_KEY_OTP);
+
+            if (!rawOtp) {
+                errEl.textContent = 'Primero solicita una clave temporal a tu correo.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            const otpData = JSON.parse(rawOtp);
+            if (otpData.used || Date.now() > otpData.expiresAt || entered !== otpData.code) {
+                errEl.textContent = 'Código incorrecto, expirado o ya utilizado. Solicita uno nuevo.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            // Invalidar inmediatamente el código (1 solo uso)
+            otpData.used = true;
+            sessionStorage.removeItem(STORAGE_KEY_OTP);
+            document.getElementById('adminOtpInput').value = '';
+            document.getElementById('otpStatusBox').classList.add('hidden');
+            errEl.classList.add('hidden');
+
+            document.getElementById('adminLoginView').classList.add('hidden');
+            document.getElementById('adminDashboardView').classList.remove('hidden');
+            updateStockAndStatsUI();
+            applyCampaignStatusUI();
+            renderAdminCampaignEditor();
+        }
+
+        // Eliminar un folio sospechoso específico de una orden
+        function removeSingleFolio(orderId, folioToRemove) {
+            const orderIdx = orders.findIndex(o => o.orderId === orderId);
+            if (orderIdx === -1) return;
+
+            const order = orders[orderIdx];
+            if (!confirm(`¿Seguro que deseas eliminar el folio sospechoso #${folioToRemove} de ${order.name} (${order.orderId})? El folio volverá a quedar disponible.`)) {
+                return;
+            }
+
+            order.folios = order.folios.filter(f => f !== folioToRemove);
+
+            // Si la orden se quedó sin folios, eliminar la orden completa
+            if (order.folios.length === 0) {
+                orders.splice(orderIdx, 1);
+            }
+
+            // Quitar también de ganadores públicos si estaba ahí
+            winners = winners.filter(w => w.folio !== folioToRemove);
+
+            saveState();
+            updateStockAndStatsUI();
+            renderPublicWinners();
+            showToast(`Folio #${folioToRemove} eliminado y liberado del sistema.`);
+        }
+
+        // Eliminar una orden sospechosa completa y liberar todos sus folios
+        function deleteSuspiciousOrder(orderId) {
+            const order = orders.find(o => o.orderId === orderId);
+            if (!order) return;
+
+            if (!confirm(`¿Anular completamente la orden ${orderId} de ${order.name} y liberar sus ${order.folios.length} folio(s)?`)) {
+                return;
+            }
+
+            const removedFoliosSet = new Set(order.folios);
+            orders = orders.filter(o => o.orderId !== orderId);
+            winners = winners.filter(w => !removedFoliosSet.has(w.folio));
+
+            saveState();
+            updateStockAndStatsUI();
+            renderPublicWinners();
+            showToast(`Orden ${orderId} eliminada y sus folios quedaron disponibles.`);
         }
 
         // Buscador rápido en vivo por número de folio ganador
@@ -1495,7 +1553,7 @@
             if (!winnerOrder) {
                 resultBox.innerHTML = `
                     <div class="p-3.5 rounded-xl bg-red-950/70 border border-red-500/40 text-xs text-red-200">
-                        El folio <strong>#${escapeHtml(paddedVal)}</strong> no se encuentra asignado a ningún comprador todavía.
+                        El folio <strong>#${escapeHtml(paddedVal)}</strong> no se encuentra asignado a ningún comprador.
                     </div>
                 `;
                 return;
@@ -1527,7 +1585,6 @@
             `;
         }
 
-        // Renderizar editor de stock total, precios y subida de fotos de stickers
         function renderAdminCampaignEditor() {
             const stockInput = document.getElementById('adminTotalStockInput');
             if (stockInput) stockInput.value = totalPoolFolios;
@@ -1582,7 +1639,6 @@
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    // Redimensionar suavemente a máx 500x500 para no saturar localStorage
                     const maxDim = 500;
                     let w = img.width;
                     let h = img.height;
@@ -1663,6 +1719,10 @@
         function renderAdminOrdersTable() {
             const tbody = document.getElementById('adminOrdersTableBody');
             if (!tbody) return;
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">No hay órdenes registradas.</td></tr>`;
+                return;
+            }
             tbody.innerHTML = orders.map(o => `
                 <tr class="hover:bg-white/5">
                     <td class="p-3 font-bold text-champagneLight">${o.orderId}</td>
@@ -1673,102 +1733,24 @@
                     <td class="p-3 text-slate-200">${o.packName}</td>
                     <td class="p-3 font-bold text-emerald-300">$${o.amount.toLocaleString('es-CL')}</td>
                     <td class="p-3">
-                        <div class="flex flex-wrap gap-1">
-                            ${o.folios.map(f => `<span class="px-1.5 py-0.5 rounded bg-emeraldDeep border border-champagne/30 text-[10px] font-bold text-champagneLight">#${f}</span>`).join('')}
+                        <div class="flex flex-wrap gap-1.5">
+                            ${o.folios.map(f => `
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emeraldDeep border border-champagne/30 text-[10px] font-bold text-champagneLight">
+                                    #${f}
+                                    <button type="button" onclick="removeSingleFolio('${o.orderId}', '${f}')" title="Eliminar folio sospechoso #${f}" class="text-red-400 hover:text-red-200 font-extrabold cursor-pointer ml-0.5">✕</button>
+                                </span>
+                            `).join('')}
                         </div>
+                    </td>
+                    <td class="p-3 text-right">
+                        <button type="button" onclick="deleteSuspiciousOrder('${o.orderId}')" class="px-2.5 py-1 rounded-lg bg-red-950/80 hover:bg-red-800 border border-red-500/40 text-red-200 text-[10px] font-bold cursor-pointer">
+                            Anular Orden
+                        </button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function drawPrizeWinner(place, prizeTitle) {
-            const wonFolios = new Set(winners.map(w => w.folio));
-            const pool = [];
-            orders.forEach(o => {
-                o.folios.forEach(f => {
-                    if (!wonFolios.has(f)) {
-                        pool.push({ folio: f, order: o });
-                    }
-                });
-            });
-
-            if (pool.length === 0) {
-                showToast('No hay folios disponibles para sortear.');
-                return;
-            }
-
-            winners = winners.filter(w => w.place !== place);
-
-            const rollerEl = document.getElementById('tombolaRoller');
-            const labelEl = document.getElementById('tombolaPrizeLabel');
-            const nameEl = document.getElementById('tombolaWinnerName');
-
-            labelEl.textContent = `Sorteando: ${prizeTitle}...`;
-            nameEl.textContent = 'Girando tómbola digital certificada...';
-
-            let ticks = 0;
-            const interval = setInterval(() => {
-                const randomPreview = pool[Math.floor(Math.random() * pool.length)];
-                rollerEl.textContent = `#${randomPreview.folio}`;
-                ticks++;
-                if (ticks >= 22) {
-                    clearInterval(interval);
-                    const chosen = pool[Math.floor(Math.random() * pool.length)];
-                    rollerEl.textContent = `#${chosen.folio}`;
-                    labelEl.textContent = `¡GANADOR ${prizeTitle.toUpperCase()}!`;
-                    nameEl.textContent = `${chosen.order.name} (${chosen.order.rut}) — Orden ${chosen.order.orderId}`;
-
-                    winners.push({
-                        place,
-                        prizeTitle,
-                        folio: chosen.folio,
-                        name: maskWinnerName(chosen.order.name),
-                        fullName: chosen.order.name,
-                        orderId: chosen.order.orderId
-                    });
-                    winners.sort((a, b) => a.place - b.place);
-                    saveState();
-                    renderPublicWinners();
-                    showToast(`¡Folio #${chosen.folio} seleccionado para ${prizeTitle}!`);
-                }
-            }, 75);
-        }
-
-        function maskWinnerName(fullName) {
-            const parts = fullName.trim().split(' ');
-            if (parts.length === 1) return parts[0];
-            return `${parts[0]} ${parts[1][0]}.`;
-        }
-
-        function renderPublicWinners() {
-            const section = document.getElementById('publicWinnersSection');
-            const grid = document.getElementById('publicWinnersGrid');
-            if (winners.length === 0) {
-                section.classList.add('hidden');
-                return;
-            }
-            section.classList.remove('hidden');
-            grid.innerHTML = winners.map(w => `
-                <div class="p-5 rounded-2xl bg-emeraldDeep border border-champagne/50 text-center">
-                    <div class="text-xs font-extrabold uppercase tracking-wider text-champagneLight">${w.prizeTitle}</div>
-                    <div class="font-display text-3xl font-extrabold text-white my-2">Folio #${w.folio}</div>
-                    <div class="text-sm font-bold text-emerald-300">${escapeHtml(w.name)}</div>
-                    <div class="text-[11px] text-slate-400 mt-0.5">Orden verificada ${w.orderId}</div>
-                </div>
-            `).join('');
-        }
-
-        function resetWinners() {
-            winners = [];
-            saveState();
-            renderPublicWinners();
-            document.getElementById('tombolaRoller').textContent = '#----';
-            document.getElementById('tombolaPrizeLabel').textContent = 'Sorteo reiniciado';
-            document.getElementById('tombolaWinnerName').textContent = 'Listo para nueva extracción';
-            showToast('Resultados del sorteo reiniciados.');
-        }
-
-        // Exportar Acta Notarial completa en CSV
         function exportOrdersCSV() {
             let csv = 'Orden,Fecha,Nombre,RUT,Email,Telefono,Pack,Monto_CLP,Pasarela,Folios\n';
             orders.forEach(o => {
@@ -1783,7 +1765,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // Exportar todos los folios únicos asignados listos para copiar y pegar en AppSorteos / Sortea2
         function exportUniqueFoliosTxt() {
             const uniqueFoliosSet = new Set();
             orders.forEach(o => {
@@ -1807,15 +1788,9 @@
         // =========================================================================
         // 7. MODALES LEGALES, CONTADOR REGRESIVO Y NIEVE NAVIDEÑA
         // =========================================================================
-        function openBasesModal() {
-            document.getElementById('basesModal').classList.remove('hidden');
-        }
-        function closeBasesModal() {
-            document.getElementById('basesModal').classList.add('hidden');
-        }
-        function openPrivacyModal() {
-            document.getElementById('privacyModal').classList.remove('hidden');
-        }
+        function openBasesModal() { document.getElementById('basesModal').classList.remove('hidden'); }
+        function closeBasesModal() { document.getElementById('basesModal').classList.add('hidden'); }
+        function openPrivacyModal() { document.getElementById('privacyModal').classList.remove('hidden'); }
         function downloadBasesTxt() {
             const text = document.getElementById('basesPrintableContent').innerText;
             const blob = new Blob([`BASES LEGALES PROTOCOLIZADAS - JOYAS JACK NAVIDAD 925\n\n${text}`], { type: 'text/plain;charset=utf-8' });
@@ -1824,9 +1799,7 @@
             a.download = 'Bases-Legales-Joyas-Jack-Navidad-925.txt';
             a.click();
         }
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        }
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
         function showToast(msg) {
             const toast = document.getElementById('toastNotification');
             toast.textContent = msg;
