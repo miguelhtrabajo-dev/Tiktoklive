@@ -652,32 +652,32 @@
                 <button onclick="closeAdminModal()" class="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 cursor-pointer">✕</button>
             </div>
 
-            <!-- Pantalla Login OTP (Sin ninguna clave fija escrita en el código ni en pantalla) -->
+            <!-- Pantalla Login OTP -->
             <div id="adminLoginView" class="p-8 max-w-md mx-auto text-center space-y-4">
                 <div class="text-3xl">🔐</div>
                 <h4 class="font-display text-xl font-bold text-white">Verificación de Seguridad</h4>
                 <p class="text-xs text-slate-300 leading-relaxed">
-                    Para ingresar al panel, solicita una <strong>clave temporal de 1 solo uso (6 dígitos)</strong> que será enviada al correo del administrador.
+                    Solicita una <strong>clave temporal de 1 solo uso</strong>. El código de acceso se enviará directamente al correo electrónico registrado del titular.
                 </p>
 
                 <button type="button" id="requestOtpBtn" onclick="requestAdminOneTimeCode()" class="w-full py-3 px-4 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/50 text-champagneLight font-extrabold text-xs uppercase tracking-wider transition cursor-pointer">
-                    ✉️ Enviar Clave Temporal a mi Correo
+                    ✉️ Enviar Clave Temporal al Correo
                 </button>
 
                 <div id="otpStatusBox" class="hidden p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-xs text-emerald-200 leading-relaxed"></div>
 
                 <form onsubmit="verifyAdminOtp(event)" class="space-y-3 pt-2">
                     <input
-                        type="text"
+                        type="password"
                         id="adminOtpInput"
                         inputmode="numeric"
                         autocomplete="one-time-code"
-                        placeholder="000000"
+                        placeholder="••••••"
                         maxlength="6"
                         class="w-full text-center tracking-[0.45em] font-display font-extrabold text-xl px-4 py-3 rounded-xl bg-emeraldDeep border border-champagne/40 text-white focus:outline-none focus:border-champagneLight"
                         required
                     >
-                    <div id="adminPinError" class="hidden text-xs text-red-400 font-semibold">Código inválido, expirado o ya utilizado. Solicita uno nuevo.</div>
+                    <div id="adminPinError" class="hidden text-xs text-red-400 font-semibold">Código incorrecto, expirado o ya utilizado. Solicita uno nuevo.</div>
                     <button type="submit" class="w-full py-3 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-sm cursor-pointer">
                         Validar Código e Ingresar
                     </button>
@@ -820,14 +820,13 @@
 
     <script>
         // =========================================================================
-        // 1. CONFIGURACIÓN DE SEGURIDAD OTP POR CORREO (EmailJS / Webhook)
+        // 1. CONFIGURACIÓN DE SEGURIDAD OTP POR CORREO (EmailJS)
         // =========================================================================
         const ADMIN_SECURITY_CONFIG = {
-            adminEmail: 'joyas.jack@gmail.com', // Tu correo donde llegará el código temporal
-            // Opcional: Pega tus credenciales gratuitas de emailjs.com para envío automático real por correo
-            emailjsServiceId: '',
-            emailjsTemplateId: '',
-            emailjsPublicKey: ''
+            adminEmail: 'miguelh.trabajo@gmail.com',
+            emailjsServiceId: 'service_ipqggla',
+            emailjsTemplateId: 'template_l1d04se',
+            emailjsPublicKey: 'qlwLewLxp2CvQRO9o'
         };
 
         const STORAGE_KEY_ORDERS = 'joyas_jack_navidad_orders_v1';
@@ -1400,7 +1399,7 @@
         }
 
         // =========================================================================
-        // 6. PANEL ADMIN: CLAVE TEMPORAL OTP DE 1 SOLO USO + ELIMINACIÓN DE FOLIOS
+        // 6. PANEL ADMIN: CLAVE TEMPORAL OTP DE 1 SOLO USO (CERO EXPOSICIÓN EN UI)
         // =========================================================================
         function openAdminModal() {
             document.getElementById('adminModal').classList.remove('hidden');
@@ -1416,7 +1415,6 @@
             const statusBox = document.getElementById('otpStatusBox');
             document.getElementById('adminPinError').classList.add('hidden');
 
-            // Generar código criptográfico aleatorio de 6 dígitos
             const array = new Uint32Array(1);
             window.crypto.getRandomValues(array);
             const otpCode = String(100000 + (array[0] % 900000));
@@ -1431,7 +1429,6 @@
             btn.disabled = true;
             btn.textContent = 'Enviando código seguro...';
 
-            // Envío real vía EmailJS si configuraste tus llaves arriba
             if (ADMIN_SECURITY_CONFIG.emailjsServiceId && ADMIN_SECURITY_CONFIG.emailjsTemplateId && ADMIN_SECURITY_CONFIG.emailjsPublicKey) {
                 try {
                     await fetch('https://api.emailjs.com/api/v1.0/email/send', {
@@ -1447,18 +1444,17 @@
                             }
                         })
                     });
-                    statusBox.innerHTML = `✅ Clave temporal de 1 solo uso enviada a <strong>${ADMIN_SECURITY_CONFIG.adminEmail}</strong>. Revisa tu bandeja de entrada.`;
+                    statusBox.textContent = '✅ Clave temporal de 1 solo uso enviada al correo del administrador. Expira en 10 minutos.';
                 } catch (err) {
-                    statusBox.innerHTML = `⚠️ No se pudo conectar con el servicio de correo. Verifica tu conexión.`;
+                    statusBox.textContent = '⚠️ Error al conectar con el servicio de correo. Intenta nuevamente.';
                 }
             } else {
-                // Modo local mientras conectas EmailJS: entrega el código temporal generado para que puedas probar ahora
-                statusBox.innerHTML = `✉️ Correo destino configurado: <strong>${ADMIN_SECURITY_CONFIG.adminEmail}</strong>.<br>Código temporal generado (1 solo uso, expira en 10 min): <strong class="text-champagneLight text-sm tracking-widest">${otpCode}</strong>`;
+                statusBox.textContent = '⚠️ Servicio de correo no configurado aún.';
             }
 
             statusBox.classList.remove('hidden');
             btn.disabled = false;
-            btn.textContent = '🔄 Generar Nuevo Código Temporal';
+            btn.textContent = '🔄 Solicitar Nuevo Código Temporal';
             document.getElementById('adminOtpInput').focus();
         }
 
@@ -1481,7 +1477,7 @@
                 return;
             }
 
-            // Invalidar inmediatamente el código (1 solo uso)
+            // Invalidar inmediatamente el código tras 1 solo uso
             otpData.used = true;
             sessionStorage.removeItem(STORAGE_KEY_OTP);
             document.getElementById('adminOtpInput').value = '';
@@ -1507,12 +1503,10 @@
 
             order.folios = order.folios.filter(f => f !== folioToRemove);
 
-            // Si la orden se quedó sin folios, eliminar la orden completa
             if (order.folios.length === 0) {
                 orders.splice(orderIdx, 1);
             }
 
-            // Quitar también de ganadores públicos si estaba ahí
             winners = winners.filter(w => w.folio !== folioToRemove);
 
             saveState();
@@ -1748,6 +1742,24 @@
                         </button>
                     </td>
                 </tr>
+            `).join('');
+        }
+
+        function renderPublicWinners() {
+            const section = document.getElementById('publicWinnersSection');
+            const grid = document.getElementById('publicWinnersGrid');
+            if (winners.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            grid.innerHTML = winners.map(w => `
+                <div class="p-5 rounded-2xl bg-emeraldDeep border border-champagne/50 text-center">
+                    <div class="text-xs font-extrabold uppercase tracking-wider text-champagneLight">${w.prizeTitle}</div>
+                    <div class="font-display text-3xl font-extrabold text-white my-2">Folio #${w.folio}</div>
+                    <div class="text-sm font-bold text-emerald-300">${escapeHtml(w.name)}</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Orden verificada ${w.orderId}</div>
+                </div>
             `).join('');
         }
 
