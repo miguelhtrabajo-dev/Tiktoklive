@@ -37,6 +37,12 @@
             color: #f8fafc;
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        input, textarea {
+            -webkit-user-select: text;
+            user-select: text;
         }
         .font-display {
             font-family: 'Cinzel', serif;
@@ -92,7 +98,7 @@
         }
     </style>
 </head>
-<body class="relative min-h-screen flex flex-col selection:bg-champagne selection:text-emeraldDeep">
+<body oncontextmenu="return false;" ondragstart="return false;" class="relative min-h-screen flex flex-col selection:bg-champagne selection:text-emeraldDeep">
 
     <!-- Canvas de Nieve Sutil Navideña -->
     <canvas id="snowCanvas"></canvas>
@@ -322,7 +328,7 @@
                         Elige tu Pack de Stickers Navideños
                     </h2>
                     <p class="mt-2 text-sm text-slate-300">
-                        Al completar tu compra descargas al instante tus stickers coleccionables en alta resolución y recibes tus folios aleatorios para el sorteo.
+                        Al completar tu compra en Flow descargas al instante tus stickers coleccionables en alta resolución y recibes tus folios aleatorios.
                     </p>
                 </div>
 
@@ -337,7 +343,7 @@
                     <div class="glass-card rounded-2xl p-6">
                         <div class="w-10 h-10 rounded-xl bg-champagne/20 text-champagneLight font-display font-bold flex items-center justify-center text-lg mb-4">1</div>
                         <h3 class="font-bold text-lg text-white">Compra tu Pack Digital</h3>
-                        <p class="mt-2 text-sm text-slate-300">Selecciona el pack de stickers navideños Joyas Jack y paga de forma segura con Flow (Webpay) o Mercado Pago.</p>
+                        <p class="mt-2 text-sm text-slate-300">Selecciona el pack de stickers navideños Joyas Jack y paga de forma segura en Flow.cl (Webpay, débito o crédito).</p>
                     </div>
                     <div class="glass-card rounded-2xl p-6">
                         <div class="w-10 h-10 rounded-xl bg-champagne/20 text-champagneLight font-display font-bold flex items-center justify-center text-lg mb-4">2</div>
@@ -347,7 +353,7 @@
                     <div class="glass-card rounded-2xl p-6">
                         <div class="w-10 h-10 rounded-xl bg-champagne/20 text-champagneLight font-display font-bold flex items-center justify-center text-lg mb-4">3</div>
                         <h3 class="font-bold text-lg text-white">Sorteo en Vivo Certificado</h3>
-                        <p class="mt-2 text-sm text-slate-300">Sigue la tómbola digital en vivo por <strong>@joyas.jack</strong> bajo bases protocolizadas ante Notario Público.</p>
+                        <p class="mt-2 text-sm text-slate-300">Sigue la transmisión en vivo por <strong>@joyas.jack</strong> bajo bases protocolizadas ante Notario Público.</p>
                     </div>
                 </div>
             </div>
@@ -414,8 +420,7 @@
             <div>
                 <h4 class="font-bold text-white uppercase tracking-wider text-xs mb-3">Medios de Pago y Redes</h4>
                 <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="px-3 py-1 rounded-lg bg-emeraldCard border border-emeraldBorder text-xs font-semibold text-white">Flow • Webpay</span>
-                    <span class="px-3 py-1 rounded-lg bg-emeraldCard border border-emeraldBorder text-xs font-semibold text-sky-300">Mercado Pago</span>
+                    <span class="px-3 py-1 rounded-lg bg-emeraldCard border border-emeraldBorder text-xs font-semibold text-white">Flow.cl • Webpay</span>
                     <span class="px-3 py-1 rounded-lg bg-emeraldCard border border-emeraldBorder text-xs font-semibold text-champagneLight">Boleta Electrónica SII</span>
                 </div>
                 <div class="flex items-center justify-between pt-3 border-t border-white/10">
@@ -428,7 +433,7 @@
         </div>
     </footer>
 
-    <!-- WIDGETS FLOTANTES ESTILO TIOTITO.CL -->
+    <!-- WIDGETS FLOTANTES -->
     <div class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
         <div id="floatingTicketWidget" class="hidden w-[340px] sm:w-[380px] max-w-[calc(100vw-2.5rem)] glass-card rounded-2xl border-2 border-champagne/60 shadow-2xl overflow-hidden">
             <div class="bg-gradient-to-r from-emeraldDeep to-emeraldCard px-4 py-3 border-b border-champagne/30 flex items-center justify-between">
@@ -469,12 +474,12 @@
         </div>
     </div>
 
-    <!-- MODAL DE CHECKOUT LEGAL -->
+    <!-- MODAL DE CHECKOUT LEGAL + REDIRECCIÓN REAL A FLOW.CL -->
     <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
         <div class="relative w-full max-w-lg glass-card rounded-3xl border-2 border-champagne/50 shadow-2xl overflow-hidden my-auto">
             <div class="bg-gradient-to-r from-rubyNav to-emeraldDeep px-6 py-4 border-b border-champagne/30 flex items-center justify-between">
                 <div>
-                    <span class="text-[11px] uppercase tracking-widest text-champagneLight font-bold">Checkout Seguro • IVA Incluido</span>
+                    <span class="text-[11px] uppercase tracking-widest text-champagneLight font-bold">Checkout Seguro Flow.cl • IVA Incluido</span>
                     <h3 id="checkoutPackTitle" class="font-display text-lg sm:text-xl font-extrabold text-white">Pack Stickers Digitales</h3>
                 </div>
                 <button onclick="closeCheckoutModal()" class="p-2 rounded-full bg-black/30 text-slate-200 hover:text-white cursor-pointer">
@@ -491,7 +496,7 @@
                     <div id="checkoutPriceDisplay" class="font-display text-xl font-extrabold text-champagneLight">$2.000</div>
                 </div>
 
-                <form id="purchaseForm" onsubmit="processSimulatedPayment(event)" class="space-y-3.5">
+                <form id="purchaseForm" onsubmit="redirectToFlowPayment(event)" class="space-y-3.5">
                     <div>
                         <label class="block text-xs font-bold text-slate-200 mb-1">Nombre y Apellido Completo *</label>
                         <input type="text" id="buyerName" required placeholder="Ej: Camila Valdés Soto" class="w-full px-3.5 py-2.5 rounded-xl bg-emeraldDeep border border-emeraldBorder text-white text-sm focus:outline-none focus:border-champagne">
@@ -509,28 +514,8 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">Correo Electrónico (para envío de stickers y boleta) *</label>
+                        <label class="block text-xs font-bold text-slate-200 mb-1">Correo Electrónico (usa el mismo correo en Flow.cl) *</label>
                         <input type="email" id="buyerEmail" required placeholder="tu.correo@gmail.com" class="w-full px-3.5 py-2.5 rounded-xl bg-emeraldDeep border border-emeraldBorder text-white text-sm focus:outline-none focus:border-champagne">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1.5">Selecciona Medio de Pago *</label>
-                        <div class="grid grid-cols-2 gap-2.5">
-                            <label class="cursor-pointer">
-                                <input type="radio" name="paymentGateway" value="Flow (Webpay / Redcompra)" checked class="peer sr-only">
-                                <div class="p-3 rounded-xl bg-emeraldDeep border border-emeraldBorder peer-checked:border-champagne peer-checked:bg-champagne/15 text-center transition">
-                                    <div class="font-extrabold text-sm text-white">Flow.cl</div>
-                                    <div class="text-[10px] text-slate-300">Webpay • Débito • Crédito</div>
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="paymentGateway" value="Mercado Pago Chile" class="peer sr-only">
-                                <div class="p-3 rounded-xl bg-emeraldDeep border border-emeraldBorder peer-checked:border-sky-400 peer-checked:bg-sky-500/15 text-center transition">
-                                    <div class="font-extrabold text-sm text-sky-300">Mercado Pago</div>
-                                    <div class="text-[10px] text-slate-300">Tarjetas • Saldo MP</div>
-                                </div>
-                            </label>
-                        </div>
                     </div>
 
                     <div class="space-y-2 pt-1">
@@ -547,21 +532,16 @@
                     <div id="checkoutErrorMsg" class="hidden p-3 rounded-xl bg-red-950/90 border border-red-500 text-red-200 text-xs font-semibold"></div>
 
                     <button type="submit" class="w-full py-3.5 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-sm uppercase tracking-wider shadow-lg hover:brightness-110 transition cursor-pointer">
-                        Pagar y Descargar Stickers Ahora
+                        Ir a Pagar en Flow.cl (Webpay / Tarjetas)
                     </button>
                 </form>
             </div>
 
-            <div id="checkoutStepProcessing" class="hidden p-10 text-center space-y-4">
-                <div class="w-14 h-14 mx-auto border-4 border-champagne border-t-transparent rounded-full animate-spin"></div>
-                <h4 class="font-display text-xl font-bold text-white">Conectando con Pasarela Segura...</h4>
-                <p id="processingGatewayLabel" class="text-sm text-slate-300">Validando transacción y generando boleta electrónica...</p>
-            </div>
-
+            <!-- Paso de Compra Confirmada al volver de Flow (?pago=ok) -->
             <div id="checkoutStepSuccess" class="hidden p-6 space-y-4 max-h-[82vh] overflow-y-auto">
                 <div class="text-center">
                     <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center text-2xl mb-2">✓</div>
-                    <h4 class="font-display text-2xl font-extrabold text-gold-gradient">¡Compra Aprobada!</h4>
+                    <h4 class="font-display text-2xl font-extrabold text-gold-gradient">¡Pago Confirmado!</h4>
                     <p id="successOrderMeta" class="text-xs text-slate-300 mt-1">Orden #JJ-1004 • Comprobante emitido</p>
                 </div>
 
@@ -608,7 +588,7 @@
                 • <strong>Tercer Lugar:</strong> $50.000 CLP vía transferencia bancaria al titular ganador o vale en mercadería Joyas Jack.<br>
                 • <strong>Segundo Lugar:</strong> $50.000 CLP vía transferencia bancaria al titular ganador o vale en mercadería Joyas Jack.<br>
                 • <strong>Primer Lugar (Premio Mayor):</strong> Lote surtido mayorista de <strong>500 gramos (medio kilo) de joyas en plata nacional Ley 925</strong> certificada.</p>
-                <p><strong>6. SORTEO Y ENTREGA:</strong> El sorteo se efectuará mediante tómbola digital aleatoria transmitida en vivo por las redes oficiales de <strong>@joyas.jack</strong>. Un mismo folio no puede ganar más de un premio. Los ganadores disponen de 10 días hábiles para acreditar su identidad mediante cédula vigente.</p>
+                <p><strong>6. SORTEO Y ENTREGA:</strong> El sorteo se efectuará mediante plataforma aleatoria externa verificable transmitida en vivo por las redes oficiales de <strong>@joyas.jack</strong>. Un mismo folio no puede ganar más de un premio. Los ganadores disponen de 10 días hábiles para acreditar su identidad mediante cédula vigente.</p>
                 <p><strong>7. PROTECCIÓN DE DATOS:</strong> Los datos personales se resguardan estrictamente bajo la Ley N° 19.628 sobre Protección de la Vida Privada.</p>
             </div>
             <div class="px-6 py-4 bg-emeraldDeep border-t border-champagne/30 flex flex-wrap justify-between items-center gap-3">
@@ -638,7 +618,7 @@
         </div>
     </div>
 
-    <!-- MODAL PANEL DE ADMINISTRACIÓN CON CLAVE TEMPORAL DE 1 SOLO USO (OTP POR CORREO) -->
+    <!-- MODAL PANEL DE ADMINISTRACIÓN CON CLAVE TEMPORAL DE 1 SOLO USO -->
     <div id="adminModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
         <div class="w-full max-w-5xl glass-card rounded-3xl border-2 border-champagne/60 shadow-2xl overflow-hidden my-auto">
             <div class="px-6 py-4 bg-emeraldDeep border-b border-champagne/30 flex items-center justify-between">
@@ -686,7 +666,6 @@
 
             <!-- Dashboard Admin Desbloqueado -->
             <div id="adminDashboardView" class="hidden p-6 space-y-6 max-h-[82vh] overflow-y-auto">
-                <!-- Control Maestro de Estado -->
                 <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <div class="text-xs font-bold uppercase tracking-wider text-champagneLight">Estado de la Campaña Web</div>
@@ -697,7 +676,7 @@
                     </button>
                 </div>
 
-                <!-- KPIs Financieros y Operativos -->
+                <!-- KPIs -->
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     <div class="p-4 rounded-2xl bg-emeraldDeep/80 border border-emeraldBorder">
                         <div class="text-[11px] text-slate-400 uppercase">Ventas Brutas</div>
@@ -784,7 +763,7 @@
                     <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                         <div>
                             <h4 class="font-bold text-sm text-white">Registro de Compradores y Auditoría de Folios</h4>
-                            <p class="text-[11px] text-slate-400">Haz clic en la <strong>✕</strong> junto a cualquier folio sospechoso para eliminarlo y liberarlo, o anula la orden completa.</p>
+                            <p class="text-[11px] text-slate-400">Verifica cada pago en tu panel de Flow.cl. Haz clic en la <strong>✕</strong> junto a cualquier folio sospechoso para eliminarlo.</p>
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <button onclick="exportOrdersCSV()" class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold cursor-pointer">
@@ -819,617 +798,597 @@
     <div id="toastNotification" class="hidden fixed top-24 right-5 z-50 px-5 py-3 rounded-2xl bg-emeraldCard border border-champagne text-white text-xs sm:text-sm font-semibold shadow-2xl"></div>
 
     <script>
-        // =========================================================================
-        // 1. CONFIGURACIÓN DE SEGURIDAD OTP POR CORREO (EmailJS)
-        // =========================================================================
-        const ADMIN_SECURITY_CONFIG = {
-            adminEmail: 'miguelh.trabajo@gmail.com',
-            emailjsServiceId: 'service_ipqggla',
-            emailjsTemplateId: 'template_l1d04se',
-            emailjsPublicKey: 'qlwLewLxp2CvQRO9o'
-        };
+        (function() {
+            'use strict';
 
-        const STORAGE_KEY_ORDERS = 'joyas_jack_navidad_orders_v1';
-        const STORAGE_KEY_STATUS = 'joyas_jack_navidad_status_v1';
-        const STORAGE_KEY_WINNERS = 'joyas_jack_navidad_winners_v1';
-        const STORAGE_KEY_SETTINGS = 'joyas_jack_navidad_settings_v1';
-        const STORAGE_KEY_OTP = 'joyas_jack_admin_otp_v1';
+            // =========================================================================
+            // 1. LINKS REALES DE PAGO EN FLOW.CL + SEGURIDAD OTP EMAILJS
+            // =========================================================================
+            const FLOW_PAYMENT_LINKS = {
+                'pack-1': 'https://www.flow.cl/uri/Ha8t0Vgnt',
+                'pack-2': 'https://www.flow.cl/uri/f9w1N9KZP',
+                'pack-3': 'https://www.flow.cl/uri/c3X0PL5BG',
+                'pack-5': 'https://www.flow.cl/uri/5sXNjSBJz',
+                'pack-10': 'https://www.flow.cl/uri/vy0rNR4ac'
+            };
 
-        const DEFAULT_STICKER_PACKS = [
-            {
-                id: 'pack-1',
-                name: 'Pack 1 Sticker Digital',
-                stickerTitle: 'Corona Plata 925',
-                stickersCount: 1,
-                foliosCount: 1,
-                price: 1000,
-                badge: 'Inicio',
-                accent: '#94a3b8',
-                customImage: null,
-                iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#e5c158" stroke-width="3"/><path d="M24 65 L30 35 L43 50 L50 28 L57 50 L70 35 L76 65 Z" fill="#e2e8f0" stroke="#f6e29f" stroke-width="2.5"/><rect x="24" y="68" width="52" height="7" rx="3" fill="#d4af37"/></svg>`
-            },
-            {
-                id: 'pack-2',
-                name: 'Pack 2 Stickers Digitales',
-                stickerTitle: 'Reno Joyero 925',
-                stickersCount: 2,
-                foliosCount: 2,
-                price: 1500,
-                badge: 'Doble Opción',
-                accent: '#cbd5e1',
-                customImage: null,
-                iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#e5c158" stroke-width="3"/><path d="M35 22 L38 40 M38 30 L28 26 M65 22 L62 40 M62 30 L72 26" stroke="#d4af37" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="56" r="18" fill="#cbd5e1"/><circle cx="50" cy="60" r="5" fill="#dc2626"/></svg>`
-            },
-            {
-                id: 'pack-3',
-                name: 'Pack 3 Stickers Digitales',
-                stickerTitle: 'Árbol de Esmeraldas',
-                stickersCount: 3,
-                foliosCount: 3,
-                price: 2000,
-                badge: 'Más Popular ⭐',
-                popular: true,
-                accent: '#f6e29f',
-                customImage: null,
-                iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#f6e29f" stroke-width="3.5"/><polygon points="50,18 26,48 38,48 22,72 78,72 62,48 74,48" fill="#10b981" stroke="#f6e29f" stroke-width="2"/><polygon points="50,12 53,19 60,19 54,23 56,30 50,26 44,30 46,23 40,19 47,19" fill="#f6e29f"/><rect x="44" y="72" width="12" height="10" rx="2" fill="#d4af37"/></svg>`
-            },
-            {
-                id: 'pack-5',
-                name: 'Pack 5 Stickers Digitales',
-                stickerTitle: 'Trineo Mayorista',
-                stickersCount: 5,
-                foliosCount: 5,
-                price: 3000,
-                badge: '5X Oportunidades',
-                accent: '#e5c158',
-                customImage: null,
-                iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#e5c158" stroke-width="3"/><path d="M25 58 H72 C78 58 80 45 72 42 H58 L48 34 H32 Z" fill="#dc2626" stroke="#f6e29f" stroke-width="2"/><path d="M20 68 H78 C84 68 86 62 82 59" fill="none" stroke="#f6e29f" stroke-width="3.5" stroke-linecap="round"/></svg>`
-            },
-            {
-                id: 'pack-10',
-                name: 'Pack 10 Stickers Digitales',
-                stickerTitle: 'Estrella Ley 925 VIP',
-                stickersCount: 10,
-                foliosCount: 10,
-                price: 5000,
-                badge: 'Mejor Valor 👑',
-                accent: '#f6e29f',
-                customImage: null,
-                iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#f6e29f" stroke-width="3.5"/><polygon points="50,16 60,38 84,41 66,57 71,81 50,69 29,81 34,57 16,41 40,38" fill="#e2e8f0" stroke="#d4af37" stroke-width="2.5"/><text x="50" y="55" text-anchor="middle" fill="#041f18" font-size="13" font-weight="bold">925</text></svg>`
-            }
-        ];
+            const ADMIN_SECURITY_CONFIG = {
+                adminEmail: 'miguelh.trabajo@gmail.com',
+                emailjsServiceId: 'service_ipqggla',
+                emailjsTemplateId: 'template_l1d04se',
+                emailjsPublicKey: 'qlwLewLxp2CvQRO9o'
+            };
 
-        const DEFAULT_ORDERS = [
-            {
-                orderId: 'JJ-1001',
-                date: '14/11/2026 18:20',
-                name: 'Valentina Muñoz Rojas',
-                rut: '12.345.678-9',
-                email: 'valentina.demo@gmail.com',
-                phone: '+56 9 8123 4567',
-                packId: 'pack-5',
-                packName: 'Pack 5 Stickers Digitales',
-                stickersCount: 5,
-                amount: 3000,
-                gateway: 'Flow (Webpay / Redcompra)',
-                folios: ['0142', '0489', '0731', '1104', '1422']
-            },
-            {
-                orderId: 'JJ-1002',
-                date: '15/11/2026 11:05',
-                name: 'Sebastián Contreras Díaz',
-                rut: '16.890.234-5',
-                email: 'seba.joyas@outlook.cl',
-                phone: '+56 9 7654 3210',
-                packId: 'pack-10',
-                packName: 'Pack 10 Stickers Digitales',
-                stickersCount: 10,
-                amount: 5000,
-                gateway: 'Mercado Pago Chile',
-                folios: ['0019', '0215', '0338', '0512', '0677', '0840', '0955', '1088', '1290', '1491']
-            },
-            {
-                orderId: 'JJ-1003',
-                date: '15/11/2026 15:40',
-                name: 'Francisca Tapia Araya',
-                rut: '18.432.110-K',
-                email: 'fran.tapia@gmail.com',
-                phone: '+56 9 9234 5678',
-                packId: 'pack-3',
-                packName: 'Pack 3 Stickers Digitales',
-                stickersCount: 3,
-                amount: 2000,
-                gateway: 'Flow (Webpay / Redcompra)',
-                folios: ['0084', '0619', '1345']
-            }
-        ];
+            const STORAGE_KEY_ORDERS = 'joyas_jack_navidad_orders_v1';
+            const STORAGE_KEY_STATUS = 'joyas_jack_navidad_status_v1';
+            const STORAGE_KEY_WINNERS = 'joyas_jack_navidad_winners_v1';
+            const STORAGE_KEY_SETTINGS = 'joyas_jack_navidad_settings_v1';
+            const STORAGE_KEY_OTP = 'joyas_jack_admin_otp_v1';
+            const STORAGE_KEY_PENDING = 'joyas_jack_pending_flow_tx_v1';
 
-        let totalPoolFolios = 1500;
-        let stickerPacks = JSON.parse(JSON.stringify(DEFAULT_STICKER_PACKS));
-        let orders = [];
-        let campaignClosed = false;
-        let winners = [];
-        let selectedPack = null;
-        let latestCreatedOrder = null;
-
-        // =========================================================================
-        // 2. INICIALIZACIÓN Y PERSISTENCIA
-        // =========================================================================
-        function initApp() {
-            try {
-                const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
-                if (savedSettings) {
-                    const parsed = JSON.parse(savedSettings);
-                    if (parsed.totalPoolFolios) totalPoolFolios = Number(parsed.totalPoolFolios);
-                    if (parsed.packs && Array.isArray(parsed.packs)) {
-                        stickerPacks = DEFAULT_STICKER_PACKS.map(defPack => {
-                            const custom = parsed.packs.find(p => p.id === defPack.id);
-                            return custom ? { ...defPack, price: Number(custom.price), customImage: custom.customImage || null } : defPack;
-                        });
-                    }
+            // Bloqueo de atajos de inspección y guardado de código fuente
+            document.addEventListener('keydown', function(e) {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C', 'i', 'j', 'c'].includes(e.key)) ||
+                    (e.ctrlKey && ['u', 'U', 's', 'S'].includes(e.key))
+                ) {
+                    e.preventDefault();
+                    return false;
                 }
-
-                const savedOrders = localStorage.getItem(STORAGE_KEY_ORDERS);
-                orders = savedOrders ? JSON.parse(savedOrders) : [...DEFAULT_ORDERS];
-                if (!savedOrders) {
-                    localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
-                }
-                campaignClosed = localStorage.getItem(STORAGE_KEY_STATUS) === 'closed';
-                const savedWinners = localStorage.getItem(STORAGE_KEY_WINNERS);
-                winners = savedWinners ? JSON.parse(savedWinners) : [];
-            } catch (e) {
-                orders = [...DEFAULT_ORDERS];
-            }
-
-            syncPoolTexts();
-            renderPacksGrid();
-            updateStockAndStatsUI();
-            applyCampaignStatusUI();
-            renderPublicWinners();
-            startCountdown();
-            initSnowCanvas();
-        }
-
-        function syncPoolTexts() {
-            const formattedTotal = totalPoolFolios.toLocaleString('es-CL');
-            const padLen = String(totalPoolFolios).length;
-            const maxFolioStr = String(totalPoolFolios).padStart(padLen, '0');
-            const minFolioStr = '1'.padStart(padLen, '0');
-
-            const totalPoolEl = document.getElementById('totalPoolDisplay');
-            if (totalPoolEl) totalPoolEl.textContent = formattedTotal;
-
-            const step2El = document.getElementById('howItWorksStep2Text');
-            if (step2El) {
-                step2El.innerHTML = `Descarga tus stickers PNG al instante. El sistema asigna automáticamente tus folios únicos de cortesía entre el ${minFolioStr} y ${maxFolioStr}.`;
-            }
-
-            const basesSpan = document.getElementById('basesStockSpan');
-            if (basesSpan) {
-                basesSpan.textContent = `${formattedTotal} folios totales`;
-            }
-        }
-
-        function saveState() {
-            try {
-                localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
-                localStorage.setItem(STORAGE_KEY_STATUS, campaignClosed ? 'closed' : 'open');
-                localStorage.setItem(STORAGE_KEY_WINNERS, JSON.stringify(winners));
-            } catch (e) {
-                console.warn('No se pudo guardar en localStorage', e);
-            }
-        }
-
-        // =========================================================================
-        // 3. RENDERIZADO DE PACKS Y ESTADO DE CAMPAÑA
-        // =========================================================================
-        function renderPacksGrid() {
-            const grid = document.getElementById('packsGrid');
-            grid.innerHTML = stickerPacks.map(pack => `
-                <div class="relative glass-card glass-card-hover rounded-3xl p-5 flex flex-col justify-between ${pack.popular ? 'border-2 border-champagne shadow-xl glow-gold' : 'border border-champagne/25'}">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${pack.popular ? 'bg-gold-metallic text-emeraldDeep' : 'bg-emeraldDeep text-champagneLight border border-champagne/30'}">
-                            ${pack.badge}
-                        </span>
-                        <span class="text-xs font-bold text-emerald-300">+${pack.foliosCount} ${pack.foliosCount === 1 ? 'Folio' : 'Folios'}</span>
-                    </div>
-
-                    <div class="my-2">
-                        ${pack.customImage
-                            ? `<img src="${pack.customImage}" alt="${escapeHtml(pack.stickerTitle)}" class="w-24 h-24 mx-auto object-cover rounded-2xl border-2 border-champagne shadow-md">`
-                            : pack.iconSvg
-                        }
-                        <div class="text-center text-[11px] text-slate-400 mt-2">Arte: ${pack.stickerTitle}</div>
-                    </div>
-
-                    <div class="text-center mt-2">
-                        <h3 class="font-bold text-base text-white">${pack.name}</h3>
-                        <div class="font-display text-2xl sm:text-3xl font-extrabold text-gold-gradient my-2">
-                            $${pack.price.toLocaleString('es-CL')}
-                        </div>
-                        <p class="text-[11px] text-slate-300 leading-snug mb-4">
-                            Incluye descarga digital PNG + <strong>${pack.foliosCount} ${pack.foliosCount === 1 ? 'cupón gratuito' : 'cupones gratuitos'}</strong> de cortesía.
-                        </p>
-                    </div>
-
-                    <button
-                        onclick="openCheckoutModal('${pack.id}')"
-                        ${campaignClosed ? 'disabled' : ''}
-                        class="w-full py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider transition cursor-pointer ${campaignClosed ? 'bg-slate-700 text-slate-400 cursor-not-allowed' : 'bg-gold-metallic text-emeraldDeep hover:brightness-110 shadow-md'}"
-                    >
-                        ${campaignClosed ? 'Venta Cerrada' : 'Comprar Pack'}
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function applyCampaignStatusUI() {
-            const banner = document.getElementById('closedCampaignBanner');
-            const toggleBtn = document.getElementById('toggleCampaignBtn');
-            const statusDesc = document.getElementById('adminStatusDesc');
-
-            if (campaignClosed) {
-                banner.classList.remove('hidden');
-                if (toggleBtn) {
-                    toggleBtn.textContent = 'Reabrir Ventas de Stickers';
-                    toggleBtn.className = 'px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition cursor-pointer bg-emerald-600 text-white hover:bg-emerald-500';
-                }
-                if (statusDesc) {
-                    statusDesc.textContent = 'Modo SORTEO CERRADO activo (estilo tiotito.cl). Botones de compra deshabilitados.';
-                }
-            } else {
-                banner.classList.add('hidden');
-                if (toggleBtn) {
-                    toggleBtn.textContent = 'Cerrar Ventas (Activar Modo Live)';
-                    toggleBtn.className = 'px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition cursor-pointer bg-rubyBright text-white hover:bg-red-600';
-                }
-                if (statusDesc) {
-                    statusDesc.textContent = 'Actualmente las ventas de packs están ABIERTAS al público.';
-                }
-            }
-            renderPacksGrid();
-        }
-
-        function updateStockAndStatsUI() {
-            const allIssued = orders.reduce((acc, o) => acc + o.folios.length, 0);
-            const pct = Math.min(100, Math.round((allIssued / totalPoolFolios) * 100));
-
-            document.getElementById('issuedFoliosCount').textContent = allIssued.toLocaleString('es-CL');
-            document.getElementById('stockPercentageText').textContent = `${pct}% Asignado`;
-            document.getElementById('stockProgressBar').style.width = `${Math.max(4, pct)}%`;
-
-            const totalRevenue = orders.reduce((acc, o) => acc + o.amount, 0);
-            const netAmount = Math.round(totalRevenue / 1.19);
-            const ivaAmount = totalRevenue - netAmount;
-
-            const kpiRev = document.getElementById('kpiRevenue');
-            if (kpiRev) {
-                kpiRev.textContent = `$${totalRevenue.toLocaleString('es-CL')}`;
-                document.getElementById('kpiIva').textContent = `$${ivaAmount.toLocaleString('es-CL')}`;
-                document.getElementById('kpiFolios').textContent = `${allIssued} / ${totalPoolFolios}`;
-                document.getElementById('kpiOrders').textContent = orders.length;
-                renderAdminOrdersTable();
-            }
-        }
-
-        // =========================================================================
-        // 4. ASIGNACIÓN DE FOLIOS ÚNICOS Y FLUJO DE CHECKOUT
-        // =========================================================================
-        function generateUniqueFolios(count) {
-            const usedSet = new Set();
-            orders.forEach(o => o.folios.forEach(f => usedSet.add(f)));
-
-            const padLen = Math.max(4, String(totalPoolFolios).length);
-            const available = [];
-            for (let i = 1; i <= totalPoolFolios; i++) {
-                const formatted = String(i).padStart(padLen, '0');
-                if (!usedSet.has(formatted)) {
-                    available.push(formatted);
-                }
-            }
-
-            if (available.length < count) {
-                throw new Error('No quedan suficientes folios disponibles en el stock de esta campaña.');
-            }
-
-            const assigned = [];
-            for (let i = 0; i < count; i++) {
-                const randIdx = Math.floor(Math.random() * available.length);
-                assigned.push(available[randIdx]);
-                available.splice(randIdx, 1);
-            }
-            return assigned.sort();
-        }
-
-        function formatRutInput(input) {
-            let val = input.value.replace(/[^0-9kK]/g, '').toUpperCase();
-            if (val.length > 1) {
-                const body = val.slice(0, -1);
-                const dv = val.slice(-1);
-                const formattedBody = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                input.value = `${formattedBody}-${dv}`;
-            } else {
-                input.value = val;
-            }
-        }
-
-        function validateChileanRut(rut) {
-            const clean = rut.replace(/[^0-9kK]/g, '').toUpperCase();
-            if (clean.length < 8) return false;
-            const body = clean.slice(0, -1);
-            const dv = clean.slice(-1);
-            let sum = 0;
-            let mul = 2;
-            for (let i = body.length - 1; i >= 0; i--) {
-                sum += parseInt(body[i], 10) * mul;
-                mul = mul === 7 ? 2 : mul + 1;
-            }
-            const expected = 11 - (sum % 11);
-            const dvCalc = expected === 11 ? '0' : expected === 10 ? 'K' : String(expected);
-            return dv === dvCalc;
-        }
-
-        function openCheckoutModal(packId) {
-            if (campaignClosed) {
-                showToast('La venta de stickers se encuentra cerrada.');
-                return;
-            }
-            selectedPack = stickerPacks.find(p => p.id === packId);
-            if (!selectedPack) return;
-
-            document.getElementById('checkoutPackTitle').textContent = selectedPack.name;
-            document.getElementById('checkoutItemDesc').textContent = `${selectedPack.name} (${selectedPack.stickerTitle})`;
-            document.getElementById('checkoutBonusDesc').textContent = `+ ${selectedPack.foliosCount} ${selectedPack.foliosCount === 1 ? 'cupón de cortesía gratuito' : 'cupones de cortesía gratuitos'}`;
-            document.getElementById('checkoutPriceDisplay').textContent = `$${selectedPack.price.toLocaleString('es-CL')}`;
-
-            document.getElementById('checkoutErrorMsg').classList.add('hidden');
-            document.getElementById('checkoutStepForm').classList.remove('hidden');
-            document.getElementById('checkoutStepProcessing').classList.add('hidden');
-            document.getElementById('checkoutStepSuccess').classList.add('hidden');
-            document.getElementById('checkoutModal').classList.remove('hidden');
-        }
-
-        function closeCheckoutModal() {
-            document.getElementById('checkoutModal').classList.add('hidden');
-        }
-
-        function processSimulatedPayment(e) {
-            e.preventDefault();
-            const errBox = document.getElementById('checkoutErrorMsg');
-            errBox.classList.add('hidden');
-
-            const name = document.getElementById('buyerName').value.trim();
-            const rut = document.getElementById('buyerRut').value.trim();
-            const phone = document.getElementById('buyerPhone').value.trim();
-            const email = document.getElementById('buyerEmail').value.trim();
-            const gateway = document.querySelector('input[name="paymentGateway"]:checked').value;
-
-            if (!validateChileanRut(rut)) {
-                errBox.textContent = 'El RUT ingresado no es válido. Verifica el dígito verificador (Ej: 12.345.678-9).';
-                errBox.classList.remove('hidden');
-                return;
-            }
-
-            document.getElementById('checkoutStepForm').classList.add('hidden');
-            document.getElementById('processingGatewayLabel').textContent = `Procesando pago seguro vía ${gateway}...`;
-            document.getElementById('checkoutStepProcessing').classList.remove('hidden');
-
-            setTimeout(() => {
-                try {
-                    const assignedFolios = generateUniqueFolios(selectedPack.foliosCount);
-                    const now = new Date();
-                    const dateStr = now.toLocaleDateString('es-CL') + ' ' + now.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
-                    const orderNumber = `JJ-${1001 + orders.length}`;
-
-                    const newOrder = {
-                        orderId: orderNumber,
-                        date: dateStr,
-                        name,
-                        rut,
-                        email,
-                        phone,
-                        packId: selectedPack.id,
-                        packName: selectedPack.name,
-                        stickersCount: selectedPack.stickersCount,
-                        amount: selectedPack.price,
-                        gateway,
-                        folios: assignedFolios
-                    };
-
-                    orders.unshift(newOrder);
-                    latestCreatedOrder = newOrder;
-                    saveState();
-                    updateStockAndStatsUI();
-
-                    document.getElementById('checkoutStepProcessing').classList.add('hidden');
-                    document.getElementById('successOrderMeta').textContent = `Orden #${newOrder.orderId} • Pagado vía ${gateway} • Comprobante emitido`;
-
-                    document.getElementById('assignedFoliosContainer').innerHTML = newOrder.folios.map(f => `
-                        <span class="px-3 py-1.5 rounded-xl bg-gold-metallic text-emeraldDeep font-display font-extrabold text-sm shadow">
-                            #${f}
-                        </span>
-                    `).join('');
-
-                    const dlContainer = document.getElementById('downloadStickersList');
-                    let dlHtml = '';
-                    for (let i = 1; i <= newOrder.stickersCount; i++) {
-                        dlHtml += `
-                            <button type="button" onclick="downloadStickerPNG('${newOrder.orderId}', ${i}, '${selectedPack.stickerTitle}', '${selectedPack.id}')" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/35 text-xs text-white font-semibold transition cursor-pointer">
-                                <span>🎄 Sticker #${i} (${selectedPack.stickerTitle})</span>
-                                <span class="text-champagneLight font-bold">PNG ↓</span>
-                            </button>
-                        `;
-                    }
-                    dlContainer.innerHTML = dlHtml;
-
-                    document.getElementById('checkoutStepSuccess').classList.remove('hidden');
-                    showToast('¡Compra aprobada! Tus stickers y folios ya están listos.');
-                } catch (err) {
-                    document.getElementById('checkoutStepProcessing').classList.add('hidden');
-                    document.getElementById('checkoutStepForm').classList.remove('hidden');
-                    errBox.textContent = err.message;
-                    errBox.classList.remove('hidden');
-                }
-            }, 1300);
-        }
-
-        function downloadStickerPNG(orderId, index, title, packId) {
-            const packObj = stickerPacks.find(p => p.id === packId);
-            if (packObj && packObj.customImage) {
-                const link = document.createElement('a');
-                link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
-                link.href = packObj.customImage;
-                link.click();
-                showToast(`Descargando foto del Sticker #${index}...`);
-                return;
-            }
-
-            const canvas = document.createElement('canvas');
-            canvas.width = 600;
-            canvas.height = 600;
-            const ctx = canvas.getContext('2d');
-
-            const grad = ctx.createRadialGradient(300, 300, 40, 300, 300, 280);
-            grad.addColorStop(0, '#0c4a3a');
-            grad.addColorStop(1, '#041f18');
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(300, 300, 280, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.lineWidth = 14;
-            ctx.strokeStyle = '#e5c158';
-            ctx.stroke();
-
-            ctx.fillStyle = '#e2e8f0';
-            ctx.beginPath();
-            ctx.moveTo(300, 125);
-            ctx.lineTo(420, 240);
-            ctx.lineTo(300, 390);
-            ctx.lineTo(180, 240);
-            ctx.closePath();
-            ctx.fill();
-            ctx.lineWidth = 5;
-            ctx.strokeStyle = '#f6e29f';
-            ctx.stroke();
-
-            ctx.fillStyle = '#041f18';
-            ctx.font = 'bold 34px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('PLATA 925', 300, 255);
-
-            ctx.fillStyle = '#f6e29f';
-            ctx.font = 'bold 32px serif';
-            ctx.fillText('JOYAS JACK • NAVIDAD', 300, 445);
-
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '20px sans-serif';
-            ctx.fillText(`${title} — Edición #${index} (${orderId})`, 300, 485);
-
-            const link = document.createElement('a');
-            link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            showToast(`Descargando Sticker #${index} en PNG...`);
-        }
-
-        function copyLatestFolios() {
-            if (!latestCreatedOrder) return;
-            const text = `Mis folios Joyas Jack (${latestCreatedOrder.orderId}): ${latestCreatedOrder.folios.map(f => '#' + f).join(', ')}`;
-            const temp = document.createElement('textarea');
-            temp.value = text;
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-            showToast('Folios copiados al portapapeles.');
-        }
-
-        // =========================================================================
-        // 5. BUSCADOR DE TICKETS (SECCIÓN + WIDGET FLOTANTE)
-        // =========================================================================
-        function handleTicketSearch(e, inputId, resultsId) {
-            e.preventDefault();
-            const query = document.getElementById(inputId).value.trim().toLowerCase();
-            const cleanRutQuery = query.replace(/[^0-9k]/g, '');
-            const resultsContainer = document.getElementById(resultsId);
-
-            const matches = orders.filter(o => {
-                const orderRutClean = o.rut.toLowerCase().replace(/[^0-9k]/g, '');
-                return (
-                    o.email.toLowerCase() === query ||
-                    o.orderId.toLowerCase() === query ||
-                    (cleanRutQuery.length >= 7 && orderRutClean === cleanRutQuery)
-                );
             });
 
-            if (matches.length === 0) {
-                resultsContainer.innerHTML = `
-                    <div class="p-4 rounded-2xl bg-red-950/60 border border-red-500/40 text-center text-xs text-red-200">
-                        No encontramos compras asociadas a <strong>"${escapeHtml(query)}"</strong>. Verifica que tu RUT o correo estén escritos correctamente.
-                    </div>
-                `;
-                return;
+            const DEFAULT_STICKER_PACKS = [
+                {
+                    id: 'pack-1',
+                    name: 'Pack 1 Sticker Digital',
+                    stickerTitle: 'Corona Plata 925',
+                    stickersCount: 1,
+                    foliosCount: 1,
+                    price: 1000,
+                    badge: 'Inicio',
+                    customImage: null,
+                    iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#e5c158" stroke-width="3"/><path d="M24 65 L30 35 L43 50 L50 28 L57 50 L70 35 L76 65 Z" fill="#e2e8f0" stroke="#f6e29f" stroke-width="2.5"/><rect x="24" y="68" width="52" height="7" rx="3" fill="#d4af37"/></svg>`
+                },
+                {
+                    id: 'pack-2',
+                    name: 'Pack 2 Stickers Digitales',
+                    stickerTitle: 'Reno Joyero 925',
+                    stickersCount: 2,
+                    foliosCount: 2,
+                    price: 1500,
+                    badge: 'Doble Opción',
+                    customImage: null,
+                    iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#e5c158" stroke-width="3"/><path d="M35 22 L38 40 M38 30 L28 26 M65 22 L62 40 M62 30 L72 26" stroke="#d4af37" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="56" r="18" fill="#cbd5e1"/><circle cx="50" cy="60" r="5" fill="#dc2626"/></svg>`
+                },
+                {
+                    id: 'pack-3',
+                    name: 'Pack 3 Stickers Digitales',
+                    stickerTitle: 'Árbol de Esmeraldas',
+                    stickersCount: 3,
+                    foliosCount: 3,
+                    price: 2000,
+                    badge: 'Más Popular ⭐',
+                    popular: true,
+                    customImage: null,
+                    iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#f6e29f" stroke-width="3.5"/><polygon points="50,18 26,48 38,48 22,72 78,72 62,48 74,48" fill="#10b981" stroke="#f6e29f" stroke-width="2"/><polygon points="50,12 53,19 60,19 54,23 56,30 50,26 44,30 46,23 40,19 47,19" fill="#f6e29f"/><rect x="44" y="72" width="12" height="10" rx="2" fill="#d4af37"/></svg>`
+                },
+                {
+                    id: 'pack-5',
+                    name: 'Pack 5 Stickers Digitales',
+                    stickerTitle: 'Trineo Mayorista',
+                    stickersCount: 5,
+                    foliosCount: 5,
+                    price: 3000,
+                    badge: '5X Oportunidades',
+                    customImage: null,
+                    iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#e5c158" stroke-width="3"/><path d="M25 58 H72 C78 58 80 45 72 42 H58 L48 34 H32 Z" fill="#dc2626" stroke="#f6e29f" stroke-width="2"/><path d="M20 68 H78 C84 68 86 62 82 59" fill="none" stroke="#f6e29f" stroke-width="3.5" stroke-linecap="round"/></svg>`
+                },
+                {
+                    id: 'pack-10',
+                    name: 'Pack 10 Stickers Digitales',
+                    stickerTitle: 'Estrella Ley 925 VIP',
+                    stickersCount: 10,
+                    foliosCount: 10,
+                    price: 5000,
+                    badge: 'Mejor Valor 👑',
+                    customImage: null,
+                    iconSvg: `<svg viewBox="0 0 100 100" class="w-20 h-20 mx-auto"><circle cx="50" cy="50" r="44" fill="#06281e" stroke="#f6e29f" stroke-width="3.5"/><polygon points="50,16 60,38 84,41 66,57 71,81 50,69 29,81 34,57 16,41 40,38" fill="#e2e8f0" stroke="#d4af37" stroke-width="2.5"/><text x="50" y="55" text-anchor="middle" fill="#041f18" font-size="13" font-weight="bold">925</text></svg>`
+                }
+            ];
+
+            let totalPoolFolios = 1500;
+            let stickerPacks = JSON.parse(JSON.stringify(DEFAULT_STICKER_PACKS));
+            let orders = [];
+            let campaignClosed = false;
+            let winners = [];
+            let selectedPack = null;
+            let latestCreatedOrder = null;
+
+            function initApp() {
+                try {
+                    const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
+                    if (savedSettings) {
+                        const parsed = JSON.parse(savedSettings);
+                        if (parsed.totalPoolFolios) totalPoolFolios = Number(parsed.totalPoolFolios);
+                        if (parsed.packs && Array.isArray(parsed.packs)) {
+                            stickerPacks = DEFAULT_STICKER_PACKS.map(defPack => {
+                                const custom = parsed.packs.find(p => p.id === defPack.id);
+                                return custom ? { ...defPack, price: Number(custom.price), customImage: custom.customImage || null } : defPack;
+                            });
+                        }
+                    }
+
+                    const savedOrders = localStorage.getItem(STORAGE_KEY_ORDERS);
+                    orders = savedOrders ? JSON.parse(savedOrders) : [];
+                    campaignClosed = localStorage.getItem(STORAGE_KEY_STATUS) === 'closed';
+                    const savedWinners = localStorage.getItem(STORAGE_KEY_WINNERS);
+                    winners = savedWinners ? JSON.parse(savedWinners) : [];
+                } catch (e) {
+                    orders = [];
+                }
+
+                syncPoolTexts();
+                renderPacksGrid();
+                updateStockAndStatsUI();
+                applyCampaignStatusUI();
+                renderPublicWinners();
+                checkFlowReturnConfirmation();
+                startCountdown();
+                initSnowCanvas();
             }
 
-            resultsContainer.innerHTML = matches.map(o => `
-                <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40 space-y-2.5">
-                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-                        <div>
-                            <div class="text-xs font-extrabold text-champagneLight">Orden #${o.orderId} • ${o.packName}</div>
-                            <div class="text-[11px] text-slate-400">${escapeHtml(o.name)} (${o.rut}) • ${o.date}</div>
+            // Verifica si el cliente regresó desde Flow.cl tras completar el pago (?pago=ok)
+            function checkFlowReturnConfirmation() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const pagoStatus = urlParams.get('pago');
+                const pendingRaw = localStorage.getItem(STORAGE_KEY_PENDING);
+
+                if (pagoStatus === 'ok' && pendingRaw) {
+                    try {
+                        const pending = JSON.parse(pendingRaw);
+                        // Evitar duplicados si recarga la página
+                        if (!orders.some(o => o.orderId === pending.orderId)) {
+                            const assignedFolios = generateUniqueFolios(pending.foliosCount);
+                            const completedOrder = {
+                                ...pending,
+                                folios: assignedFolios
+                            };
+                            orders.unshift(completedOrder);
+                            latestCreatedOrder = completedOrder;
+                            saveState();
+                            updateStockAndStatsUI();
+                            showConfirmedOrderModal(completedOrder);
+                        }
+                    } catch (err) {
+                        showToast(err.message);
+                    } finally {
+                        localStorage.removeItem(STORAGE_KEY_PENDING);
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    }
+                }
+            }
+
+            function showConfirmedOrderModal(order) {
+                document.getElementById('checkoutPackTitle').textContent = order.packName;
+                document.getElementById('checkoutStepForm').classList.add('hidden');
+                document.getElementById('successOrderMeta').textContent = `Orden #${order.orderId} • Pagado vía Flow.cl • RUT ${order.rut}`;
+
+                document.getElementById('assignedFoliosContainer').innerHTML = order.folios.map(f => `
+                    <span class="px-3 py-1.5 rounded-xl bg-gold-metallic text-emeraldDeep font-display font-extrabold text-sm shadow">
+                        #${f}
+                    </span>
+                `).join('');
+
+                const dlContainer = document.getElementById('downloadStickersList');
+                let dlHtml = '';
+                for (let i = 1; i <= order.stickersCount; i++) {
+                    dlHtml += `
+                        <button type="button" onclick="downloadStickerPNG('${order.orderId}', ${i}, '${order.stickerTitle}', '${order.packId}')" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/35 text-xs text-white font-semibold transition cursor-pointer">
+                            <span>🎄 Sticker #${i} (${order.stickerTitle})</span>
+                            <span class="text-champagneLight font-bold">PNG ↓</span>
+                        </button>
+                    `;
+                }
+                dlContainer.innerHTML = dlHtml;
+
+                document.getElementById('checkoutStepSuccess').classList.remove('hidden');
+                document.getElementById('checkoutModal').classList.remove('hidden');
+                showToast('¡Pago aprobado en Flow.cl! Descarga tus stickers abajo.');
+            }
+
+            function syncPoolTexts() {
+                const formattedTotal = totalPoolFolios.toLocaleString('es-CL');
+                const padLen = String(totalPoolFolios).length;
+                const maxFolioStr = String(totalPoolFolios).padStart(padLen, '0');
+                const minFolioStr = '1'.padStart(padLen, '0');
+
+                const totalPoolEl = document.getElementById('totalPoolDisplay');
+                if (totalPoolEl) totalPoolEl.textContent = formattedTotal;
+
+                const step2El = document.getElementById('howItWorksStep2Text');
+                if (step2El) {
+                    step2El.innerHTML = `Descarga tus stickers PNG al instante. El sistema asigna automáticamente tus folios únicos de cortesía entre el ${minFolioStr} y ${maxFolioStr}.`;
+                }
+
+                const basesSpan = document.getElementById('basesStockSpan');
+                if (basesSpan) {
+                    basesSpan.textContent = `${formattedTotal} folios totales`;
+                }
+            }
+
+            function saveState() {
+                try {
+                    localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
+                    localStorage.setItem(STORAGE_KEY_STATUS, campaignClosed ? 'closed' : 'open');
+                    localStorage.setItem(STORAGE_KEY_WINNERS, JSON.stringify(winners));
+                } catch (e) {
+                    console.warn('No se pudo guardar estado local');
+                }
+            }
+
+            function renderPacksGrid() {
+                const grid = document.getElementById('packsGrid');
+                grid.innerHTML = stickerPacks.map(pack => `
+                    <div class="relative glass-card glass-card-hover rounded-3xl p-5 flex flex-col justify-between ${pack.popular ? 'border-2 border-champagne shadow-xl glow-gold' : 'border border-champagne/25'}">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${pack.popular ? 'bg-gold-metallic text-emeraldDeep' : 'bg-emeraldDeep text-champagneLight border border-champagne/30'}">
+                                ${pack.badge}
+                            </span>
+                            <span class="text-xs font-bold text-emerald-300">+${pack.foliosCount} ${pack.foliosCount === 1 ? 'Folio' : 'Folios'}</span>
                         </div>
-                        <button onclick="downloadStickerPNG('${o.orderId}', 1, 'Edición Navidad 925', '${o.packId}')" class="px-2.5 py-1 rounded-lg bg-emeraldCard border border-champagne/40 text-champagneLight text-[11px] font-bold hover:bg-champagne hover:text-emeraldDeep transition cursor-pointer">
-                            Descargar Sticker PNG ↓
+
+                        <div class="my-2">
+                            ${pack.customImage
+                                ? `<img src="${pack.customImage}" alt="${escapeHtml(pack.stickerTitle)}" class="w-24 h-24 mx-auto object-cover rounded-2xl border-2 border-champagne shadow-md">`
+                                : pack.iconSvg
+                            }
+                            <div class="text-center text-[11px] text-slate-400 mt-2">Arte: ${pack.stickerTitle}</div>
+                        </div>
+
+                        <div class="text-center mt-2">
+                            <h3 class="font-bold text-base text-white">${pack.name}</h3>
+                            <div class="font-display text-2xl sm:text-3xl font-extrabold text-gold-gradient my-2">
+                                $${pack.price.toLocaleString('es-CL')}
+                            </div>
+                            <p class="text-[11px] text-slate-300 leading-snug mb-4">
+                                Incluye descarga digital PNG + <strong>${pack.foliosCount} ${pack.foliosCount === 1 ? 'cupón gratuito' : 'cupones gratuitos'}</strong> de cortesía.
+                            </p>
+                        </div>
+
+                        <button
+                            onclick="openCheckoutModal('${pack.id}')"
+                            ${campaignClosed ? 'disabled' : ''}
+                            class="w-full py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider transition cursor-pointer ${campaignClosed ? 'bg-slate-700 text-slate-400 cursor-not-allowed' : 'bg-gold-metallic text-emeraldDeep hover:brightness-110 shadow-md'}"
+                        >
+                            ${campaignClosed ? 'Venta Cerrada' : 'Comprar Pack'}
                         </button>
                     </div>
-                    <div>
-                        <div class="text-[11px] text-slate-300 mb-1.5">Folios activos (${o.folios.length}):</div>
-                        <div class="flex flex-wrap gap-1.5">
-                            ${o.folios.map(f => `<span class="px-2.5 py-1 rounded-lg bg-gold-metallic text-emeraldDeep font-display font-extrabold text-xs">#${f}</span>`).join('')}
+                `).join('');
+            }
+
+            function applyCampaignStatusUI() {
+                const banner = document.getElementById('closedCampaignBanner');
+                const toggleBtn = document.getElementById('toggleCampaignBtn');
+                const statusDesc = document.getElementById('adminStatusDesc');
+
+                if (campaignClosed) {
+                    banner.classList.remove('hidden');
+                    if (toggleBtn) {
+                        toggleBtn.textContent = 'Reabrir Ventas de Stickers';
+                        toggleBtn.className = 'px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition cursor-pointer bg-emerald-600 text-white hover:bg-emerald-500';
+                    }
+                    if (statusDesc) {
+                        statusDesc.textContent = 'Modo SORTEO CERRADO activo. Botones de compra deshabilitados.';
+                    }
+                } else {
+                    banner.classList.add('hidden');
+                    if (toggleBtn) {
+                        toggleBtn.textContent = 'Cerrar Ventas (Activar Modo Live)';
+                        toggleBtn.className = 'px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition cursor-pointer bg-rubyBright text-white hover:bg-red-600';
+                    }
+                    if (statusDesc) {
+                        statusDesc.textContent = 'Actualmente las ventas de packs están ABIERTAS al público.';
+                    }
+                }
+                renderPacksGrid();
+            }
+
+            function updateStockAndStatsUI() {
+                const allIssued = orders.reduce((acc, o) => acc + o.folios.length, 0);
+                const pct = Math.min(100, Math.round((allIssued / totalPoolFolios) * 100));
+
+                document.getElementById('issuedFoliosCount').textContent = allIssued.toLocaleString('es-CL');
+                document.getElementById('stockPercentageText').textContent = `${pct}% Asignado`;
+                document.getElementById('stockProgressBar').style.width = `${Math.max(2, pct)}%`;
+
+                const totalRevenue = orders.reduce((acc, o) => acc + o.amount, 0);
+                const netAmount = Math.round(totalRevenue / 1.19);
+                const ivaAmount = totalRevenue - netAmount;
+
+                const kpiRev = document.getElementById('kpiRevenue');
+                if (kpiRev) {
+                    kpiRev.textContent = `$${totalRevenue.toLocaleString('es-CL')}`;
+                    document.getElementById('kpiIva').textContent = `$${ivaAmount.toLocaleString('es-CL')}`;
+                    document.getElementById('kpiFolios').textContent = `${allIssued} / ${totalPoolFolios}`;
+                    document.getElementById('kpiOrders').textContent = orders.length;
+                    renderAdminOrdersTable();
+                }
+            }
+
+            function generateUniqueFolios(count) {
+                const usedSet = new Set();
+                orders.forEach(o => o.folios.forEach(f => usedSet.add(f)));
+
+                const padLen = Math.max(4, String(totalPoolFolios).length);
+                const available = [];
+                for (let i = 1; i <= totalPoolFolios; i++) {
+                    const formatted = String(i).padStart(padLen, '0');
+                    if (!usedSet.has(formatted)) {
+                        available.push(formatted);
+                    }
+                }
+
+                if (available.length < count) {
+                    throw new Error('No quedan suficientes folios disponibles en el stock de esta campaña.');
+                }
+
+                const assigned = [];
+                for (let i = 0; i < count; i++) {
+                    const randIdx = Math.floor(Math.random() * available.length);
+                    assigned.push(available[randIdx]);
+                    available.splice(randIdx, 1);
+                }
+                return assigned.sort();
+            }
+
+            function formatRutInput(input) {
+                let val = input.value.replace(/[^0-9kK]/g, '').toUpperCase();
+                if (val.length > 1) {
+                    const body = val.slice(0, -1);
+                    const dv = val.slice(-1);
+                    const formattedBody = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    input.value = `${formattedBody}-${dv}`;
+                } else {
+                    input.value = val;
+                }
+            }
+
+            function validateChileanRut(rut) {
+                const clean = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+                if (clean.length < 8) return false;
+                const body = clean.slice(0, -1);
+                const dv = clean.slice(-1);
+                let sum = 0;
+                let mul = 2;
+                for (let i = body.length - 1; i >= 0; i--) {
+                    sum += parseInt(body[i], 10) * mul;
+                    mul = mul === 7 ? 2 : mul + 1;
+                }
+                const expected = 11 - (sum % 11);
+                const dvCalc = expected === 11 ? '0' : expected === 10 ? 'K' : String(expected);
+                return dv === dvCalc;
+            }
+
+            function openCheckoutModal(packId) {
+                if (campaignClosed) {
+                    showToast('La venta de stickers se encuentra cerrada.');
+                    return;
+                }
+                selectedPack = stickerPacks.find(p => p.id === packId);
+                if (!selectedPack) return;
+
+                document.getElementById('checkoutPackTitle').textContent = selectedPack.name;
+                document.getElementById('checkoutItemDesc').textContent = `${selectedPack.name} (${selectedPack.stickerTitle})`;
+                document.getElementById('checkoutBonusDesc').textContent = `+ ${selectedPack.foliosCount} ${selectedPack.foliosCount === 1 ? 'cupón de cortesía gratuito' : 'cupones de cortesía gratuitos'}`;
+                document.getElementById('checkoutPriceDisplay').textContent = `$${selectedPack.price.toLocaleString('es-CL')}`;
+
+                document.getElementById('checkoutErrorMsg').classList.add('hidden');
+                document.getElementById('checkoutStepForm').classList.remove('hidden');
+                document.getElementById('checkoutStepSuccess').classList.add('hidden');
+                document.getElementById('checkoutModal').classList.remove('hidden');
+            }
+
+            function closeCheckoutModal() {
+                document.getElementById('checkoutModal').classList.add('hidden');
+            }
+
+            function redirectToFlowPayment(e) {
+                e.preventDefault();
+                const errBox = document.getElementById('checkoutErrorMsg');
+                errBox.classList.add('hidden');
+
+                const name = document.getElementById('buyerName').value.trim();
+                const rut = document.getElementById('buyerRut').value.trim();
+                const phone = document.getElementById('buyerPhone').value.trim();
+                const email = document.getElementById('buyerEmail').value.trim();
+
+                if (!validateChileanRut(rut)) {
+                    errBox.textContent = 'El RUT ingresado no es válido. Verifica el dígito verificador (Ej: 12.345.678-9).';
+                    errBox.classList.remove('hidden');
+                    return;
+                }
+
+                const flowUrl = FLOW_PAYMENT_LINKS[selectedPack.id];
+                if (!flowUrl) {
+                    errBox.textContent = 'Enlace de pago no disponible para este pack.';
+                    errBox.classList.remove('hidden');
+                    return;
+                }
+
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('es-CL') + ' ' + now.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
+                const orderNumber = `JJ-${1001 + orders.length}`;
+
+                // Guardar orden pendiente antes de salir a Flow.cl
+                const pendingTx = {
+                    orderId: orderNumber,
+                    date: dateStr,
+                    name,
+                    rut,
+                    email,
+                    phone,
+                    packId: selectedPack.id,
+                    packName: selectedPack.name,
+                    stickerTitle: selectedPack.stickerTitle,
+                    stickersCount: selectedPack.stickersCount,
+                    foliosCount: selectedPack.foliosCount,
+                    amount: selectedPack.price,
+                    gateway: 'Flow.cl'
+                };
+
+                localStorage.setItem(STORAGE_KEY_PENDING, JSON.stringify(pendingTx));
+                window.location.href = flowUrl;
+            }
+
+            function downloadStickerPNG(orderId, index, title, packId) {
+                const packObj = stickerPacks.find(p => p.id === packId);
+                if (packObj && packObj.customImage) {
+                    const link = document.createElement('a');
+                    link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
+                    link.href = packObj.customImage;
+                    link.click();
+                    showToast(`Descargando foto del Sticker #${index}...`);
+                    return;
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = 600;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+
+                const grad = ctx.createRadialGradient(300, 300, 40, 300, 300, 280);
+                grad.addColorStop(0, '#0c4a3a');
+                grad.addColorStop(1, '#041f18');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(300, 300, 280, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.lineWidth = 14;
+                ctx.strokeStyle = '#e5c158';
+                ctx.stroke();
+
+                ctx.fillStyle = '#e2e8f0';
+                ctx.beginPath();
+                ctx.moveTo(300, 125);
+                ctx.lineTo(420, 240);
+                ctx.lineTo(300, 390);
+                ctx.lineTo(180, 240);
+                ctx.closePath();
+                ctx.fill();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = '#f6e29f';
+                ctx.stroke();
+
+                ctx.fillStyle = '#041f18';
+                ctx.font = 'bold 34px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('PLATA 925', 300, 255);
+
+                ctx.fillStyle = '#f6e29f';
+                ctx.font = 'bold 32px serif';
+                ctx.fillText('JOYAS JACK • NAVIDAD', 300, 445);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '20px sans-serif';
+                ctx.fillText(`${title} — Edición #${index} (${orderId})`, 300, 485);
+
+                const link = document.createElement('a');
+                link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast(`Descargando Sticker #${index} en PNG...`);
+            }
+
+            function copyLatestFolios() {
+                if (!latestCreatedOrder) return;
+                const text = `Mis folios Joyas Jack (${latestCreatedOrder.orderId}): ${latestCreatedOrder.folios.map(f => '#' + f).join(', ')}`;
+                const temp = document.createElement('textarea');
+                temp.value = text;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                showToast('Folios copiados al portapapeles.');
+            }
+
+            function handleTicketSearch(e, inputId, resultsId) {
+                e.preventDefault();
+                const query = document.getElementById(inputId).value.trim().toLowerCase();
+                const cleanRutQuery = query.replace(/[^0-9k]/g, '');
+                const resultsContainer = document.getElementById(resultsId);
+
+                const matches = orders.filter(o => {
+                    const orderRutClean = o.rut.toLowerCase().replace(/[^0-9k]/g, '');
+                    return (
+                        o.email.toLowerCase() === query ||
+                        o.orderId.toLowerCase() === query ||
+                        (cleanRutQuery.length >= 7 && orderRutClean === cleanRutQuery)
+                    );
+                });
+
+                if (matches.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="p-4 rounded-2xl bg-red-950/60 border border-red-500/40 text-center text-xs text-red-200">
+                            No encontramos compras asociadas a <strong>"${escapeHtml(query)}"</strong>. Verifica que tu RUT o correo estén escritos correctamente.
+                        </div>
+                    `;
+                    return;
+                }
+
+                resultsContainer.innerHTML = matches.map(o => `
+                    <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40 space-y-2.5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+                            <div>
+                                <div class="text-xs font-extrabold text-champagneLight">Orden #${o.orderId} • ${o.packName}</div>
+                                <div class="text-[11px] text-slate-400">${escapeHtml(o.name)} (${o.rut}) • ${o.date}</div>
+                            </div>
+                            <button onclick="downloadStickerPNG('${o.orderId}', 1, 'Edición Navidad 925', '${o.packId}')" class="px-2.5 py-1 rounded-lg bg-emeraldCard border border-champagne/40 text-champagneLight text-[11px] font-bold hover:bg-champagne hover:text-emeraldDeep transition cursor-pointer">
+                                Descargar Sticker PNG ↓
+                            </button>
+                        </div>
+                        <div>
+                            <div class="text-[11px] text-slate-300 mb-1.5">Folios activos (${o.folios.length}):</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${o.folios.map(f => `<span class="px-2.5 py-1 rounded-lg bg-gold-metallic text-emeraldDeep font-display font-extrabold text-xs">#${f}</span>`).join('')}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
-        }
+                `).join('');
+            }
 
-        function toggleFloatingWidget() {
-            const widget = document.getElementById('floatingTicketWidget');
-            widget.classList.toggle('hidden');
-        }
+            function toggleFloatingWidget() {
+                document.getElementById('floatingTicketWidget').classList.toggle('hidden');
+            }
 
-        // =========================================================================
-        // 6. PANEL ADMIN: CLAVE TEMPORAL OTP DE 1 SOLO USO (CERO EXPOSICIÓN EN UI)
-        // =========================================================================
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.remove('hidden');
-        }
+            function openAdminModal() {
+                document.getElementById('adminModal').classList.remove('hidden');
+            }
 
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
+            function closeAdminModal() {
+                document.getElementById('adminModal').classList.add('hidden');
+            }
 
-        // Genera una clave temporal de 6 dígitos válida por 10 min y de 1 solo uso
-        async function requestAdminOneTimeCode() {
-            const btn = document.getElementById('requestOtpBtn');
-            const statusBox = document.getElementById('otpStatusBox');
-            document.getElementById('adminPinError').classList.add('hidden');
+            async function requestAdminOneTimeCode() {
+                const btn = document.getElementById('requestOtpBtn');
+                const statusBox = document.getElementById('otpStatusBox');
+                document.getElementById('adminPinError').classList.add('hidden');
 
-            const array = new Uint32Array(1);
-            window.crypto.getRandomValues(array);
-            const otpCode = String(100000 + (array[0] % 900000));
-            const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutos
+                const array = new Uint32Array(1);
+                window.crypto.getRandomValues(array);
+                const otpCode = String(100000 + (array[0] % 900000));
+                const expiresAt = Date.now() + 10 * 60 * 1000;
 
-            sessionStorage.setItem(STORAGE_KEY_OTP, JSON.stringify({
-                code: otpCode,
-                expiresAt,
-                used: false
-            }));
+                sessionStorage.setItem(STORAGE_KEY_OTP, JSON.stringify({
+                    code: otpCode,
+                    expiresAt,
+                    used: false
+                }));
 
-            btn.disabled = true;
-            btn.textContent = 'Enviando código seguro...';
+                btn.disabled = true;
+                btn.textContent = 'Enviando código seguro...';
 
-            if (ADMIN_SECURITY_CONFIG.emailjsServiceId && ADMIN_SECURITY_CONFIG.emailjsTemplateId && ADMIN_SECURITY_CONFIG.emailjsPublicKey) {
                 try {
                     await fetch('https://api.emailjs.com/api/v1.0/email/send', {
                         method: 'POST',
@@ -1446,440 +1405,456 @@
                     });
                     statusBox.textContent = '✅ Clave temporal de 1 solo uso enviada al correo del administrador. Expira en 10 minutos.';
                 } catch (err) {
-                    statusBox.textContent = '⚠️ Error al conectar con el servicio de correo. Intenta nuevamente.';
+                    statusBox.textContent = '⚠️ Error al conectar con el servidor de correo. Intenta nuevamente.';
                 }
-            } else {
-                statusBox.textContent = '⚠️ Servicio de correo no configurado aún.';
+
+                statusBox.classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = '🔄 Solicitar Nuevo Código Temporal';
+                document.getElementById('adminOtpInput').focus();
             }
 
-            statusBox.classList.remove('hidden');
-            btn.disabled = false;
-            btn.textContent = '🔄 Solicitar Nuevo Código Temporal';
-            document.getElementById('adminOtpInput').focus();
-        }
+            function verifyAdminOtp(e) {
+                e.preventDefault();
+                const entered = document.getElementById('adminOtpInput').value.trim();
+                const errEl = document.getElementById('adminPinError');
+                const rawOtp = sessionStorage.getItem(STORAGE_KEY_OTP);
 
-        function verifyAdminOtp(e) {
-            e.preventDefault();
-            const entered = document.getElementById('adminOtpInput').value.trim();
-            const errEl = document.getElementById('adminPinError');
-            const rawOtp = sessionStorage.getItem(STORAGE_KEY_OTP);
+                if (!rawOtp) {
+                    errEl.textContent = 'Primero solicita una clave temporal a tu correo.';
+                    errEl.classList.remove('hidden');
+                    return;
+                }
 
-            if (!rawOtp) {
-                errEl.textContent = 'Primero solicita una clave temporal a tu correo.';
-                errEl.classList.remove('hidden');
-                return;
+                const otpData = JSON.parse(rawOtp);
+                if (otpData.used || Date.now() > otpData.expiresAt || entered !== otpData.code) {
+                    errEl.textContent = 'Código incorrecto, expirado o ya utilizado. Solicita uno nuevo.';
+                    errEl.classList.remove('hidden');
+                    return;
+                }
+
+                otpData.used = true;
+                sessionStorage.removeItem(STORAGE_KEY_OTP);
+                document.getElementById('adminOtpInput').value = '';
+                document.getElementById('otpStatusBox').classList.add('hidden');
+                errEl.classList.add('hidden');
+
+                document.getElementById('adminLoginView').classList.add('hidden');
+                document.getElementById('adminDashboardView').classList.remove('hidden');
+                updateStockAndStatsUI();
+                applyCampaignStatusUI();
+                renderAdminCampaignEditor();
             }
 
-            const otpData = JSON.parse(rawOtp);
-            if (otpData.used || Date.now() > otpData.expiresAt || entered !== otpData.code) {
-                errEl.textContent = 'Código incorrecto, expirado o ya utilizado. Solicita uno nuevo.';
-                errEl.classList.remove('hidden');
-                return;
+            function removeSingleFolio(orderId, folioToRemove) {
+                const orderIdx = orders.findIndex(o => o.orderId === orderId);
+                if (orderIdx === -1) return;
+
+                const order = orders[orderIdx];
+                if (!confirm(`¿Seguro que deseas eliminar el folio sospechoso #${folioToRemove} de ${order.name} (${order.orderId})?`)) {
+                    return;
+                }
+
+                order.folios = order.folios.filter(f => f !== folioToRemove);
+                if (order.folios.length === 0) {
+                    orders.splice(orderIdx, 1);
+                }
+                winners = winners.filter(w => w.folio !== folioToRemove);
+
+                saveState();
+                updateStockAndStatsUI();
+                renderPublicWinners();
+                showToast(`Folio #${folioToRemove} eliminado y liberado del sistema.`);
             }
 
-            // Invalidar inmediatamente el código tras 1 solo uso
-            otpData.used = true;
-            sessionStorage.removeItem(STORAGE_KEY_OTP);
-            document.getElementById('adminOtpInput').value = '';
-            document.getElementById('otpStatusBox').classList.add('hidden');
-            errEl.classList.add('hidden');
+            function deleteSuspiciousOrder(orderId) {
+                const order = orders.find(o => o.orderId === orderId);
+                if (!order) return;
 
-            document.getElementById('adminLoginView').classList.add('hidden');
-            document.getElementById('adminDashboardView').classList.remove('hidden');
-            updateStockAndStatsUI();
-            applyCampaignStatusUI();
-            renderAdminCampaignEditor();
-        }
+                if (!confirm(`¿Anular completamente la orden ${orderId} de ${order.name} y liberar sus ${order.folios.length} folio(s)?`)) {
+                    return;
+                }
 
-        // Eliminar un folio sospechoso específico de una orden
-        function removeSingleFolio(orderId, folioToRemove) {
-            const orderIdx = orders.findIndex(o => o.orderId === orderId);
-            if (orderIdx === -1) return;
+                const removedFoliosSet = new Set(order.folios);
+                orders = orders.filter(o => o.orderId !== orderId);
+                winners = winners.filter(w => !removedFoliosSet.has(w.folio));
 
-            const order = orders[orderIdx];
-            if (!confirm(`¿Seguro que deseas eliminar el folio sospechoso #${folioToRemove} de ${order.name} (${order.orderId})? El folio volverá a quedar disponible.`)) {
-                return;
+                saveState();
+                updateStockAndStatsUI();
+                renderPublicWinners();
+                showToast(`Orden ${orderId} eliminada y sus folios quedaron disponibles.`);
             }
 
-            order.folios = order.folios.filter(f => f !== folioToRemove);
+            function lookupFolioOwner(e) {
+                e.preventDefault();
+                const rawVal = document.getElementById('adminFolioLookupInput').value.trim().replace(/^#/, '');
+                const padLen = Math.max(4, String(totalPoolFolios).length);
+                const paddedVal = rawVal.padStart(padLen, '0');
+                const resultBox = document.getElementById('adminFolioLookupResult');
 
-            if (order.folios.length === 0) {
-                orders.splice(orderIdx, 1);
-            }
+                const winnerOrder = orders.find(o => o.folios.includes(paddedVal) || o.folios.includes(rawVal));
 
-            winners = winners.filter(w => w.folio !== folioToRemove);
+                if (!winnerOrder) {
+                    resultBox.innerHTML = `
+                        <div class="p-3.5 rounded-xl bg-red-950/70 border border-red-500/40 text-xs text-red-200">
+                            El folio <strong>#${escapeHtml(paddedVal)}</strong> no se encuentra asignado a ningún comprador.
+                        </div>
+                    `;
+                    return;
+                }
 
-            saveState();
-            updateStockAndStatsUI();
-            renderPublicWinners();
-            showToast(`Folio #${folioToRemove} eliminado y liberado del sistema.`);
-        }
+                const waDigits = winnerOrder.phone.replace(/[^0-9]/g, '');
+                const waText = encodeURIComponent(`¡Felicidades ${winnerOrder.name}! Tu folio #${paddedVal} (Orden ${winnerOrder.orderId}) resultó ganador en el sorteo navideño de Joyas Jack.`);
 
-        // Eliminar una orden sospechosa completa y liberar todos sus folios
-        function deleteSuspiciousOrder(orderId) {
-            const order = orders.find(o => o.orderId === orderId);
-            if (!order) return;
-
-            if (!confirm(`¿Anular completamente la orden ${orderId} de ${order.name} y liberar sus ${order.folios.length} folio(s)?`)) {
-                return;
-            }
-
-            const removedFoliosSet = new Set(order.folios);
-            orders = orders.filter(o => o.orderId !== orderId);
-            winners = winners.filter(w => !removedFoliosSet.has(w.folio));
-
-            saveState();
-            updateStockAndStatsUI();
-            renderPublicWinners();
-            showToast(`Orden ${orderId} eliminada y sus folios quedaron disponibles.`);
-        }
-
-        // Buscador rápido en vivo por número de folio ganador
-        function lookupFolioOwner(e) {
-            e.preventDefault();
-            const rawVal = document.getElementById('adminFolioLookupInput').value.trim().replace(/^#/, '');
-            const padLen = Math.max(4, String(totalPoolFolios).length);
-            const paddedVal = rawVal.padStart(padLen, '0');
-            const resultBox = document.getElementById('adminFolioLookupResult');
-
-            const winnerOrder = orders.find(o => o.folios.includes(paddedVal) || o.folios.includes(rawVal));
-
-            if (!winnerOrder) {
                 resultBox.innerHTML = `
-                    <div class="p-3.5 rounded-xl bg-red-950/70 border border-red-500/40 text-xs text-red-200">
-                        El folio <strong>#${escapeHtml(paddedVal)}</strong> no se encuentra asignado a ningún comprador.
+                    <div class="p-4 rounded-2xl bg-black/50 border-2 border-emerald-400 space-y-2">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+                            <span class="px-3 py-1 rounded-full bg-gold-metallic text-emeraldDeep font-display font-extrabold text-xs">
+                                🏆 DUEÑO DEL FOLIO #${paddedVal}
+                            </span>
+                            <span class="text-xs font-bold text-emerald-300">Orden ${winnerOrder.orderId} • ${winnerOrder.packName}</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                            <div><span class="text-slate-400">Nombre:</span> <strong class="text-white">${escapeHtml(winnerOrder.name)}</strong></div>
+                            <div><span class="text-slate-400">RUT:</span> <strong class="text-champagneLight">${escapeHtml(winnerOrder.rut)}</strong></div>
+                            <div><span class="text-slate-400">Teléfono:</span> <strong class="text-white">${escapeHtml(winnerOrder.phone)}</strong></div>
+                            <div><span class="text-slate-400">Correo:</span> <strong class="text-white">${escapeHtml(winnerOrder.email)}</strong></div>
+                        </div>
+                        <div class="pt-2">
+                            <a href="https://wa.me/${waDigits}?text=${waText}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
+                                💬 Hablar por WhatsApp con el Ganador
+                            </a>
+                        </div>
                     </div>
                 `;
-                return;
             }
 
-            const waDigits = winnerOrder.phone.replace(/[^0-9]/g, '');
-            const waText = encodeURIComponent(`¡Felicidades ${winnerOrder.name}! Tu folio #${paddedVal} (Orden ${winnerOrder.orderId}) resultó ganador en el sorteo navideño de Joyas Jack.`);
+            function renderAdminCampaignEditor() {
+                const stockInput = document.getElementById('adminTotalStockInput');
+                if (stockInput) stockInput.value = totalPoolFolios;
 
-            resultBox.innerHTML = `
-                <div class="p-4 rounded-2xl bg-black/50 border-2 border-emerald-400 space-y-2">
-                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
-                        <span class="px-3 py-1 rounded-full bg-gold-metallic text-emeraldDeep font-display font-extrabold text-xs">
-                            🏆 DUEÑO DEL FOLIO #${paddedVal}
-                        </span>
-                        <span class="text-xs font-bold text-emerald-300">Orden ${winnerOrder.orderId} • ${winnerOrder.packName}</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
-                        <div><span class="text-slate-400">Nombre:</span> <strong class="text-white">${escapeHtml(winnerOrder.name)}</strong></div>
-                        <div><span class="text-slate-400">RUT:</span> <strong class="text-champagneLight">${escapeHtml(winnerOrder.rut)}</strong></div>
-                        <div><span class="text-slate-400">Teléfono:</span> <strong class="text-white">${escapeHtml(winnerOrder.phone)}</strong></div>
-                        <div><span class="text-slate-400">Correo:</span> <strong class="text-white">${escapeHtml(winnerOrder.email)}</strong></div>
-                    </div>
-                    <div class="pt-2">
-                        <a href="https://wa.me/${waDigits}?text=${waText}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
-                            💬 Hablar por WhatsApp con el Ganador
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
+                const container = document.getElementById('adminPacksEditorList');
+                if (!container) return;
 
-        function renderAdminCampaignEditor() {
-            const stockInput = document.getElementById('adminTotalStockInput');
-            if (stockInput) stockInput.value = totalPoolFolios;
-
-            const container = document.getElementById('adminPacksEditorList');
-            if (!container) return;
-
-            container.innerHTML = stickerPacks.map(pack => `
-                <div class="p-3.5 rounded-xl bg-black/35 border border-emeraldBorder space-y-2.5">
-                    <div class="flex items-center justify-between gap-2">
-                        <div>
-                            <div class="text-xs font-extrabold text-white">${pack.name}</div>
-                            <div class="text-[10px] text-champagne">${pack.stickerTitle} (${pack.foliosCount} ${pack.foliosCount === 1 ? 'folio' : 'folios'})</div>
+                container.innerHTML = stickerPacks.map(pack => `
+                    <div class="p-3.5 rounded-xl bg-black/35 border border-emeraldBorder space-y-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div>
+                                <div class="text-xs font-extrabold text-white">${pack.name}</div>
+                                <div class="text-[10px] text-champagne">${pack.stickerTitle} (${pack.foliosCount} ${pack.foliosCount === 1 ? 'folio' : 'folios'})</div>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-emeraldDeep border border-champagne/30 flex items-center justify-center overflow-hidden shrink-0">
+                                ${pack.customImage
+                                    ? `<img src="${pack.customImage}" alt="Preview" class="w-full h-full object-cover">`
+                                    : `<span class="text-[10px] text-slate-400 text-center px-1">Sin foto</span>`
+                                }
+                            </div>
                         </div>
-                        <div class="w-12 h-12 rounded-lg bg-emeraldDeep border border-champagne/30 flex items-center justify-center overflow-hidden shrink-0">
-                            ${pack.customImage
-                                ? `<img src="${pack.customImage}" alt="Preview" class="w-full h-full object-cover">`
-                                : `<span class="text-[10px] text-slate-400 text-center px-1">Sin foto</span>`
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 items-end">
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1">Precio CLP ($)</label>
+                                <input
+                                    type="number"
+                                    id="price-input-${pack.id}"
+                                    value="${pack.price}"
+                                    min="100"
+                                    step="100"
+                                    class="w-full px-3 py-1.5 rounded-lg bg-emeraldDeep border border-emeraldBorder text-white text-xs font-bold focus:outline-none focus:border-champagne"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1">Foto Sticker (desde PC)</label>
+                                <label class="flex items-center justify-center px-3 py-1.5 rounded-lg bg-emeraldCard hover:bg-emeraldDeep border border-champagne/40 text-champagneLight text-[11px] font-bold cursor-pointer transition">
+                                    <span>📁 Subir Imagen</span>
+                                    <input type="file" accept="image/*" onchange="handleStickerImageUpload(event, '${pack.id}')" class="hidden">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function handleStickerImageUpload(event, packId) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const maxDim = 500;
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) {
+                                h = Math.round((h * maxDim) / w);
+                                w = maxDim;
+                            } else {
+                                w = Math.round((w * maxDim) / h);
+                                h = maxDim;
                             }
-                        </div>
-                    </div>
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 items-end">
-                        <div>
-                            <label class="block text-[10px] text-slate-400 mb-1">Precio CLP ($)</label>
-                            <input
-                                type="number"
-                                id="price-input-${pack.id}"
-                                value="${pack.price}"
-                                min="100"
-                                step="100"
-                                class="w-full px-3 py-1.5 rounded-lg bg-emeraldDeep border border-emeraldBorder text-white text-xs font-bold focus:outline-none focus:border-champagne"
-                            >
-                        </div>
-                        <div>
-                            <label class="block text-[10px] text-slate-400 mb-1">Foto Sticker (desde PC)</label>
-                            <label class="flex items-center justify-center px-3 py-1.5 rounded-lg bg-emeraldCard hover:bg-emeraldDeep border border-champagne/40 text-champagneLight text-[11px] font-bold cursor-pointer transition">
-                                <span>📁 Subir Imagen</span>
-                                <input type="file" accept="image/*" onchange="handleStickerImageUpload(event, '${pack.id}')" class="hidden">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
+                        const dataUrl = canvas.toDataURL('image/png', 0.9);
+                        const pack = stickerPacks.find(p => p.id === packId);
+                        if (pack) {
+                            pack.customImage = dataUrl;
+                            renderAdminCampaignEditor();
+                            showToast(`Foto cargada para ${pack.name}. Haz clic en "Guardar Cambios".`);
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
 
-        function handleStickerImageUpload(event, packId) {
-            const file = event.target.files[0];
-            if (!file) return;
+            function saveCampaignSettings() {
+                const newTotal = parseInt(document.getElementById('adminTotalStockInput').value, 10);
+                if (!newTotal || newTotal < 10) {
+                    showToast('Ingresa un stock total válido (mínimo 10).');
+                    return;
+                }
+                totalPoolFolios = newTotal;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const maxDim = 500;
-                    let w = img.width;
-                    let h = img.height;
-                    if (w > maxDim || h > maxDim) {
-                        if (w > h) {
-                            h = Math.round((h * maxDim) / w);
-                            w = maxDim;
-                        } else {
-                            w = Math.round((w * maxDim) / h);
-                            h = maxDim;
+                stickerPacks.forEach(pack => {
+                    const priceInput = document.getElementById(`price-input-${pack.id}`);
+                    if (priceInput) {
+                        const val = parseInt(priceInput.value, 10);
+                        if (val && val >= 100) {
+                            pack.price = val;
                         }
                     }
-                    const canvas = document.createElement('canvas');
-                    canvas.width = w;
-                    canvas.height = h;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, w, h);
-
-                    const dataUrl = canvas.toDataURL('image/png', 0.9);
-                    const pack = stickerPacks.find(p => p.id === packId);
-                    if (pack) {
-                        pack.customImage = dataUrl;
-                        renderAdminCampaignEditor();
-                        showToast(`Foto cargada para ${pack.name}. Haz clic en "Guardar Cambios".`);
-                    }
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function saveCampaignSettings() {
-            const newTotal = parseInt(document.getElementById('adminTotalStockInput').value, 10);
-            if (!newTotal || newTotal < 10) {
-                showToast('Ingresa un stock total válido (mínimo 10).');
-                return;
-            }
-            totalPoolFolios = newTotal;
-
-            stickerPacks.forEach(pack => {
-                const priceInput = document.getElementById(`price-input-${pack.id}`);
-                if (priceInput) {
-                    const val = parseInt(priceInput.value, 10);
-                    if (val && val >= 100) {
-                        pack.price = val;
-                    }
-                }
-            });
-
-            try {
-                const payload = {
-                    totalPoolFolios,
-                    packs: stickerPacks.map(p => ({
-                        id: p.id,
-                        price: p.price,
-                        customImage: p.customImage
-                    }))
-                };
-                localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(payload));
-            } catch (err) {
-                showToast('Aviso: Las imágenes son muy pesadas para guardarlas en caché local; usa imágenes más livianas.');
-                return;
-            }
-
-            syncPoolTexts();
-            renderPacksGrid();
-            updateStockAndStatsUI();
-            showToast('¡Stock, precios y fotos de stickers actualizados en toda la web!');
-        }
-
-        function toggleCampaignStatus() {
-            campaignClosed = !campaignClosed;
-            saveState();
-            applyCampaignStatusUI();
-            showToast(campaignClosed ? 'Ventas cerradas: Modo Live activado.' : 'Ventas reabiertas correctamente.');
-        }
-
-        function renderAdminOrdersTable() {
-            const tbody = document.getElementById('adminOrdersTableBody');
-            if (!tbody) return;
-            if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">No hay órdenes registradas.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = orders.map(o => `
-                <tr class="hover:bg-white/5">
-                    <td class="p-3 font-bold text-champagneLight">${o.orderId}</td>
-                    <td class="p-3">
-                        <div class="font-semibold text-white">${escapeHtml(o.name)}</div>
-                        <div class="text-[10px] text-slate-400">${o.rut} • ${escapeHtml(o.email)}</div>
-                    </td>
-                    <td class="p-3 text-slate-200">${o.packName}</td>
-                    <td class="p-3 font-bold text-emerald-300">$${o.amount.toLocaleString('es-CL')}</td>
-                    <td class="p-3">
-                        <div class="flex flex-wrap gap-1.5">
-                            ${o.folios.map(f => `
-                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emeraldDeep border border-champagne/30 text-[10px] font-bold text-champagneLight">
-                                    #${f}
-                                    <button type="button" onclick="removeSingleFolio('${o.orderId}', '${f}')" title="Eliminar folio sospechoso #${f}" class="text-red-400 hover:text-red-200 font-extrabold cursor-pointer ml-0.5">✕</button>
-                                </span>
-                            `).join('')}
-                        </div>
-                    </td>
-                    <td class="p-3 text-right">
-                        <button type="button" onclick="deleteSuspiciousOrder('${o.orderId}')" class="px-2.5 py-1 rounded-lg bg-red-950/80 hover:bg-red-800 border border-red-500/40 text-red-200 text-[10px] font-bold cursor-pointer">
-                            Anular Orden
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderPublicWinners() {
-            const section = document.getElementById('publicWinnersSection');
-            const grid = document.getElementById('publicWinnersGrid');
-            if (winners.length === 0) {
-                section.classList.add('hidden');
-                return;
-            }
-            section.classList.remove('hidden');
-            grid.innerHTML = winners.map(w => `
-                <div class="p-5 rounded-2xl bg-emeraldDeep border border-champagne/50 text-center">
-                    <div class="text-xs font-extrabold uppercase tracking-wider text-champagneLight">${w.prizeTitle}</div>
-                    <div class="font-display text-3xl font-extrabold text-white my-2">Folio #${w.folio}</div>
-                    <div class="text-sm font-bold text-emerald-300">${escapeHtml(w.name)}</div>
-                    <div class="text-[11px] text-slate-400 mt-0.5">Orden verificada ${w.orderId}</div>
-                </div>
-            `).join('');
-        }
-
-        function exportOrdersCSV() {
-            let csv = 'Orden,Fecha,Nombre,RUT,Email,Telefono,Pack,Monto_CLP,Pasarela,Folios\n';
-            orders.forEach(o => {
-                csv += `"${o.orderId}","${o.date}","${o.name}","${o.rut}","${o.email}","${o.phone}","${o.packName}",${o.amount},"${o.gateway}","${o.folios.join(' ')}"\n`;
-            });
-            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Acta-Notarial-JoyasJack-Navidad2026.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function exportUniqueFoliosTxt() {
-            const uniqueFoliosSet = new Set();
-            orders.forEach(o => {
-                o.folios.forEach(f => uniqueFoliosSet.add(f));
-            });
-            const sortedFolios = Array.from(uniqueFoliosSet).sort();
-            if (sortedFolios.length === 0) {
-                showToast('Aún no hay folios asignados para descargar.');
-                return;
-            }
-            const blob = new Blob([sortedFolios.join('\n')], { type: 'text/plain;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Folios-Unicos-AppSorteos-JoyasJack.txt';
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast(`Descargados ${sortedFolios.length} folios únicos listos para copiar y pegar.`);
-        }
-
-        // =========================================================================
-        // 7. MODALES LEGALES, CONTADOR REGRESIVO Y NIEVE NAVIDEÑA
-        // =========================================================================
-        function openBasesModal() { document.getElementById('basesModal').classList.remove('hidden'); }
-        function closeBasesModal() { document.getElementById('basesModal').classList.add('hidden'); }
-        function openPrivacyModal() { document.getElementById('privacyModal').classList.remove('hidden'); }
-        function downloadBasesTxt() {
-            const text = document.getElementById('basesPrintableContent').innerText;
-            const blob = new Blob([`BASES LEGALES PROTOCOLIZADAS - JOYAS JACK NAVIDAD 925\n\n${text}`], { type: 'text/plain;charset=utf-8' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'Bases-Legales-Joyas-Jack-Navidad-925.txt';
-            a.click();
-        }
-        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        function showToast(msg) {
-            const toast = document.getElementById('toastNotification');
-            toast.textContent = msg;
-            toast.classList.remove('hidden');
-            clearTimeout(window._toastTimer);
-            window._toastTimer = setTimeout(() => toast.classList.add('hidden'), 3200);
-        }
-        function escapeHtml(str) {
-            return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
-        }
-
-        function startCountdown() {
-            const targetDate = new Date('2026-12-23T21:00:00-03:00').getTime();
-            function tick() {
-                const now = Date.now();
-                const diff = Math.max(0, targetDate - now);
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / 1000 / 60) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-                document.getElementById('cdDays').textContent = String(d).padStart(2, '0');
-                document.getElementById('cdHours').textContent = String(h).padStart(2, '0');
-                document.getElementById('cdMins').textContent = String(m).padStart(2, '0');
-                document.getElementById('cdSecs').textContent = String(s).padStart(2, '0');
-            }
-            tick();
-            setInterval(tick, 1000);
-        }
-
-        function initSnowCanvas() {
-            const canvas = document.getElementById('snowCanvas');
-            const ctx = canvas.getContext('2d');
-            let width = (canvas.width = window.innerWidth);
-            let height = (canvas.height = window.innerHeight);
-
-            window.addEventListener('resize', () => {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            });
-
-            const flakes = Array.from({ length: 45 }, () => ({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                r: Math.random() * 2.4 + 0.8,
-                speedY: Math.random() * 0.7 + 0.3,
-                speedX: (Math.random() - 0.5) * 0.4,
-                alpha: Math.random() * 0.5 + 0.2
-            }));
-
-            function animateSnow() {
-                ctx.clearRect(0, 0, width, height);
-                flakes.forEach(f => {
-                    ctx.beginPath();
-                    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(246, 226, 159, ${f.alpha})`;
-                    ctx.fill();
-                    f.y += f.speedY;
-                    f.x += f.speedX;
-                    if (f.y > height) { f.y = -5; f.x = Math.random() * width; }
-                    if (f.x > width) f.x = 0;
-                    if (f.x < 0) f.x = width;
                 });
-                requestAnimationFrame(animateSnow);
-            }
-            animateSnow();
-        }
 
-        window.onload = initApp;
+                try {
+                    const payload = {
+                        totalPoolFolios,
+                        packs: stickerPacks.map(p => ({
+                            id: p.id,
+                            price: p.price,
+                            customImage: p.customImage
+                        }))
+                    };
+                    localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(payload));
+                } catch (err) {
+                    showToast('Aviso: Las imágenes son muy pesadas; usa imágenes más livianas.');
+                    return;
+                }
+
+                syncPoolTexts();
+                renderPacksGrid();
+                updateStockAndStatsUI();
+                showToast('¡Stock, precios y fotos de stickers actualizados!');
+            }
+
+            function toggleCampaignStatus() {
+                campaignClosed = !campaignClosed;
+                saveState();
+                applyCampaignStatusUI();
+                showToast(campaignClosed ? 'Ventas cerradas: Modo Live activado.' : 'Ventas reabiertas correctamente.');
+            }
+
+            function renderAdminOrdersTable() {
+                const tbody = document.getElementById('adminOrdersTableBody');
+                if (!tbody) return;
+                if (orders.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">No hay órdenes registradas aún.</td></tr>`;
+                    return;
+                }
+                tbody.innerHTML = orders.map(o => `
+                    <tr class="hover:bg-white/5">
+                        <td class="p-3 font-bold text-champagneLight">${o.orderId}</td>
+                        <td class="p-3">
+                            <div class="font-semibold text-white">${escapeHtml(o.name)}</div>
+                            <div class="text-[10px] text-slate-400">${o.rut} • ${escapeHtml(o.email)}</div>
+                        </td>
+                        <td class="p-3 text-slate-200">${o.packName}</td>
+                        <td class="p-3 font-bold text-emerald-300">$${o.amount.toLocaleString('es-CL')}</td>
+                        <td class="p-3">
+                            <div class="flex flex-wrap gap-1.5">
+                                ${o.folios.map(f => `
+                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emeraldDeep border border-champagne/30 text-[10px] font-bold text-champagneLight">
+                                        #${f}
+                                        <button type="button" onclick="removeSingleFolio('${o.orderId}', '${f}')" title="Eliminar folio sospechoso #${f}" class="text-red-400 hover:text-red-200 font-extrabold cursor-pointer ml-0.5">✕</button>
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </td>
+                        <td class="p-3 text-right">
+                            <button type="button" onclick="deleteSuspiciousOrder('${o.orderId}')" class="px-2.5 py-1 rounded-lg bg-red-950/80 hover:bg-red-800 border border-red-500/40 text-red-200 text-[10px] font-bold cursor-pointer">
+                                Anular Orden
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            function renderPublicWinners() {
+                const section = document.getElementById('publicWinnersSection');
+                const grid = document.getElementById('publicWinnersGrid');
+                if (winners.length === 0) {
+                    section.classList.add('hidden');
+                    return;
+                }
+                section.classList.remove('hidden');
+                grid.innerHTML = winners.map(w => `
+                    <div class="p-5 rounded-2xl bg-emeraldDeep border border-champagne/50 text-center">
+                        <div class="text-xs font-extrabold uppercase tracking-wider text-champagneLight">${w.prizeTitle}</div>
+                        <div class="font-display text-3xl font-extrabold text-white my-2">Folio #${w.folio}</div>
+                        <div class="text-sm font-bold text-emerald-300">${escapeHtml(w.name)}</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">Orden verificada ${w.orderId}</div>
+                    </div>
+                `).join('');
+            }
+
+            function exportOrdersCSV() {
+                let csv = 'Orden,Fecha,Nombre,RUT,Email,Telefono,Pack,Monto_CLP,Pasarela,Folios\n';
+                orders.forEach(o => {
+                    csv += `"${o.orderId}","${o.date}","${o.name}","${o.rut}","${o.email}","${o.phone}","${o.packName}",${o.amount},"${o.gateway}","${o.folios.join(' ')}"\n`;
+                });
+                const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Acta-Notarial-JoyasJack-Navidad2026.csv`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            function exportUniqueFoliosTxt() {
+                const uniqueFoliosSet = new Set();
+                orders.forEach(o => {
+                    o.folios.forEach(f => uniqueFoliosSet.add(f));
+                });
+                const sortedFolios = Array.from(uniqueFoliosSet).sort();
+                if (sortedFolios.length === 0) {
+                    showToast('Aún no hay folios asignados para descargar.');
+                    return;
+                }
+                const blob = new Blob([sortedFolios.join('\n')], { type: 'text/plain;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Folios-Unicos-AppSorteos-JoyasJack.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+                showToast(`Descargados ${sortedFolios.length} folios únicos listos para copiar y pegar.`);
+            }
+
+            function openBasesModal() { document.getElementById('basesModal').classList.remove('hidden'); }
+            function closeBasesModal() { document.getElementById('basesModal').classList.add('hidden'); }
+            function openPrivacyModal() { document.getElementById('privacyModal').classList.remove('hidden'); }
+            function downloadBasesTxt() {
+                const text = document.getElementById('basesPrintableContent').innerText;
+                const blob = new Blob([`BASES LEGALES PROTOCOLIZADAS - JOYAS JACK NAVIDAD 925\n\n${text}`], { type: 'text/plain;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'Bases-Legales-Joyas-Jack-Navidad-925.txt';
+                a.click();
+            }
+            function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+            function showToast(msg) {
+                const toast = document.getElementById('toastNotification');
+                toast.textContent = msg;
+                toast.classList.remove('hidden');
+                clearTimeout(window._toastTimer);
+                window._toastTimer = setTimeout(() => toast.classList.add('hidden'), 3200);
+            }
+            function escapeHtml(str) {
+                return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+            }
+
+            function startCountdown() {
+                const targetDate = new Date('2026-12-23T21:00:00-03:00').getTime();
+                function tick() {
+                    const now = Date.now();
+                    const diff = Math.max(0, targetDate - now);
+                    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const m = Math.floor((diff / 1000 / 60) % 60);
+                    const s = Math.floor((diff / 1000) % 60);
+                    document.getElementById('cdDays').textContent = String(d).padStart(2, '0');
+                    document.getElementById('cdHours').textContent = String(h).padStart(2, '0');
+                    document.getElementById('cdMins').textContent = String(m).padStart(2, '0');
+                    document.getElementById('cdSecs').textContent = String(s).padStart(2, '0');
+                }
+                tick();
+                setInterval(tick, 1000);
+            }
+
+            function initSnowCanvas() {
+                const canvas = document.getElementById('snowCanvas');
+                const ctx = canvas.getContext('2d');
+                let width = (canvas.width = window.innerWidth);
+                let height = (canvas.height = window.innerHeight);
+
+                window.addEventListener('resize', () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                });
+
+                const flakes = Array.from({ length: 45 }, () => ({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 2.4 + 0.8,
+                    speedY: Math.random() * 0.7 + 0.3,
+                    speedX: (Math.random() - 0.5) * 0.4,
+                    alpha: Math.random() * 0.5 + 0.2
+                }));
+
+                function animateSnow() {
+                    ctx.clearRect(0, 0, width, height);
+                    flakes.forEach(f => {
+                        ctx.beginPath();
+                        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(246, 226, 159, ${f.alpha})`;
+                        ctx.fill();
+                        f.y += f.speedY;
+                        f.x += f.speedX;
+                        if (f.y > height) { f.y = -5; f.x = Math.random() * width; }
+                        if (f.x > width) f.x = 0;
+                        if (f.x < 0) f.x = width;
+                    });
+                    requestAnimationFrame(animateSnow);
+                }
+                animateSnow();
+            }
+
+            // Exponer funciones al ámbito global para los botones HTML
+            window.openBasesModal = openBasesModal;
+            window.closeBasesModal = closeBasesModal;
+            window.openPrivacyModal = openPrivacyModal;
+            window.downloadBasesTxt = downloadBasesTxt;
+            window.toggleMobileMenu = toggleMobileMenu;
+            window.openCheckoutModal = openCheckoutModal;
+            window.closeCheckoutModal = closeCheckoutModal;
+            window.formatRutInput = formatRutInput;
+            window.redirectToFlowPayment = redirectToFlowPayment;
+            window.downloadStickerPNG = downloadStickerPNG;
+            window.copyLatestFolios = copyLatestFolios;
+            window.handleTicketSearch = handleTicketSearch;
+            window.toggleFloatingWidget = toggleFloatingWidget;
+            window.openAdminModal = openAdminModal;
+            window.closeAdminModal = closeAdminModal;
+            window.requestAdminOneTimeCode = requestAdminOneTimeCode;
+            window.verifyAdminOtp = verifyAdminOtp;
+            window.toggleCampaignStatus = toggleCampaignStatus;
+            window.lookupFolioOwner = lookupFolioOwner;
+            window.saveCampaignSettings = saveCampaignSettings;
+            window.handleStickerImageUpload = handleStickerImageUpload;
+            window.removeSingleFolio = removeSingleFolio;
+            window.deleteSuspiciousOrder = deleteSuspiciousOrder;
+            window.exportOrdersCSV = exportOrdersCSV;
+            window.exportUniqueFoliosTxt = exportUniqueFoliosTxt;
+
+            window.onload = initApp;
+        })();
     </script>
 </body>
 </html>
