@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Confirmado! Tus Stickers y Folios | Joyas Jack Navidad 925</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        emeraldDeep: '#041f18',
+                        emeraldCard: '#082e24',
+                        emeraldBorder: '#134e3e',
+                        champagne: '#e5c158',
+                        champagneLight: '#f6e29f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #041f18;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .font-display { font-family: 'Cinzel', serif; }
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #f6e29f 0%, #d4af37 50%, #f6e29f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gold-metallic {
+            background: linear-gradient(135deg, #d4af37 0%, #f6e29f 50%, #b48a1e 100%);
+        }
+        .glass-card {
+            background: rgba(8, 46, 36, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(229, 193, 88, 0.4);
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;" class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-xl glass-card rounded-3xl p-6 sm:p-10 shadow-2xl text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 flex items-center justify-center text-3xl shadow-lg">
+            ✓
+        </div>
+
+        <div>
+            <span class="text-xs uppercase tracking-[0.25em] text-champagne font-bold">Joyas Jack • Navidad Plata 925</span>
+            <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-gold-gradient mt-1">¡Pago Aprobado con Éxito!</h1>
+            <p id="saludoCliente" class="text-xs sm:text-sm text-slate-300 mt-2">
+                Tus stickers digitales coleccionables y tus folios gratuitos de cortesía ya están registrados en el sistema oficial.
+            </p>
+        </div>
+
+        <!-- Resumen de Orden y Folios -->
+        <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40 text-left">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-2 mb-3">
+                <span>Orden: <strong id="ordenMeta" class="text-white">JJ-1001</strong></span>
+                <span id="packMeta" class="text-champagneLight font-bold">Pack Digital</span>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-champagneLight">Tus Folios de Cortesía Asignados:</span>
+                <button type="button" onclick="copiarFolios()" class="text-xs text-emerald-300 hover:underline font-semibold cursor-pointer">Copiar números</button>
+            </div>
+            <div id="assignedFoliosContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Descarga de Stickers PNG -->
+        <div class="p-4 rounded-2xl bg-emeraldDeep/70 border border-emeraldBorder text-left">
+            <div class="text-xs font-bold uppercase tracking-wider text-white mb-2.5">
+                📥 Descarga tus Stickers Coleccionables (PNG Alta Resolución):
+            </div>
+            <div id="downloadStickersList" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+
+        <p class="text-[11px] text-slate-400">
+            Toma una captura de pantalla de esta ventana como respaldo. También podrás consultar tus números en cualquier momento en la página principal ingresando tu RUT.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <a href="index.html" class="flex-1 py-3 px-4 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-xs uppercase tracking-wider text-center hover:brightness-110 transition">
+                ← Volver a Joyas Jack
+            </a>
+            <a id="waBackupBtn" href="https://wa.me/56945281442" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 px-4 rounded-xl bg-emerald-700/40 border border-emerald-400/40 text-emerald-200 font-bold text-xs uppercase tracking-wider text-center hover:bg-emerald-700/60 transition">
+                💬 Guardar Respaldo en WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const STORAGE_KEY_ORDERS = 'joyas_jack_navidad_orders_v1';
+            const STORAGE_KEY_SETTINGS = 'joyas_jack_navidad_settings_v1';
+            const STORAGE_KEY_PENDING = 'joyas_jack_pending_flow_tx_v1';
+
+            let totalPoolFolios = 1500;
+            let customPacksMap = {};
+            let currentOrder = null;
+
+            function initPagoOk() {
+                try {
+                    const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
+                    if (savedSettings) {
+                        const parsed = JSON.parse(savedSettings);
+                        if (parsed.totalPoolFolios) totalPoolFolios = Number(parsed.totalPoolFolios);
+                        if (parsed.packs && Array.isArray(parsed.packs)) {
+                            parsed.packs.forEach(p => { customPacksMap[p.id] = p.customImage || null; });
+                        }
+                    }
+
+                    const savedOrdersRaw = localStorage.getItem(STORAGE_KEY_ORDERS);
+                    const orders = savedOrdersRaw ? JSON.parse(savedOrdersRaw) : [];
+                    const pendingRaw = localStorage.getItem(STORAGE_KEY_PENDING);
+
+                    if (pendingRaw) {
+                        const pending = JSON.parse(pendingRaw);
+                        const alreadyExists = orders.find(o => o.orderId === pending.orderId);
+
+                        if (!alreadyExists) {
+                            const folios = generateUniqueFolios(pending.foliosCount, orders);
+                            currentOrder = { ...pending, folios };
+                            orders.unshift(currentOrder);
+                            localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
+                        } else {
+                            currentOrder = alreadyExists;
+                        }
+                        localStorage.removeItem(STORAGE_KEY_PENDING);
+                    } else if (orders.length > 0) {
+                        currentOrder = orders[0];
+                    }
+                } catch (e) {
+                    console.warn('Error cargando confirmación de pago');
+                }
+
+                renderConfirmation();
+            }
+
+            function generateUniqueFolios(count, existingOrders) {
+                const usedSet = new Set();
+                existingOrders.forEach(o => o.folios.forEach(f => usedSet.add(f)));
+
+                const padLen = Math.max(4, String(totalPoolFolios).length);
+                const available = [];
+                for (let i = 1; i <= totalPoolFolios; i++) {
+                    const formatted = String(i).padStart(padLen, '0');
+                    if (!usedSet.has(formatted)) available.push(formatted);
+                }
+
+                const assigned = [];
+                for (let i = 0; i < count && available.length > 0; i++) {
+                    const randIdx = Math.floor(Math.random() * available.length);
+                    assigned.push(available[randIdx]);
+                    available.splice(randIdx, 1);
+                }
+                return assigned.sort();
+            }
+
+            function renderConfirmation() {
+                if (!currentOrder) {
+                    document.getElementById('saludoCliente').textContent =
+                        'No se detectó una orden reciente en este navegador. Si ya pagaste en Flow.cl, consulta tus folios en la página principal con tu RUT.';
+                    return;
+                }
+
+                document.getElementById('saludoCliente').innerHTML =
+                    `¡Gracias <strong class="text-white">${escapeHtml(currentOrder.name)}</strong>! Tus stickers están listos y tus folios quedaron asociados al RUT <strong class="text-champagneLight">${escapeHtml(currentOrder.rut)}</strong>.`;
+                document.getElementById('ordenMeta').textContent = currentOrder.orderId;
+                document.getElementById('packMeta').textContent = currentOrder.packName;
+
+                document.getElementById('assignedFoliosContainer').innerHTML = currentOrder.folios.map(f => `
+                    <span class="px-3 py-1.5 rounded-xl bg-gold-metallic text-emeraldDeep font-display font-extrabold text-sm shadow">
+                        #${f}
+                    </span>
+                `).join('');
+
+                const dlContainer = document.getElementById('downloadStickersList');
+                let dlHtml = '';
+                for (let i = 1; i <= currentOrder.stickersCount; i++) {
+                    dlHtml += `
+                        <button type="button" onclick="downloadStickerPNG('${currentOrder.orderId}', ${i}, '${escapeHtml(currentOrder.stickerTitle)}', '${currentOrder.packId}')" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/35 text-xs text-white font-semibold transition cursor-pointer">
+                            <span>🎄 Sticker #${i} (${escapeHtml(currentOrder.stickerTitle)})</span>
+                            <span class="text-champagneLight font-bold">PNG ↓</span>
+                        </button>
+                    `;
+                }
+                dlContainer.innerHTML = dlHtml;
+
+                const msg = encodeURIComponent(
+                    `Hola Joyas Jack! Respaldo de mi compra ${currentOrder.packName} (Orden ${currentOrder.orderId}). Mis folios son: ${currentOrder.folios.map(f => '#' + f).join(', ')}`
+                );
+                document.getElementById('waBackupBtn').href = `https://wa.me/56945281442?text=${msg}`;
+            }
+
+            function downloadStickerPNG(orderId, index, title, packId) {
+                if (customPacksMap[packId]) {
+                    const link = document.createElement('a');
+                    link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
+                    link.href = customPacksMap[packId];
+                    link.click();
+                    return;
+                }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = 600;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+
+                const grad = ctx.createRadialGradient(300, 300, 40, 300, 300, 280);
+                grad.addColorStop(0, '#0c4a3a');
+                grad.addColorStop(1, '#041f18');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(300, 300, 280, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.lineWidth = 14;
+                ctx.strokeStyle = '#e5c158';
+                ctx.stroke();
+
+                ctx.fillStyle = '#e2e8f0';
+                ctx.beginPath();
+                ctx.moveTo(300, 125);
+                ctx.lineTo(420, 240);
+                ctx.lineTo(300, 390);
+                ctx.lineTo(180, 240);
+                ctx.closePath();
+                ctx.fill();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = '#f6e29f';
+                ctx.stroke();
+
+                ctx.fillStyle = '#041f18';
+                ctx.font = 'bold 34px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('PLATA 925', 300, 255);
+
+                ctx.fillStyle = '#f6e29f';
+                ctx.font = 'bold 32px serif';
+                ctx.fillText('JOYAS JACK • NAVIDAD', 300, 445);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '20px sans-serif';
+                ctx.fillText(`${title} — Edición #${index} (${orderId})`, 300, 485);
+
+                const link = document.createElement('a');
+                link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+
+            function copiarFolios() {
+                if (!currentOrder) return;
+                const text = `Mis folios Joyas Jack (${currentOrder.orderId}): ${currentOrder.folios.map(f => '#' + f).join(', ')}`;
+                const temp = document.createElement('textarea');
+                temp.value = text;
+                document.body.appendChild(temp);
+                temp.select();
+                document.execCommand('copy');
+                document.body.removeChild(temp);
+                alert('Folios copiados al portapapeles.');
+            }
+
+            function escapeHtml(str) {
+                return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+            }
+
+            window.downloadStickerPNG = downloadStickerPNG;
+            window.copiarFolios = copiarFolios;
+            window.onload = initPagoOk;
+        })();
+    </script>
+</body>
+</html>
