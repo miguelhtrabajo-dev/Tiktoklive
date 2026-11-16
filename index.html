@@ -1,708 +1,230 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Joyas Jack · Edición Navidad 925 | Packs de Stickers Digitales</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #080c14;
-      color: #f8fafc;
-      overflow-x: hidden;
-    }
-    .font-luxury { font-family: 'Cinzel', serif; }
-    .bg-christmas-luxury {
-      background:
-        radial-gradient(circle at 15% 15%, rgba(185, 28, 28, 0.22) 0%, transparent 45%),
-        radial-gradient(circle at 85% 20%, rgba(212, 175, 55, 0.16) 0%, transparent 45%),
-        radial-gradient(circle at 50% 80%, rgba(6, 95, 70, 0.18) 0%, transparent 50%),
-        #080c14;
-    }
-    .silver-card {
-      background: linear-gradient(145deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
-      border: 1px solid rgba(203, 213, 225, 0.2);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
-    }
-    .gold-border {
-      border: 1px solid rgba(250, 204, 21, 0.45);
-      box-shadow: 0 0 25px rgba(250, 204, 21, 0.12);
-    }
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      color: rgba(255, 255, 255, 0.25);
-      user-select: none;
-      pointer-events: none;
-      z-index: 1;
-      animation: fall linear infinite;
-    }
-    @keyframes fall {
-      to { transform: translateY(105vh) rotate(360deg); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Compra Aprobada! Tus Stickers y Folios | Joyas Jack Navidad 925</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        emeraldDeep: '#041f18',
+                        emeraldCard: '#082e24',
+                        emeraldBorder: '#134e3e',
+                        champagne: '#e5c158',
+                        champagneLight: '#f6e29f',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #041f18;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-display { font-family: 'Cinzel', serif; }
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #f6e29f 0%, #d4af37 50%, #f6e29f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gold-metallic {
+            background: linear-gradient(135deg, #d4af37 0%, #f6e29f 50%, #b48a1e 100%);
+        }
+        .glass-card {
+            background: rgba(8, 46, 36, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(229, 193, 88, 0.35);
+        }
+    </style>
 </head>
-<body class="bg-christmas-luxury min-h-screen flex flex-col">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-  <!-- Nieve sutil de fondo -->
-  <div id="snow-container" aria-hidden="true"></div>
-
-  <!-- Barra superior legal -->
-  <div class="bg-gradient-to-r from-red-900 via-red-800 to-red-900 text-amber-100 text-[11px] sm:text-xs py-2 px-4 text-center font-medium tracking-wide border-b border-amber-400/20 relative z-20">
-    🎄 PROMOCIÓN COMERCIAL NAVIDAD 925 · Compra tus Stickers Digitales y recibe folios de cortesía · Bases protocolizadas ante Notario
-  </div>
-
-  <!-- Navbar -->
-  <header class="sticky top-0 z-30 backdrop-blur-md bg-slate-950/80 border-b border-slate-800/80">
-    <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-300 via-yellow-500 to-amber-700 p-[1.5px]">
-          <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center font-luxury font-extrabold text-amber-300 text-sm">
-            JJ
-          </div>
-        </div>
-        <div>
-          <span class="font-luxury font-bold text-lg tracking-wider text-white block leading-none">JOYAS JACK</span>
-          <span class="text-[10px] uppercase tracking-[0.22em] text-amber-300/90 font-semibold">Plata Nacional 925</span>
-        </div>
-      </a>
-
-      <nav class="hidden md:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-300">
-        <a href="#packs" class="hover:text-amber-300 transition">Comprar Stickers</a>
-        <a href="#buscador" class="hover:text-amber-300 transition">Verificar Folios</a>
-        <button onclick="abrirModalBases()" class="hover:text-amber-300 transition uppercase">Bases Legales</button>
-        <a href="https://wa.me/56945281442" target="_blank" class="px-4 py-2 rounded-full bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-600/30 transition">
-          WhatsApp
-        </a>
-      </nav>
-
-      <a href="#buscador" class="md:hidden px-3.5 py-2 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-xs font-bold">
-        Mis Folios
-      </a>
-    </div>
-  </header>
-
-  <!-- Banner de Campaña Cerrada (Se activa desde el Panel Admin igual que Tío Tito) -->
-  <section id="banner-cerrado" class="hidden relative z-20 max-w-4xl mx-auto px-4 pt-8">
-    <div class="rounded-3xl bg-gradient-to-br from-red-950 via-slate-900 to-slate-950 border-2 border-amber-400 p-8 text-center shadow-2xl">
-      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/30 border border-red-400 text-red-200 text-xs font-extrabold uppercase tracking-widest mb-4">
-        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-        Venta de Stickers Finalizada
-      </span>
-      <h2 class="font-luxury text-3xl sm:text-5xl font-extrabold text-white mb-3">
-        ¡Sorteo Cerrado!
-      </h2>
-      <p class="text-amber-300 font-bold text-lg sm:text-xl mb-4">
-        Sigue la transmisión EN VIVO por Instagram y TikTok @joyas.jack
-      </p>
-      <p class="text-slate-300 text-sm max-w-xl mx-auto mb-6">
-        Todos los folios ya fueron emitidos. Puedes verificar tus números ingresando tu RUT en el buscador de abajo.
-      </p>
-      <a href="https://www.instagram.com/joyas.jack" target="_blank" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-400 text-slate-950 font-extrabold text-sm hover:bg-amber-300 transition">
-        Ir a @joyas.jack en Instagram
-      </a>
-    </div>
-  </section>
-
-  <!-- Hero Principal -->
-  <main class="flex-1 relative z-10">
-    <section class="max-w-6xl mx-auto px-4 pt-10 pb-12 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-widest mb-5">
-        ✨ Especial Navidad Mayorista · Joyas Jack Chile
-      </div>
-
-      <h1 class="font-luxury text-3xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight max-w-4xl mx-auto mb-5">
-        Colecciona Nuestros Stickers Navideños y Participa por <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-300">Medio Kilo de Plata 925</span>
-      </h1>
-
-      <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-        Adquiere tu <strong>Pack de Stickers Digitales Coleccionables</strong> con descarga inmediata y recibe automáticamente <strong>folios gratuitos de cortesía</strong> para nuestro gran sorteo navideño en vivo.
-      </p>
-
-      <!-- Barra de Stock / Progreso -->
-      <div class="max-w-lg mx-auto silver-card rounded-2xl p-4 mb-10">
-        <div class="flex justify-between text-xs font-bold mb-2">
-          <span class="text-slate-300">Stock de Stickers Disponibles</span>
-          <span id="stock-text" class="text-amber-300">1.500 / 1.500 disponibles</span>
-        </div>
-        <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden border border-slate-700">
-          <div id="stock-bar" class="h-full bg-gradient-to-r from-red-600 via-amber-400 to-emerald-400 transition-all duration-500" style="width: 100%"></div>
-        </div>
-        <p class="text-[11px] text-slate-400 mt-2">
-          Cada sticker incluye 1 folio aleatorio irrepetible entre el <strong>0001 y el 1500</strong>.
-        </p>
-      </div>
-
-      <!-- Los 3 Premios -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto text-left">
-        <!-- 1er Lugar -->
-        <div class="silver-card gold-border rounded-3xl p-6 relative overflow-hidden md:order-2 transform md:-translate-y-2">
-          <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold uppercase">
-            Premio Mayor
-          </div>
-          <div class="text-3xl mb-3">👑</div>
-          <p class="text-xs font-bold uppercase tracking-widest text-amber-300">1° Lugar</p>
-          <h3 class="font-luxury text-2xl font-extrabold text-white mt-1 mb-2">500 Gramos de Plata 925</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Lote mayorista surtido de <strong>Medio Kilo de Joyas en Plata Nacional Ley 925</strong>. Ideal para emprender o hacer crecer tu negocio.
-          </p>
-        </div>
-
-        <!-- 2do Lugar -->
-        <div class="silver-card rounded-3xl p-6 md:order-1">
-          <div class="text-3xl mb-3">🥈</div>
-          <p class="text-xs font-bold uppercase tracking-widest text-slate-400">2° Lugar</p>
-          <h3 class="font-luxury text-2xl font-extrabold text-white mt-1 mb-2">$50.000 CLP</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Transferencia electrónica directa a la cuenta del ganador o canjeables por mercadería en Joyas Jack.
-          </p>
-        </div>
-
-        <!-- 3er Lugar -->
-        <div class="silver-card rounded-3xl p-6 md:order-3">
-          <div class="text-3xl mb-3">🥉</div>
-          <p class="text-xs font-bold uppercase tracking-widest text-slate-400">3° Lugar</p>
-          <h3 class="font-luxury text-2xl font-extrabold text-white mt-1 mb-2">$50.000 CLP</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Transferencia electrónica directa a la cuenta del ganador o canjeables por mercadería en Joyas Jack.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Packs de Stickers -->
-    <section id="packs" class="max-w-6xl mx-auto px-4 py-12">
-      <div class="text-center mb-10">
-        <span class="text-xs font-bold uppercase tracking-[0.25em] text-red-400">Paso 1 · Elige tu Pack</span>
-        <h2 class="font-luxury text-2xl sm:text-4xl font-extrabold text-white mt-1">Packs de Stickers Digitales</h2>
-        <p class="text-xs sm:text-sm text-slate-400 mt-2">Descarga instantánea en PNG + Folios de cortesía asignados al azar.</p>
-      </div>
-
-      <div id="packs-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
-        <!-- Se renderiza desde JS -->
-      </div>
-    </section>
-
-    <!-- Buscador de Folios (Tipo Tío Tito) -->
-    <section id="buscador" class="max-w-3xl mx-auto px-4 py-12">
-      <div class="silver-card rounded-3xl p-6 sm:p-8 border border-slate-700/80">
-        <div class="text-center mb-6">
-          <span class="text-xs font-bold uppercase tracking-widest text-amber-300">Transparencia Total</span>
-          <h2 class="font-luxury text-2xl sm:text-3xl font-extrabold text-white mt-1">Verifica tus Folios y Descargas</h2>
-          <p class="text-xs sm:text-sm text-slate-400 mt-1">
-            Ingresa tu <strong>RUT</strong> (ej: 12.345.678-9), <strong>correo electrónico</strong> o <strong>N° de Orden</strong> para revisar tus números asignados.
-          </p>
-        </div>
-
-        <form onsubmit="buscarFolios(event)" class="flex flex-col sm:flex-row gap-3">
-          <input
-            type="text"
-            id="input-busqueda"
-            required
-            placeholder="Ej: 12.345.678-9 o tu@correo.cl"
-            class="flex-1 px-4 py-3.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-amber-400"
-          />
-          <button type="submit" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm transition cursor-pointer">
-            Buscar mis Folios
-          </button>
-        </form>
-
-        <div id="resultados-busqueda" class="mt-6 space-y-4"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modal Checkout (Registro + Redirección a Flow) -->
-  <div id="modal-checkout" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-amber-400/40 rounded-3xl max-w-md w-full p-6 sm:p-7 relative shadow-2xl">
-      <button onclick="cerrarModalCheckout()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center">✕</button>
-
-      <p class="text-[11px] uppercase tracking-widest text-amber-300 font-bold">Finalizar Compra Digital</p>
-      <h3 id="checkout-titulo" class="font-luxury text-xl font-extrabold text-white mt-1">Pack Stickers Digitales</h3>
-      <p id="checkout-subtitulo" class="text-xs text-slate-300 mt-1 mb-5">Incluye folios gratuitos de cortesía para el sorteo navideño.</p>
-
-      <form onsubmit="procesarCompra(event)" class="space-y-3.5">
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Completo *</label>
-          <input type="text" id="buyer-name" required placeholder="Ej: Camila Soto Pérez" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-amber-400 focus:outline-none">
+    <div class="w-full max-w-xl glass-card rounded-3xl p-6 sm:p-10 shadow-2xl text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 flex items-center justify-center text-3xl">
+            ✓
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">RUT Chileno (Solo +18 años) *</label>
-          <input type="text" id="buyer-rut" required placeholder="Ej: 18.456.789-2" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-amber-400 focus:outline-none">
+            <span class="text-xs uppercase tracking-[0.25em] text-champagne font-bold">Joyas Jack • Navidad Plata 925</span>
+            <h1 class="font-display text-2xl sm:text-3xl font-extrabold text-gold-gradient mt-1">¡Compra Aprobada!</h1>
+            <p id="saludoCliente" class="text-xs sm:text-sm text-slate-300 mt-2">
+                Tus stickers digitales coleccionables y tus folios gratuitos de cortesía ya están registrados.
+            </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico *</label>
-            <input type="email" id="buyer-email" required placeholder="correo@ejemplo.cl" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-amber-400 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Teléfono / WhatsApp *</label>
-            <input type="tel" id="buyer-phone" required placeholder="+56 9 1234 5678" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-amber-400 focus:outline-none">
-          </div>
+        <!-- Folios Asignados -->
+        <div class="p-4 rounded-2xl bg-emeraldDeep border border-champagne/40 text-left">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-white/10 pb-2 mb-3">
+                <span>Orden: <strong id="ordenMeta" class="text-white">JJ-1001</strong></span>
+                <span id="packMeta" class="text-champagneLight font-bold">Pack Digital</span>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-champagneLight">Tus Folios de Cortesía Asignados:</span>
+                <button onclick="copiarFolios()" class="text-xs text-emerald-300 hover:underline font-semibold cursor-pointer">Copiar números</button>
+            </div>
+            <div id="assignedFoliosContainer" class="flex flex-wrap gap-2"></div>
         </div>
 
-        <div class="pt-2 space-y-2 text-xs text-slate-300">
-          <label class="flex items-start gap-2.5 cursor-pointer">
-            <input type="checkbox" id="check-ig" required class="mt-0.5 accent-amber-400">
-            <span>Confirmo que sigo a <a href="https://www.instagram.com/joyas.jack" target="_blank" class="text-amber-300 underline font-bold">@joyas.jack</a> en Instagram.</span>
-          </label>
-
-          <label class="flex items-start gap-2.5 cursor-pointer">
-            <input type="checkbox" id="check-bases" required class="mt-0.5 accent-amber-400">
-            <span>Soy mayor de 18 años, resido en Chile y acepto las <button type="button" onclick="abrirModalBases()" class="text-amber-300 underline font-bold">Bases Legales Protocolizadas</button>.</span>
-          </label>
+        <!-- Descargas Reales PNG -->
+        <div class="p-4 rounded-2xl bg-emeraldDeep/70 border border-emeraldBorder text-left">
+            <div class="text-xs font-bold uppercase tracking-wider text-white mb-2.5">
+                📥 Descarga tus Stickers Coleccionables (PNG Alta Resolución):
+            </div>
+            <div id="downloadStickersList" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
         </div>
 
-        <button type="submit" id="btn-pagar-submit" class="w-full mt-3 py-3.5 px-5 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-extrabold text-sm tracking-wide shadow-lg transition cursor-pointer">
-          Continuar al Pago Seguro
-        </button>
-        <p class="text-[10px] text-center text-slate-400">
-          Al completar el pago recibirás tus stickers descargables y tus folios de cortesía.
-        </p>
-      </form>
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <a href="index.html" class="flex-1 py-3 px-4 rounded-xl bg-gold-metallic text-emeraldDeep font-extrabold text-xs uppercase tracking-wider text-center">
+                Volver a Joyas Jack
+            </a>
+            <a id="waBackupBtn" href="https://wa.me/56945281442" target="_blank" class="flex-1 py-3 px-4 rounded-xl bg-emerald-700/40 border border-emerald-400/40 text-emerald-200 font-bold text-xs uppercase tracking-wider text-center">
+                Guardar Respaldo en WhatsApp
+            </a>
+        </div>
     </div>
-  </div>
 
-  <!-- Modal Bases Legales -->
-  <div id="modal-bases" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative max-h-[85vh] flex flex-col">
-      <button onclick="cerrarModalBases()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center">✕</button>
-      <h3 class="font-luxury text-xl sm:text-2xl font-extrabold text-amber-300 mb-3">Bases Legales · Concurso Promocional Joyas Jack</h3>
-      <div class="overflow-y-auto pr-2 space-y-3 text-xs text-slate-300 leading-relaxed">
-        <p><strong>1. Organizador:</strong> Joyas Jack, comercializadora mayorista de joyas en plata nacional Ley 925, con domicilio comercial en Av. Libertador Bernardo O'Higgins 4050, Estación Central, Santiago, Chile.</p>
-        <p><strong>2. Naturaleza Promocional:</strong> La presente campaña corresponde a la venta de productos digitales ("Packs de Stickers Digitales Joyas Jack"). La entrega de folios de participación es estrictamente gratuita y de cortesía asociada a cada compra, sin constituir rifa ni juego de azar conforme a la legislación chilena.</p>
-        <p><strong>3. Stock y Vigencia:</strong> Se emitirán un máximo de 1.500 stickers digitales (folios del 0001 al 1500). La campaña cierra al completarse los 1.500 stickers o en la fecha informada en @joyas.jack.</p>
-        <p><strong>4. Requisitos:</strong> Podrán participar personas naturales mayores de 18 años residentes en Chile con cédula de identidad vigente.</p>
-        <p><strong>5. Premios (Orden de extracción):</strong> 3° Lugar: $50.000 CLP; 2° Lugar: $50.000 CLP; 1° Lugar: Lote mayorista de 500 gramos (medio kilo) de joyas en plata nacional Ley 925.</p>
-        <p><strong>6. Realización del Sorteo:</strong> Se efectuará mediante plataforma aleatoria externa verificable en transmisión en vivo por las cuentas oficiales de @joyas.jack, extrayendo titulares y suplentes.</p>
-        <p><strong>7. Entrega:</strong> Retiro presencial en oficina de Estación Central (Santiago) o despacho sin costo a regiones vía Starken / Chilexpress. Plazo de reclamo: 10 días hábiles.</p>
-      </div>
-      <div class="pt-4 mt-4 border-t border-slate-800 text-right">
-        <button onclick="cerrarModalBases()" class="px-5 py-2 rounded-full bg-amber-400 text-slate-950 font-bold text-xs">Entendido</button>
-      </div>
-    </div>
-  </div>
+    <script>
+        const TOTAL_POOL_FOLIOS = 1500;
+        const STORAGE_KEY_ORDERS = 'joyas_jack_navidad_orders_v1';
+        const STORAGE_KEY_PENDING = 'joyas_jack_navidad_pending_v1';
+        let currentOrder = null;
 
-  <!-- Modal Panel Admin (PIN: 2026) -->
-  <div id="modal-admin" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4">
-    <div class="bg-slate-900 border border-amber-400/40 rounded-3xl max-w-3xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="cerrarModalAdmin()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center">✕</button>
+        function generateUniqueFolios(count, existingOrders) {
+            const usedSet = new Set();
+            existingOrders.forEach(o => o.folios.forEach(f => usedSet.add(f)));
+            const available = [];
+            for (let i = 1; i <= TOTAL_POOL_FOLIOS; i++) {
+                const formatted = String(i).padStart(4, '0');
+                if (!usedSet.has(formatted)) available.push(formatted);
+            }
+            const assigned = [];
+            for (let i = 0; i < count && available.length > 0; i++) {
+                const randIdx = Math.floor(Math.random() * available.length);
+                assigned.push(available[randIdx]);
+                available.splice(randIdx, 1);
+            }
+            return assigned.sort();
+        }
 
-      <div id="admin-login-box" class="max-w-xs mx-auto text-center py-6">
-        <h3 class="font-luxury text-xl font-bold text-white mb-2">Acceso Administrador</h3>
-        <p class="text-xs text-slate-400 mb-4">Ingresa tu PIN de seguridad (Por defecto: 2026)</p>
-        <input type="password" id="admin-pin-input" placeholder="PIN" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-center text-white mb-3">
-        <button onclick="verificarAdmin()" class="w-full py-2.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs">Ingresar</button>
-      </div>
+        function initGracias() {
+            const savedOrdersRaw = localStorage.getItem(STORAGE_KEY_ORDERS);
+            const orders = savedOrdersRaw ? JSON.parse(savedOrdersRaw) : [];
+            const pendingRaw = localStorage.getItem(STORAGE_KEY_PENDING);
 
-      <div id="admin-dashboard" class="hidden space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
-          <div>
-            <h3 class="font-luxury text-2xl font-extrabold text-white">Panel de Control · Joyas Jack</h3>
-            <p class="text-xs text-slate-400">Gestión de participantes, cierre de campaña y exportación para AppSorteos / Notaría</p>
-          </div>
-          <button id="btn-toggle-campana" onclick="toggleEstadoCampana()" class="px-4 py-2 rounded-full text-xs font-extrabold bg-red-600 text-white">
-            Cerrar Ventas (Activar Banner Live)
-          </button>
-        </div>
+            if (pendingRaw) {
+                const pending = JSON.parse(pendingRaw);
+                const alreadySaved = orders.find(o => o.orderId === pending.orderId);
+                if (!alreadySaved) {
+                    const folios = generateUniqueFolios(pending.foliosCount, orders);
+                    currentOrder = { ...pending, folios };
+                    orders.unshift(currentOrder);
+                    localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
+                } else {
+                    currentOrder = alreadySaved;
+                }
+                localStorage.removeItem(STORAGE_KEY_PENDING);
+            } else if (orders.length > 0) {
+                currentOrder = orders[0];
+            }
 
-        <!-- Métricas -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block">Recaudación</span>
-            <strong id="stat-recaudado" class="text-lg text-emerald-400 font-extrabold">$0</strong>
-          </div>
-          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block">Folios Asignados</span>
-            <strong id="stat-folios" class="text-lg text-amber-300 font-extrabold">0 / 1500</strong>
-          </div>
-          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block">Órdenes Pagadas</span>
-            <strong id="stat-ordenes" class="text-lg text-white font-extrabold">0</strong>
-          </div>
-          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block">Estado Web</span>
-            <strong id="stat-estado" class="text-lg text-emerald-400 font-extrabold">ABIERTA</strong>
-          </div>
-        </div>
+            if (currentOrder) {
+                document.getElementById('saludoCliente').innerHTML =
+                    `¡Gracias <strong class="text-white">${currentOrder.name}</strong>! Tus stickers están listos y tus folios quedaron asociados al RUT <strong class="text-champagneLight">${currentOrder.rut}</strong>.`;
+                document.getElementById('ordenMeta').textContent = currentOrder.orderId;
+                document.getElementById('packMeta').textContent = currentOrder.packName;
 
-        <!-- Botones de Descarga (Acta Notarial + Lista limpia para AppSorteos) -->
-        <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-5">
-          <h4 class="text-sm font-extrabold text-white mb-1">Exportar Archivos Oficiales</h4>
-          <p class="text-xs text-slate-400 mb-4">
-            Descarga el acta completa con RUT y datos para el Notario/SII, o descarga únicamente los números de folios irrepetibles listos para pegar en <strong>AppSorteos / Sortea2</strong> durante tu Live.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <button onclick="descargarActaCSV()" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer">
-              📄 Descargar Acta-Notarial-JoyasJack-Navidad2026.csv
-            </button>
-            <button onclick="descargarListaAppSorteos()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 cursor-pointer">
-              🎯 Descargar Lista-AppSorteos-Folios-Unicos.txt
-            </button>
-          </div>
-        </div>
+                document.getElementById('assignedFoliosContainer').innerHTML = currentOrder.folios.map(f => `
+                    <span class="px-3 py-1.5 rounded-xl bg-gold-metallic text-emeraldDeep font-display font-extrabold text-sm shadow">
+                        #${f}
+                    </span>
+                `).join('');
 
-        <!-- Tabla de Últimas Compras -->
-        <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Registro de Participantes</h4>
-          <div class="overflow-x-auto rounded-xl border border-slate-800">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-slate-950 text-slate-400">
-                <tr>
-                  <th class="p-3">Orden</th>
-                  <th class="p-3">Participante</th>
-                  <th class="p-3">RUT</th>
-                  <th class="p-3">Pack</th>
-                  <th class="p-3">Folios Asignados</th>
-                </tr>
-              </thead>
-              <tbody id="admin-tabla-body" class="divide-y divide-slate-800 bg-slate-900/60"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                const dlContainer = document.getElementById('downloadStickersList');
+                let dlHtml = '';
+                for (let i = 1; i <= currentOrder.stickersCount; i++) {
+                    dlHtml += `
+                        <button type="button" onclick="downloadStickerPNG('${currentOrder.orderId}', ${i}, '${currentOrder.stickerTitle}')" class="flex items-center justify-between px-3 py-2 rounded-xl bg-emeraldCard hover:bg-emeraldDeep border border-champagne/35 text-xs text-white font-semibold transition cursor-pointer">
+                            <span>🎄 Sticker #${i} (${currentOrder.stickerTitle})</span>
+                            <span class="text-champagneLight font-bold">PNG ↓</span>
+                        </button>
+                    `;
+                }
+                dlContainer.innerHTML = dlHtml;
 
-  <!-- Botones Flotantes (Buscador Rápido + WhatsApp) -->
-  <div class="fixed bottom-5 right-5 z-40 flex flex-col gap-3 items-end">
-    <a href="#buscador" class="px-4 py-2.5 rounded-full bg-slate-900/95 border border-amber-400/60 text-amber-300 text-xs font-extrabold shadow-xl hover:bg-slate-800 transition flex items-center gap-2">
-      🎟️ Verificar mis Folios
-    </a>
-    <a href="https://wa.me/56945281442" target="_blank" aria-label="WhatsApp Joyas Jack" class="w-13 h-13 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-2xl transition transform hover:scale-105 flex items-center justify-center">
-      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
-    </a>
-  </div>
+                const msg = encodeURIComponent(
+                    `Hola Joyas Jack! Respaldo de mi compra ${currentOrder.packName} (Orden ${currentOrder.orderId}). Mis folios son: ${currentOrder.folios.map(f => '#' + f).join(', ')}`
+                );
+                document.getElementById('waBackupBtn').href = `https://wa.me/56945281442?text=${msg}`;
+            }
+        }
 
-  <!-- Footer Legal -->
-  <footer class="bg-slate-950 border-t border-slate-800/90 py-8 px-4 text-center text-xs text-slate-400 relative z-10">
-    <div class="max-w-5xl mx-auto space-y-2">
-      <p class="font-luxury text-white font-bold text-sm tracking-wider">JOYAS JACK · PLATA NACIONAL 925</p>
-      <p>Av. Libertador Bernardo O'Higgins 4050, Estación Central, Santiago, Chile · WhatsApp: +56 9 4528 1442</p>
-      <div class="flex justify-center gap-4 pt-2 text-[11px]">
-        <button onclick="abrirModalBases()" class="underline hover:text-amber-300">Bases Legales Protocolizadas</button>
-        <span>•</span>
-        <a href="#buscador" class="underline hover:text-amber-300">Verificar Folios</a>
-        <span>•</span>
-        <button onclick="abrirModalAdmin()" class="text-slate-600 hover:text-slate-400">Admin</button>
-      </div>
-      <p class="text-[10px] text-slate-600 pt-2">© 2026 Joyas Jack Chile. Todos los derechos reservados.</p>
-    </div>
-  </footer>
+        function downloadStickerPNG(orderId, index, title) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
 
-  <script>
-    // =========================================================================
-    // CONFIGURACIÓN DE LINKS DE PAGO DE FLOW (Pega aquí tus 5 links de flow.cl)
-    // Mientras estén vacíos (""), funciona en modo prueba directo a gracias.html
-    // =========================================================================
-    const FLOW_PAYMENT_LINKS = {
-      1: "", // Link Flow Pack 1 Sticker ($1.000)
-      2: "", // Link Flow Pack 2 Stickers ($1.500)
-      3: "", // Link Flow Pack 3 Stickers ($2.000)
-      5: "", // Link Flow Pack 5 Stickers ($3.000)
-      10: "" // Link Flow Pack 10 Stickers ($5.000)
-    };
+            const grad = ctx.createRadialGradient(300, 300, 40, 300, 300, 280);
+            grad.addColorStop(0, '#0c4a3a');
+            grad.addColorStop(1, '#041f18');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(300, 300, 280, 0, Math.PI * 2);
+            ctx.fill();
 
-    const ADMIN_PIN = "2026";
-    const TOTAL_FOLIOS = 1500;
-    const STORAGE_KEY = 'joyas_jack_navidad_2026_v1';
-    const PENDING_KEY = 'joyas_jack_pending_order';
+            ctx.lineWidth = 14;
+            ctx.strokeStyle = '#e5c158';
+            ctx.stroke();
 
-    const PACKS = [
-      { qty: 1, price: 1000, title: "Pack 1 Sticker", badge: "Inicial", desc: "1 Sticker Digital PNG + 1 Folio de Cortesía" },
-      { qty: 2, price: 1500, title: "Pack 2 Stickers", badge: "Ahorro", desc: "2 Stickers Digitales PNG + 2 Folios de Cortesía" },
-      { qty: 3, price: 2000, title: "Pack 3 Stickers", badge: "Popular", featured: true, desc: "3 Stickers Digitales PNG + 3 Folios de Cortesía" },
-      { qty: 5, price: 3000, title: "Pack 5 Stickers", badge: "Mayorista", desc: "5 Stickers Digitales PNG + 5 Folios de Cortesía" },
-      { qty: 10, price: 5000, title: "Pack 10 Stickers", badge: "VIP Plata 925", desc: "10 Stickers Digitales PNG + 10 Folios de Cortesía" }
-    ];
+            ctx.fillStyle = '#e2e8f0';
+            ctx.beginPath();
+            ctx.moveTo(300, 125);
+            ctx.lineTo(420, 240);
+            ctx.lineTo(300, 390);
+            ctx.lineTo(180, 240);
+            ctx.closePath();
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = '#f6e29f';
+            ctx.stroke();
 
-    let packSeleccionado = null;
+            ctx.fillStyle = '#041f18';
+            ctx.font = 'bold 34px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('PLATA 925', 300, 255);
 
-    function getState() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-      return { orders: [], closed: false };
-    }
+            ctx.fillStyle = '#f6e29f';
+            ctx.font = 'bold 32px serif';
+            ctx.fillText('JOYAS JACK • NAVIDAD', 300, 445);
 
-    function saveState(state) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      actualizarUI();
-    }
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '20px sans-serif';
+            ctx.fillText(`${title} — Edición #${index} (${orderId})`, 300, 485);
 
-    // Validación de RUT Chileno (Módulo 11)
-    function validarRUT(rutCompleto) {
-      const limpio = rutCompleto.replace(/[^0-9kK]/g, '').toUpperCase();
-      if (limpio.length < 8) return false;
-      const cuerpo = limpio.slice(0, -1);
-      const dv = limpio.slice(-1);
-      let suma = 0, multiplo = 2;
-      for (let i = cuerpo.length - 1; i >= 0; i--) {
-        suma += parseInt(cuerpo[i]) * multiplo;
-        multiplo = multiplo < 7 ? multiplo + 1 : 2;
-      }
-      const dvEsperado = 11 - (suma % 11);
-      const dvCalc = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
-      return dv === dvCalc;
-    }
+            const link = document.createElement('a');
+            link.download = `JoyasJack-Sticker-${index}-${orderId}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
 
-    function formatearRUT(rut) {
-      const limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
-      if (limpio.length < 2) return limpio;
-      const cuerpo = limpio.slice(0, -1);
-      const dv = limpio.slice(-1);
-      return cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + dv;
-    }
+        function copiarFolios() {
+            if (!currentOrder) return;
+            const text = `Mis folios Joyas Jack (${currentOrder.orderId}): ${currentOrder.folios.map(f => '#' + f).join(', ')}`;
+            navigator.clipboard.writeText(text);
+            alert('Folios copiados al portapapeles.');
+        }
 
-    function renderPacks() {
-      const state = getState();
-      const grid = document.getElementById('packs-grid');
-      grid.innerHTML = PACKS.map(p => `
-        <div class="silver-card ${p.featured ? 'gold-border relative' : ''} rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
-          ${p.featured ? '<span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">Más Elegido</span>' : ''}
-          <div>
-            <span class="inline-block px-2.5 py-1 rounded-full bg-red-950/80 border border-red-500/30 text-red-300 text-[10px] font-bold uppercase mb-3">
-              ${p.badge}
-            </span>
-            <h3 class="font-luxury text-xl font-extrabold text-white">${p.title}</h3>
-            <p class="text-2xl font-extrabold text-amber-300 my-2">$${p.price.toLocaleString('es-CL')} <span class="text-xs text-slate-400 font-normal">CLP</span></p>
-            <p class="text-xs text-slate-300 leading-relaxed mb-5">${p.desc}</p>
-          </div>
-          <button
-            onclick="abrirCheckout(${p.qty})"
-            ${state.closed ? 'disabled' : ''}
-            class="w-full py-3 px-4 rounded-full ${state.closed ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white cursor-pointer'} font-extrabold text-xs uppercase tracking-wider shadow-md transition">
-            ${state.closed ? 'Venta Cerrada' : 'Comprar Pack'}
-          </button>
-        </div>
-      `).join('');
-    }
-
-    function actualizarUI() {
-      const state = getState();
-      let asignados = 0;
-      state.orders.forEach(o => asignados += o.folios.length);
-      const disponibles = Math.max(0, TOTAL_FOLIOS - asignados);
-      const pct = Math.round((disponibles / TOTAL_FOLIOS) * 100);
-
-      document.getElementById('stock-text').textContent = `${disponibles.toLocaleString('es-CL')} / ${TOTAL_FOLIOS.toLocaleString('es-CL')} disponibles`;
-      document.getElementById('stock-bar').style.width = `${pct}%`;
-
-      const bannerCerrado = document.getElementById('banner-cerrado');
-      if (state.closed || disponibles === 0) {
-        bannerCerrado.classList.remove('hidden');
-      } else {
-        bannerCerrado.classList.add('hidden');
-      }
-
-      renderPacks();
-    }
-
-    function abrirCheckout(qty) {
-      const state = getState();
-      if (state.closed) return;
-      packSeleccionado = PACKS.find(p => p.qty === qty);
-      document.getElementById('checkout-titulo').textContent = `${packSeleccionado.title} — $${packSeleccionado.price.toLocaleString('es-CL')} CLP`;
-      document.getElementById('checkout-subtitulo').textContent = `Recibirás ${packSeleccionado.qty} Sticker(s) descargables + ${packSeleccionado.qty} folio(s) de cortesía.`;
-      document.getElementById('modal-checkout').classList.remove('hidden');
-      document.getElementById('modal-checkout').classList.add('flex');
-    }
-
-    function cerrarModalCheckout() {
-      document.getElementById('modal-checkout').classList.add('hidden');
-      document.getElementById('modal-checkout').classList.remove('flex');
-    }
-
-    function procesarCompra(e) {
-      e.preventDefault();
-      const name = document.getElementById('buyer-name').value.trim();
-      const rutRaw = document.getElementById('buyer-rut').value.trim();
-      const email = document.getElementById('buyer-email').value.trim();
-      const phone = document.getElementById('buyer-phone').value.trim();
-
-      if (!validarRUT(rutRaw)) {
-        alert("Por favor ingresa un RUT chileno válido (con dígito verificador).");
-        return;
-      }
-
-      const rutFormateado = formatearRUT(rutRaw);
-      const orderId = "JJ-" + Math.floor(100000 + Math.random() * 900000);
-
-      const pendingOrder = {
-        id: orderId,
-        name,
-        rut: rutFormateado,
-        email,
-        phone,
-        qty: packSeleccionado.qty,
-        price: packSeleccionado.price,
-        packTitle: packSeleccionado.title
-      };
-
-      localStorage.setItem(PENDING_KEY, JSON.stringify(pendingOrder));
-
-      const flowUrl = FLOW_PAYMENT_LINKS[packSeleccionado.qty];
-      if (flowUrl && flowUrl.startsWith("http")) {
-        window.location.href = flowUrl;
-      } else {
-        // Modo prueba directo a la página de entrega gracias.html
-        window.location.href = "gracias.html";
-      }
-    }
-
-    function buscarFolios(e) {
-      e.preventDefault();
-      const q = document.getElementById('input-busqueda').value.trim().toLowerCase().replace(/\./g, '');
-      const state = getState();
-      const cont = document.getElementById('resultados-busqueda');
-
-      const encontrados = state.orders.filter(o =>
-        o.rut.toLowerCase().replace(/\./g, '') === q ||
-        o.email.toLowerCase() === q ||
-        o.id.toLowerCase() === q
-      );
-
-      if (encontrados.length === 0) {
-        cont.innerHTML = `<div class="p-4 rounded-2xl bg-red-950/40 border border-red-500/30 text-center text-xs text-red-200">No se encontraron compras asociadas a "${document.getElementById('input-busqueda').value}". Verifica tu RUT con guión o correo usado en la compra.</div>`;
-        return;
-      }
-
-      cont.innerHTML = encontrados.map(o => `
-        <div class="p-4 rounded-2xl bg-slate-950 border border-amber-400/30 space-y-2">
-          <div class="flex justify-between items-center text-xs">
-            <span class="font-bold text-white">${o.name} <span class="text-slate-400">(${o.rut})</span></span>
-            <span class="text-amber-300 font-bold">Orden ${o.id}</span>
-          </div>
-          <p class="text-[11px] text-slate-400">${o.packTitle} · ${o.date}</p>
-          <div class="flex flex-wrap gap-1.5 pt-1">
-            ${o.folios.map(f => `<span class="px-2.5 py-1 rounded-lg bg-amber-400/15 border border-amber-400/50 text-amber-300 font-extrabold text-xs">#${f}</span>`).join('')}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Modales Bases y Admin
-    function abrirModalBases() {
-      document.getElementById('modal-bases').classList.remove('hidden');
-      document.getElementById('modal-bases').classList.add('flex');
-    }
-    function cerrarModalBases() {
-      document.getElementById('modal-bases').classList.add('hidden');
-      document.getElementById('modal-bases').classList.remove('flex');
-    }
-    function abrirModalAdmin() {
-      document.getElementById('modal-admin').classList.remove('hidden');
-      document.getElementById('modal-admin').classList.add('flex');
-    }
-    function cerrarModalAdmin() {
-      document.getElementById('modal-admin').classList.add('hidden');
-      document.getElementById('modal-admin').classList.remove('flex');
-    }
-
-    function verificarAdmin() {
-      const pin = document.getElementById('admin-pin-input').value;
-      if (pin === ADMIN_PIN) {
-        document.getElementById('admin-login-box').classList.add('hidden');
-        document.getElementById('admin-dashboard').classList.remove('hidden');
-        cargarDashboardAdmin();
-      } else {
-        alert("PIN incorrecto");
-      }
-    }
-
-    function cargarDashboardAdmin() {
-      const state = getState();
-      let totalDinero = 0, totalFolios = 0;
-      state.orders.forEach(o => {
-        totalDinero += o.price;
-        totalFolios += o.folios.length;
-      });
-
-      document.getElementById('stat-recaudado').textContent = `$${totalDinero.toLocaleString('es-CL')}`;
-      document.getElementById('stat-folios').textContent = `${totalFolios} / ${TOTAL_FOLIOS}`;
-      document.getElementById('stat-ordenes').textContent = state.orders.length;
-      document.getElementById('stat-estado').textContent = state.closed ? 'CERRADA' : 'ABIERTA';
-
-      const btnToggle = document.getElementById('btn-toggle-campana');
-      btnToggle.textContent = state.closed ? 'Reabrir Ventas de Stickers' : 'Cerrar Ventas (Activar Banner Live)';
-
-      const tbody = document.getElementById('admin-tabla-body');
-      tbody.innerHTML = state.orders.length === 0
-        ? `<tr><td colspan="5" class="p-4 text-center text-slate-500">Aún no hay compras registradas en este navegador.</td></tr>`
-        : state.orders.map(o => `
-          <tr>
-            <td class="p-3 font-bold text-amber-300">${o.id}</td>
-            <td class="p-3 text-white">${o.name}<br><span class="text-[10px] text-slate-400">${o.email} · ${o.phone}</span></td>
-            <td class="p-3 text-slate-300">${o.rut}</td>
-            <td class="p-3 text-slate-300">${o.packTitle}</td>
-            <td class="p-3 font-mono text-amber-300">${o.folios.join(', ')}</td>
-          </tr>
-        `).join('');
-    }
-
-    function toggleEstadoCampana() {
-      const state = getState();
-      state.closed = !state.closed;
-      saveState(state);
-      cargarDashboardAdmin();
-    }
-
-    // 1. Descarga Acta Notarial Completa (.CSV)
-    function descargarActaCSV() {
-      const state = getState();
-      let csv = "Orden;Fecha;RUT;Nombre;Email;Telefono;Pack;Monto_CLP;Folios_Asignados\n";
-      state.orders.forEach(o => {
-        csv += `${o.id};"${o.date}";${o.rut};"${o.name}";${o.email};${o.phone};"${o.packTitle}";${o.price};"${o.folios.join(', ')}"\n`;
-      });
-      descargarArchivo(csv, "Acta-Notarial-JoyasJack-Navidad2026.csv", "text/csv;charset=utf-8;");
-    }
-
-    // 2. Descarga Lista Limpia de Folios Únicos para AppSorteos / Sortea2 (.TXT)
-    function descargarListaAppSorteos() {
-      const state = getState();
-      const foliosUnicos = new Set();
-      state.orders.forEach(o => {
-        o.folios.forEach(f => foliosUnicos.add(f));
-      });
-      const listaOrdenada = Array.from(foliosUnicos).sort();
-      if (listaOrdenada.length === 0) {
-        alert("Aún no hay folios asignados para exportar.");
-        return;
-      }
-      const contenidoTxt = listaOrdenada.join("\n");
-      descargarArchivo(contenidoTxt, "Lista-AppSorteos-Folios-Unicos.txt", "text/plain;charset=utf-8;");
-    }
-
-    function descargarArchivo(contenido, nombre, mime) {
-      const blob = new Blob(["\uFEFF" + contenido], { type: mime });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = nombre;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    // Generar copos de nieve suaves
-    function initSnow() {
-      const cont = document.getElementById('snow-container');
-      for (let i = 0; i < 18; i++) {
-        const flake = document.createElement('div');
-        flake.className = 'snowflake';
-        flake.textContent = '❄';
-        flake.style.left = Math.random() * 100 + 'vw';
-        flake.style.fontSize = (Math.random() * 10 + 8) + 'px';
-        flake.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        flake.style.animationDelay = (Math.random() * 5) + 's';
-        cont.appendChild(flake);
-      }
-    }
-
-    initSnow();
-    actualizarUI();
-  </script>
+        initGracias();
+    </script>
 </body>
 </html>
